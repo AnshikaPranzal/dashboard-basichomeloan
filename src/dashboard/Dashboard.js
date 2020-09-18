@@ -67,7 +67,9 @@ export default function Dashboard(props) {
       <CssBaseline />
       <AppBar style={{ backgroundColor: "white" }}>
         <Toolbar>
-          <Typography variant='h6'>Basic HomeLoan</Typography>
+          <Typography variant='h6' style={{ color: "black" }}>
+            Basic HomeLoan
+          </Typography>
         </Toolbar>
       </AppBar>
       <Toolbar id='back-to-top-anchor' />
