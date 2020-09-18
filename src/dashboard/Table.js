@@ -209,9 +209,7 @@ function TableCard() {
                       <td>
                         <Row>
                           <Col md={2}>
-                            <Link
-                              to={`/http://dev-applicationservice.basichomeloan.com/api/v1/Applications/${product.id}`}
-                            >
+                            <Link to={`/${product.id}`}>
                               <img
                                 // className='circular-image-small'
                                 src={product.profilePicUrl}
