@@ -128,7 +128,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-import { GETALLLEADS } from "../../../helper/index";
+import { GETALLLEADS } from "../helper/index";
 import { Link } from "react-router-dom";
 
 function TableCard() {
