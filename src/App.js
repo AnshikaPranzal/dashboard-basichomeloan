@@ -1,8 +1,22 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getApplications } from './helper';
 
 function App() {
+  
+  useEffect(() => {
+    getApplications().then(data=>{
+      if(data){
+        if(data.error){
+          console.log(data.error)
+        }
+        else{
+          console.log("App",data)
+        }
+      }
+    })
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
