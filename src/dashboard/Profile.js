@@ -33,6 +33,27 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
+  expand3: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expand1: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expand2: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
   expandOpen: {
     transform: "rotate(180deg)",
   },
@@ -45,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "2rem",
     },
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "5rem",
+      paddingLeft: "2rem",
       paddingRight: "2rem",
     },
   },
@@ -53,17 +74,23 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       marginLeft: "5rem",
       marginRight: "2rem",
+      fontSize: 15,
     },
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "5rem",
+      paddingLeft: "2rem",
       paddingRight: "2rem",
       marginTop: "1rem",
+      fontSize: 13,
     },
   },
 }));
 function Profile(props) {
   const [jobs, setjobs] = useState([]);
-  const [vjobs, setvjobs] = useState([]);
+  const [vjobs, setvjobs] = useState([
+    {
+      documents: [],
+    },
+  ]);
   // eslint-disable-next-line no-unused-vars
   const [errorF, seterrorF] = useState(false);
   const [update, setupdate] = useState(false);
@@ -77,6 +104,7 @@ function Profile(props) {
         } else {
           setjobs(data);
           setvjobs(data.result);
+
           console.log(vjobs);
         }
     });
@@ -142,7 +170,7 @@ function Profile(props) {
             <div style={{}}>
               <div
                 style={{
-                  backgroundColor: "lightgray",
+                  backgroundColor: "#f1f3f8",
                   borderRadius: "10px",
                   // width: 290,
                   // height: "150%",
@@ -256,7 +284,7 @@ function Profile(props) {
                       opacity: 0.75,
                       fontSize: 13,
                       textAlign: "right",
-                      paddingRight: "2rem",
+                      paddingRight: "4rem",
                     }}
                   >
                     {" "}
@@ -269,7 +297,7 @@ function Profile(props) {
                       opacity: 0.75,
                       fontSize: 13,
                       textAlign: "right",
-                      paddingRight: "2rem",
+                      paddingRight: "4rem",
                       color: "green",
                       paddingBottom: "2rem",
                     }}
@@ -290,7 +318,7 @@ function Profile(props) {
                 <div
                   style={{
                     paddingLeft: "15%",
-                    paddingTop: "6rem",
+                    paddingTop: "3rem",
                     // height: "140%",
                   }}
                 >
@@ -298,17 +326,18 @@ function Profile(props) {
                     style={{
                       marginTop: "0.5rem",
                       fontFamily: "Open Sans",
-                      opacity: 0.75,
-                      fontSize: 16,
-                      color: "blue",
+                      // opacity: 0.75,
+                      // fontSize: 16,
+                      fontWeight: 600,
+                      // color: "blue",
                     }}
                   >
                     {" "}
-                    {/* Basic Relationship Manager Details{" "} */}
+                    Basic Relationship Manager Details{" "}
                   </div>
                   <div
                     style={{
-                      marginTop: "1rem",
+                      marginTop: "2rem",
                       fontFamily: "Open Sans",
                       opacity: 0.75,
                       fontSize: 13,
@@ -334,7 +363,7 @@ function Profile(props) {
                       fontFamily: "Open Sans",
                       opacity: 0.75,
                       fontSize: 13,
-                      paddingBottom: "2rem",
+                      paddingBottom: "4rem",
                     }}
                   >
                     {" "}
@@ -443,58 +472,56 @@ function Profile(props) {
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Customer Name
+                    Property Amount
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return (
-                        <div>{obj2.id === vjob.id && obj2.customerName}</div>
-                      );
-                    })}
+                    ₹{vjob.propertyValue}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
                   <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Phone Number
+                    Property Name
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
-                    })}
+                    {vjob.propertyProjectName}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
                   <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Type
+                    Property Address
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.loanType}
+                    {vjob.propertyAddress}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
                   <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Amount
+                    Property City
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.amount}</div>;
-                    })}
+                    {vjob.propertyCity}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
                   <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Basic Ref Number
+                    Pin Code
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.basicId == null ? "" : vjob.basickId}
+                    {vjob.propertyPincode}
+                    {/* {vjob.basicId == null ? "" : vjob.basickId} */}
                   </Grid>
                 </Grid>
+
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Bank Application Number
+                  <Grid
+                    item
+                    xs={6}
+                    style={{ marginLeft: "2rem", fontWeight: 600 }}
+                  >
+                    Documents:
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.bankId == null ? "" : vjob.bankId}
+                    {/* {vjob.documments.id == null ? "" : vjob.bankId} */}
                   </Grid>
                 </Grid>
               </CardContent>
