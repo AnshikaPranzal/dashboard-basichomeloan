@@ -1,135 +1,19 @@
-// import React from "react";
-// import {
-//   Card,
-//   Icon,
-//   IconButton,
-//   Table,
-//   TableHead,
-//   TableRow,
-//   TableCell,
-//   TableBody
-// } from "@material-ui/core";
 
-// const TableCard = () => {
-//   const productList = [
-//     {
-//       imgUrl: "/assets/images/products/headphone-2.jpg",
-//       name: "earphone",
-//       price: 100,
-//       available: 15
-//     },
-//     {
-//       imgUrl: "/assets/images/products/headphone-3.jpg",
-//       name: "earphone",
-//       price: 1500,
-//       available: 30
-//     },
-//     {
-//       imgUrl: "/assets/images/products/iphone-2.jpg",
-//       name: "iPhone x",
-//       price: 1900,
-//       available: 35
-//     },
-//     {
-//       imgUrl: "/assets/images/products/iphone-1.jpg",
-//       name: "iPhone x",
-//       price: 100,
-//       available: 0
-//     },
-//     {
-//       imgUrl: "/assets/images/products/headphone-3.jpg",
-//       name: "Head phone",
-//       price: 1190,
-//       available: 5
-//     }
-//   ];
-
-//   return (
-//     <Card elevation={3} className="pt-5 mb-6">
-//       <div className="card-title px-6 mb-3">top selling products</div>
-//       <div className="overflow-auto">
-//         <Table className="product-table">
-//           <TableHead>
-//             <TableRow>
-//               <TableCell className="px-6" colSpan={4}>
-//                 Name
-//               </TableCell>
-//               <TableCell className="px-0" colSpan={2}>
-//                 Revenue
-//               </TableCell>
-//               <TableCell className="px-0" colSpan={2}>
-//                 Stock Status
-//               </TableCell>
-//               <TableCell className="px-0" colSpan={1}>
-//                 Action
-//               </TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {productList.map((product, index) => (
-//               <TableRow key={index}>
-//                 <TableCell className="px-0 capitalize" colSpan={4} align="left">
-//                   <div className="flex items-center">
-//                     <img
-//                       className="circular-image-small"
-//                       src={product.imgUrl}
-//                       alt="user"
-//                     />
-//                     <p className="m-0 ml-8">{product.name}</p>
-//                   </div>
-//                 </TableCell>
-//                 <TableCell className="px-0 capitalize" align="left" colSpan={2}>
-//                   $
-//                   {product.price > 999
-//                     ? (product.price / 1000).toFixed(1) + "k"
-//                     : product.price}
-//                 </TableCell>
-
-//                 <TableCell className="px-0" align="left" colSpan={2}>
-//                   {product.available ? (
-//                     product.available < 20 ? (
-//                       <small className="border-radius-4 bg-secondary text-white px-2 py-2px ">
-//                         {product.available} available
-//                       </small>
-//                     ) : (
-//                       <small className="border-radius-4 bg-primary text-white px-2 py-2px ">
-//                         in stock
-//                       </small>
-//                     )
-//                   ) : (
-//                     <small className="border-radius-4 bg-error text-white px-2 py-2px ">
-//                       out of stock
-//                     </small>
-//                   )}
-//                 </TableCell>
-//                 <TableCell className="px-0" colSpan={1}>
-//                   <IconButton>
-//                     <Icon color="primary">edit</Icon>
-//                   </IconButton>
-//                 </TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </div>
-//     </Card>
-//   );
-// };
-
-// export default TableCard;
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Icon,
-  IconButton,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@material-ui/core";
+import '../style.css'
 import { GETALLLEADS } from "../helper/index";
 import { Link } from "react-router-dom";
+
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Input,
+  Table,
+  Row,
+  Col,
+} from "reactstrap";
 
 function TableCard() {
   const [jobs, setjobs] = useState([]);
@@ -159,110 +43,87 @@ function TableCard() {
   }, [refresh]);
 
   return (
-    <Card elevation={3} className='pt-5 mb-6'>
-      <div className='card-title px-6 mb-3'>top selling products</div>
-      <div className='overflow-auto'>
-        <Table className='product-table'>
-          <TableHead>
-            <TableRow>
-              <TableCell className='px-6' colSpan={4}>
-                Name
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Basic App ID
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Bank Name
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Loan Type
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Amount
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Status Date
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Status
-              </TableCell>
-              <TableCell className='px-0' colSpan={2}>
-                Stage
-              </TableCell>
-              <TableCell className='px-0' colSpan={1}>
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+    // <Card elevation={3} className='pt-5 mb-6'>
+    //   <div className='card-title px-6 mb-3'>top selling products</div>
+    <>
+    
+      <Card className="card-dashboard">
+        <CardBody>
+          <div className="d-flex align-items-center">
+            <div>
+              <CardTitle>
+                <h4>My Leads</h4>
+              </CardTitle>
+              {/* <CardSubtitle>Click on them to join</CardSubtitle> */}
+            </div>
+            </div>
+        <Table className="no-wrap v-middle card-dashboard" responsive>
+            <thead>
+              <tr className="border-0">
+                <th className="border-0">Name</th>
+                <th className="border-0">Basic App ID</th>
+                <th className="border-0">Bank Name</th>
+                <th className="border-0">Loan Type</th>
+                <th className="border-0">Amount</th>
+                <th className="border-0">Status Date</th>
+                <th className="border-0">Status</th>
+                <th className="border-0">Stage</th>
+                <th className="border-0">Verified</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                
             {vjobs.map((product, i) => {
               return (
-                <TableRow key={i}>
-                  <TableCell
-                    className='px-0 capitalize'
-                    colSpan={4}
-                    align='left'
-                  >
-                    <div className='flex items-center'>
-                      <Link
+                <tr style={{paddingTop:"2rem"}}>
+                <td>
+                  <Row>
+                    <Col md={2}>
+                    <Link
                         to={`/http://dev-applicationservice.basichomeloan.com/api/v1/Applications/${product.id}`}
                       >
                         <img
-                          className='circular-image-small'
+                          // className='circular-image-small'
                           src={product.profilePicUrl}
-                          style={{ width: "5rem", height: "2rem" }}
+                          style={{ width: "4rem", height: "4rem",borderRadius:"2rem" }}
                           alt='user'
                         />
-                      </Link>
-                      <div className='m-0 ml-8'> {product.customerName}</div>
-                      <br></br>
-                      <div>{product.mobile}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell
-                    className='px-0 capitalize'
-                    align='center'
-                    colSpan={2}
-                  >
-                    {product.basicAppID}
-                    {/* $
-                  {product. > 999
-                    ? (product.price / 1000).toFixed(1) + "k"
-                    : product.price} */}
-                  </TableCell>
+                  </Link>
+                    </Col>
+                    <Col md={8}>
+                    <span  className="name">
+                      {product.customerName}<br></br>
+                      {product.mobile}
+                      </span>
+                    </Col>
 
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.bankName}
-                  </TableCell>
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.loanType}
-                  </TableCell>
-
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.amount}
-                  </TableCell>
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.eventDate}
-                  </TableCell>
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.eventDate}
-                  </TableCell>
-                  <TableCell className='px-0' align='left' colSpan={2}>
-                    {product.applicationStage}
-                  </TableCell>
-                  <TableCell className='px-0' colSpan={1}>
-                    <IconButton>
-                      <Icon color='primary'>edit</Icon>
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </div>
-    </Card>
+                  </Row>
+                  
+                  
+                </td>
+              <td> {product.basicAppID}</td>
+                <td>{product.bankName}</td>
+                <td>{product.loanType}</td>
+                <td>{product.amount}</td>
+                <td>{product.eventDate}</td>
+                <td>{product.applicationStatus}</td>
+                <td>{product.applicationStage}</td>
+                <td>
+                  <i className="fa fa-check text-success" aria-hidden="true"></i>
+                </td>
+                </tr>
+              )})}
+                  
+              
+            </tbody>
+      </Table>
+      </CardBody>
+      </Card>
+    </>
   );
+ 
+  
 }
 
 export default TableCard;
