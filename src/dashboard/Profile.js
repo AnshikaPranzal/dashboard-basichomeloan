@@ -124,18 +124,19 @@ function Profile(props) {
     loadAlljobs();
   }, [refresh1]);
 
-  const [vjob, setvjob] = useState([
+  const [vjob, setvjob] = useState(
     {
       // coBorrowers: {
-      coBorrowers: [
-        {
-          documents: [],
-        },
-      ],
+      coBorrowers: [{
+        documents:[{
+          id:""
+        }]
+      }],
     },
     // },
     // },
-  ]);
+  );
+  console.log("ghgg",vjob.coBorrowers.documents)
   const [vjobp, setvjobp] = useState([]);
 
   //   const [errorF, seterrorF] = useState(false);
@@ -149,13 +150,13 @@ function Profile(props) {
           console.log(data);
           setvjob(data.result);
           console.log(data.result);
-
+          setvjobp(data.result.coBorrowers)
           console.log("ggii");
-          console.log(vjob.primaryBorrower);
+          console.log(vjobp,data.result.coBorrowers);
         }
     });
   };
-
+  console.log("hi",vjobp[0])
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -192,6 +193,9 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+     {vjobp.map((j,k)=>{
+       console.log("jiik",j.documents)
+     })}
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
@@ -1340,6 +1344,7 @@ function Profile(props) {
           </Card>
         </Grid>
       </Grid>
+      
     </div>
   );
 }
