@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
-import { GETALLLEADS, getDocConfig } from "../helper/index";
+import { GETALLLEADS } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -150,36 +150,6 @@ function Profile(props) {
   useEffect(() => {
     getajob(props.match.params.id);
   }, [refresh]);
-
-  const [vjob1, setvjob1] = useState([]);
-  // const [vjobp, setvjobp] = useState([]);
-
-  //   const [errorF, seterrorF] = useState(false);
-  const id;
-  vjob.coBorrowers.documents.map((o, i) => {
-   id = o.id;
-  });
-  const getadoc = (id) => {
-    getDocConfig(id).then((data) => {
-      if (data)
-        if (data.error) {
-          seterrorF(data.error);
-        } else {
-          console.log(data);
-          setvjob1(data.result);
-          console.log(data);
-
-          console.log("ggii");
-        }
-    });
-  };
-
-  const [refresh2, setrefresh2] = useState(true);
-
-  useEffect(() => {
-    getadoc(id);
-  }, [refresh]);
-
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [expanded1, setExpanded1] = React.useState(false);
@@ -1119,40 +1089,15 @@ function Profile(props) {
                       : ""}
                   </Grid>
                 </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    Company Name
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    style={{
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {vjob.coBorrowers
-                      ? vjob.coBorrowers.map((o, i) => {
-                          return o.companyName;
+                <Grid item xs={12}>
+                  {vjob.coBorrowers
+                    ? vjob.coBorrowers.documents
+                      ? vjob.coBorrowers.documents.map((o, i) => {
+                          return o.id;
                         })
-                      : ""}
-                  </Grid>
+                      : " 678"
+                    : " "}
                 </Grid>
-                {vjob.coBorrowers
-                  ? vjob.coBorrowers.documents
-                    ? vjob.coBorrowers.documents.map((o, i) => {})
-                    : "io"
-                  : " "}
               </CardContent>
             </Collapse>
           </Card>
