@@ -190,15 +190,33 @@ function TableCard() {
           <Table className='no-wrap v-middle card-dashboard' responsive>
             <thead>
               <tr className='border-0'>
-                <th className='border-0'>Name</th>
-                <th className='border-0'>Basic App ID</th>
-                <th className='border-0'>Bank Name</th>
-                <th className='border-0'>Loan Type</th>
-                <th className='border-0'>Amount</th>
-                <th className='border-0'>Status Date</th>
-                <th className='border-0'>Status</th>
-                <th className='border-0'>Stage</th>
-                <th className='border-0'>Verified</th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Name
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Basic App ID
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Bank Name
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Loan Type
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Amount
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Status Date
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Status
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Stage
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  Verified
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -223,21 +241,88 @@ function TableCard() {
                             </Link>
                           </Col>
                           <Col md={8}>
-                            <span className='name'>
-                              {product.customerName}
-                              <br></br>
+                            <span
+                              className='name'
+                              style={{ fontFamily: "Roboto" }}
+                            >
+                              <div
+                                style={{
+                                  fontSize: 14,
+                                  color: "black",
+                                  opacity: 0.75,
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {product.customerName}
+                              </div>
+                              {/* <br></br> */}
                               {product.mobile}
                             </span>
                           </Col>
                         </Row>
                       </td>
-                      <td> {product.basicAppID}</td>
-                      <td>{product.bankName}</td>
-                      <td>{product.loanType}</td>
-                      <td>{product.amount}</td>
-                      <td>{product.eventDate}</td>
-                      <td>{product.applicationStatus}</td>
-                      <td>{product.applicationStage}</td>
+                      <td
+                        style={{
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {" "}
+                        {product.basicAppID}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+                          opacity: 1.5,
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.bankName}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.loanType}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.amount}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.eventDate}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+                          // opacity: 1.5,
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.applicationStatus}
+                      </td>
+                      <td
+                        style={{
+                          // color: "#ACACAC",
+                          opacity: 1.5,
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.applicationStage}
+                      </td>
                       <td>
                         <i
                           className='fa fa-check text-success'

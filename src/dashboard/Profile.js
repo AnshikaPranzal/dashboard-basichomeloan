@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
-import { GETALLLEADS } from "../helper/index";
+import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   expand2: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expand4: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
@@ -89,6 +96,7 @@ function Profile(props) {
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
+      // primaryBorrower: [],
     },
   ]);
   // eslint-disable-next-line no-unused-vars
@@ -116,7 +124,9 @@ function Profile(props) {
     loadAlljobs();
   }, [refresh1]);
 
-  const [vjob, setvjob] = useState({});
+  const [vjob, setvjob] = useState([]);
+  const [vjobp, setvjobp] = useState([]);
+
   //   const [errorF, seterrorF] = useState(false);
 
   const getajob = (id) => {
@@ -128,6 +138,9 @@ function Profile(props) {
           console.log(data);
           setvjob(data.result);
           console.log(data.result);
+
+          console.log("ggii");
+          console.log(vjob.primaryBorrower);
         }
     });
   };
@@ -137,12 +150,42 @@ function Profile(props) {
   useEffect(() => {
     getajob(props.match.params.id);
   }, [refresh]);
+
+  const [vjob1, setvjob1] = useState([]);
+  // const [vjobp, setvjobp] = useState([]);
+
+  //   const [errorF, seterrorF] = useState(false);
+  const id;
+  vjob.coBorrowers.documents.map((o, i) => {
+   id = o.id;
+  });
+  const getadoc = (id) => {
+    getDocConfig(id).then((data) => {
+      if (data)
+        if (data.error) {
+          seterrorF(data.error);
+        } else {
+          console.log(data);
+          setvjob1(data.result);
+          console.log(data);
+
+          console.log("ggii");
+        }
+    });
+  };
+
+  const [refresh2, setrefresh2] = useState(true);
+
+  useEffect(() => {
+    getadoc(id);
+  }, [refresh]);
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [expanded1, setExpanded1] = React.useState(false);
   const [expanded2, setExpanded2] = React.useState(false);
   const [expanded3, setExpanded3] = React.useState(false);
-
+  const [expanded4, setExpanded4] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -155,11 +198,17 @@ function Profile(props) {
   const handleExpandClick3 = () => {
     setExpanded3(!expanded3);
   };
+  const handleExpandClick4 = () => {
+    setExpanded4(!expanded4);
+  };
+
   return (
     <div>
       <AppBar style={{ backgroundColor: "white" }}>
         <Toolbar>
-          <Typography variant='h6'>Basic HomeLoan</Typography>
+          <Typography variant='h6' style={{ color: "black" }}>
+            Basic HomeLoan
+          </Typography>
         </Toolbar>
       </AppBar>
       <Grid container style={{ marginTop: "10rem" }}>
@@ -205,7 +254,16 @@ function Profile(props) {
                         );
                       })}
                     </div>
-                    <div>
+                    <div
+                      style={{
+                        font: "normal normal medium",
+                        fontSize: "14px/20px",
+                        fontFamily: "Roboto",
+                        letterSpacing: 0,
+                        color: "#212121",
+                        opacity: 1,
+                      }}
+                    >
                       {vjobs.map((obj2, i) => {
                         return (
                           <div>{obj2.id === vjob.id && obj2.customerName}</div>
@@ -223,7 +281,16 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    <div>
+                    <div
+                      style={{
+                        font: "normal normal normal",
+                        fontSize: "9px/20px",
+                        fontFamily: "Roboto",
+                        letterSpacing: "0px",
+                        color: "#ACACAC",
+                        opacity: 1,
+                      }}
+                    >
                       {vjobs.map((obj2, i) => {
                         return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
                       })}
@@ -232,10 +299,12 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "0.5rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
                       marginTop: "1rem",
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -244,10 +313,12 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "0.5rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
                       marginTop: "1rem",
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -256,10 +327,12 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "0.5rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
                       marginTop: "1rem",
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -268,10 +341,12 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "0.5rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
                       marginTop: "1rem",
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -288,7 +363,14 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    OSV{" "}
+                    {vjobs.map((obj2, i) => {
+                      return (
+                        <div>
+                          {obj2.id === vjob.id && obj2.applicationStage}
+                        </div>
+                      );
+                    })}
+                    {/* {vjob.applicationStatus}{" "} */}
                   </div>
                   <div
                     style={{
@@ -303,15 +385,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    <div>
-                      {vjobs.map((obj2, i) => {
-                        return (
-                          <div>
-                            {obj2.id === vjob.id && obj2.applicationStage}
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <div>{vjob.applicationStatus}</div>
                   </div>
                 </div>
                 <Divider />
@@ -325,10 +399,11 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "0.5rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       // opacity: 0.75,
                       // fontSize: 16,
                       fontWeight: 600,
+                      letterSpacing: 0.21,
                       // color: "blue",
                     }}
                   >
@@ -338,9 +413,11 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "2rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -349,9 +426,11 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "1rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -360,10 +439,12 @@ function Profile(props) {
                   <div
                     style={{
                       marginTop: "1rem",
-                      fontFamily: "Open Sans",
+                      fontFamily: "Roboto",
                       opacity: 0.75,
                       fontSize: 13,
                       paddingBottom: "4rem",
+                      color: "#ACACAC",
+                      opacity: 1,
                     }}
                   >
                     {" "}
@@ -377,7 +458,16 @@ function Profile(props) {
         <Grid item xs={12} md={6} className={classes.text1}>
           <Card>
             <CardActions disableSpacing>
-              <div style={{ marginLeft: "2rem", fontWeight: 600 }}>
+              <div
+                style={{
+                  marginLeft: "2.8rem",
+                  fontWeight: 500,
+                  // opacity: 1.5,
+                  letterSpacing: 0.48,
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                }}
+              >
                 Application Details
               </div>
               <IconButton
@@ -394,10 +484,27 @@ function Profile(props) {
             <Collapse in={expanded} timeout='auto' unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Customer Name
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjobs.map((obj2, i) => {
                       return (
                         <div>{obj2.id === vjob.id && obj2.customerName}</div>
@@ -406,46 +513,131 @@ function Profile(props) {
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Phone Number
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjobs.map((obj2, i) => {
                       return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
                     })}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Loan Type
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.loanType}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Loan Amount
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjobs.map((obj2, i) => {
                       return <div>{obj2.id === vjob.id && obj2.amount}</div>;
                     })}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Basic Ref Number
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.basicId == null ? "" : vjob.basickId}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Bank Application Number
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.bankId == null ? "" : vjob.bankId}
                   </Grid>
                 </Grid>
@@ -454,7 +646,15 @@ function Profile(props) {
           </Card>
           <Card style={{ marginTop: "2rem" }}>
             <CardActions disableSpacing>
-              <div style={{ marginLeft: "2rem", fontWeight: 600 }}>
+              <div
+                style={{
+                  marginLeft: "2.8rem",
+                  fontWeight: 500,
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                  letterSpacing: 0.48,
+                }}
+              >
                 Property Details
               </div>
               <IconButton
@@ -471,52 +671,143 @@ function Profile(props) {
             <Collapse in={expanded3} timeout='auto' unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Property Amount
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     ₹{vjob.propertyValue}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Property Name
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.propertyProjectName}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Property Address
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.propertyAddress}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Property City
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.propertyCity}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Pin Code
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.propertyPincode}
                     {/* {vjob.basicId == null ? "" : vjob.basickId} */}
                   </Grid>
                 </Grid>
 
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                <Grid container item xs={12} style={{ marginTop: "2rem" }}>
                   <Grid
                     item
                     xs={6}
-                    style={{ marginLeft: "2rem", fontWeight: 600 }}
+                    style={{
+                      marginLeft: "2rem",
+                      fontWeight: 400,
+                      // color: "#ACACAC",
+                      // opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
                   >
                     Documents:
                   </Grid>
@@ -529,7 +820,15 @@ function Profile(props) {
           </Card>
           <Card style={{ marginTop: "2rem" }}>
             <CardActions disableSpacing>
-              <div style={{ marginLeft: "2rem", fontWeight: 600 }}>
+              <div
+                style={{
+                  marginLeft: "2.8rem",
+                  fontWeight: 500,
+                  // opacity: 1.5,
+                  fontFamily: "Roboto",
+                  letterSpacing: 0.48,
+                }}
+              >
                 Borrower Details
               </div>
               <IconButton
@@ -546,67 +845,326 @@ function Profile(props) {
             <Collapse in={expanded2} timeout='auto' unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Customer Name
-                  </Grid>
-                  <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return (
-                        <div>{obj2.id === vjob.id && obj2.customerName}</div>
-                      );
-                    })}
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      fontWeight: 600,
+                      // opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Primary Borrower
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Name
+                  </Grid>
+                  <Grid item xs={4}>
+                    {/* {vjob.primaryBorrower.map((ob, i) => { */}
+                    {vjob.primaryBorrower
+                      ? vjob.primaryBorrower.firstName
+                      : ""}{" "}
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.lastName : ""}
+                    {/* })}
+                    {/* {vjob.primaryBorrower.map((o, i) => {
+                      return o.id;
+                    })} */}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Phone Number
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
-                    })}
+                    {/* {vjob.mobile} */}
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.mobile : ""}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Type
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Gender
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.loanType}
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.gender : ""}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Amount
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Profession Name
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.amount}</div>;
-                    })}
+                    {vjob.primaryBorrower
+                      ? vjob.primaryBorrower.professionName
+                      : ""}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Basic Ref Number
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Company Name
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.basicId == null ? "" : vjob.basickId}
+                    {vjob.primaryBorrower
+                      ? vjob.primaryBorrower.companyName
+                      : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      fontWeight: 600,
+                      marginTop: "2rem",
+                      marginLeft: "2rem",
+                    }}
+                  >
+                    CoBorrower Details
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Bank Application Number
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Name
                   </Grid>
-                  <Grid item xs={4}>
-                    {vjob.bankId == null ? "" : vjob.bankId}
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.firstName;
+                        })
+                      : ""}{" "}
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.lastName;
+                        })
+                      : ""}
                   </Grid>
                 </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Phone Number
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.mobile;
+                        })
+                      : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Gender
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.gender;
+                        })
+                      : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Profession Name
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.professionName;
+                        })
+                      : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Company Name
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.companyName;
+                        })
+                      : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Company Name
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.coBorrowers
+                      ? vjob.coBorrowers.map((o, i) => {
+                          return o.companyName;
+                        })
+                      : ""}
+                  </Grid>
+                </Grid>
+                {vjob.coBorrowers
+                  ? vjob.coBorrowers.documents
+                    ? vjob.coBorrowers.documents.map((o, i) => {})
+                    : "io"
+                  : " "}
               </CardContent>
             </Collapse>
           </Card>
           <Card style={{ marginTop: "2rem" }}>
             <CardActions disableSpacing>
-              <div style={{ marginLeft: "2rem", fontWeight: 600 }}>
+              <div
+                style={{
+                  marginLeft: "2.8rem",
+                  fontWeight: 500,
+                  letterSpacing: 0.48,
+                }}
+              >
                 Bank Details
               </div>
               <IconButton
@@ -623,60 +1181,141 @@ function Profile(props) {
             <Collapse in={expanded1} timeout='auto' unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Customer Name
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Bank Name
                   </Grid>
-                  <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return (
-                        <div>{obj2.id === vjob.id && obj2.customerName}</div>
-                      );
-                    })}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Phone Number
-                  </Grid>
-                  <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
-                    })}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Type
-                  </Grid>
-                  <Grid item xs={4}>
-                    {vjob.loanType}
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.bankName}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Loan Amount
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Branch
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.bankBranchName}
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  style={{
+                    marginTop: "2rem",
+                    marginLeft: "2rem",
+                    fontWeight: 400,
+                    fontFamily: "Roboto",
+                  }}
+                >
+                  Documents:
+                </Grid>
+              </CardContent>
+            </Collapse>
+          </Card>
+          <Card style={{ marginTop: "2rem" }}>
+            <CardActions disableSpacing>
+              <div
+                style={{
+                  marginLeft: "2.8rem",
+                  fontWeight: 500,
+                  letterSpacing: 0.48,
+                }}
+              >
+                OSV
+              </div>
+              <IconButton
+                className={clsx(classes.expand4, {
+                  [classes.expandOpen]: expanded4,
+                })}
+                onClick={handleExpandClick4}
+                aria-expanded={expanded4}
+                aria-label='show more'
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={expanded4} timeout='auto' unmountOnExit>
+              <CardContent>
+                <Grid container item xs={12}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Bank Name
                   </Grid>
                   <Grid item xs={4}>
-                    {vjobs.map((obj2, i) => {
-                      return <div>{obj2.id === vjob.id && obj2.amount}</div>;
-                    })}
+                    {vjob.bankName}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Basic Ref Number
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Branch
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.basicId == null ? "" : vjob.basickId}
+                    {vjob.bankBranchName}
                   </Grid>
                 </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid item xs={6} style={{ marginLeft: "2rem" }}>
-                    Bank Application Number
-                  </Grid>
-                  <Grid item xs={4}>
-                    {vjob.bankId == null ? "" : vjob.bankId}
-                  </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  style={{
+                    marginTop: "2rem",
+                    marginLeft: "2rem",
+                    fontWeight: 400,
+                    fontFamily: "Roboto",
+                  }}
+                >
+                  Documents:
                 </Grid>
               </CardContent>
             </Collapse>
