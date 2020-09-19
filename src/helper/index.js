@@ -38,9 +38,9 @@ export const GETAPPLICATION = (id) => {
     });
 };
 
-export const getDocConfig = (id) => {
+export const getDocConfig = () => {
   return fetch(
-    `http://dev-applicationservice.basichomeloan.com/api/v1/DocConfig/${id}`,
+    `http://dev-applicationservice.basichomeloan.com/api/v1/DocConfig/`,
     {
       method: "GET",
       headers: {

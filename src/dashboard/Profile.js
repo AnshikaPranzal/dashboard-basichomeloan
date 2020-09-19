@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
-import { GETALLLEADS } from "../helper/index";
+import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,6 +93,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Profile(props) {
   const [jobs, setjobs] = useState([]);
+  const [jobs1, setjobs1] = useState([]);
+  const [vjobs1, setvjobs1] = useState([]);
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
@@ -124,19 +126,44 @@ function Profile(props) {
     loadAlljobs();
   }, [refresh1]);
 
+  const loadDoc = () => {
+    getDocConfig().then((data) => {
+      console.log("samm", data.result);
+      if (data)
+        if (data.error) {
+          seterrorF(data.error);
+        } else {
+          setjobs1(data);
+          setvjobs1(data.result);
+
+          console.log("sammm", vjobs1);
+        }
+    });
+  };
+
+  const [refresh3, setrefresh3] = useState(true);
+
+  useEffect(() => {
+    loadDoc();
+  }, [refresh3]);
+
   const [vjob, setvjob] = useState(
     {
       // coBorrowers: {
-      coBorrowers: [{
-        documents:[{
-          id:""
-        }]
-      }],
-    },
+      coBorrowers: [
+        {
+          documents: [
+            {
+              id: "",
+            },
+          ],
+        },
+      ],
+    }
     // },
     // },
   );
-  console.log("ghgg",vjob.coBorrowers.documents)
+  console.log("ghgg", vjob.coBorrowers.documents);
   const [vjobp, setvjobp] = useState([]);
 
   //   const [errorF, seterrorF] = useState(false);
@@ -150,18 +177,19 @@ function Profile(props) {
           console.log(data);
           setvjob(data.result);
           console.log(data.result);
-          setvjobp(data.result.coBorrowers)
+          setvjobp(data.result.coBorrowers);
           console.log("ggii");
-          console.log(vjobp,data.result.coBorrowers);
+          console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  console.log("hi",vjobp[0])
+  console.log("hi", vjobp[0]);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
     getajob(props.match.params.id);
   }, [refresh]);
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [expanded1, setExpanded1] = React.useState(false);
@@ -193,9 +221,9 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-     {vjobp.map((j,k)=>{
-       console.log("jiik",j.documents)
-     })}
+      {vjobp.map((j, k) => {
+        console.log("jiik", j.documents);
+      })}
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
@@ -1140,38 +1168,20 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
-                          o.documents.map((ob, i) => {
-                            return <Grid key={i}>{ob.id}</Grid>;
-                          });
+                          return o.companyName;
                         })
                       : ""}
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  {/* return{" "} */}
-                  {/* {vjob.coBorrowers.map((post, index) => (
-                    <div key={`Key${index}`}>
-                      {/* <h3>{post.question}</h3> */}
-                  {/* <ul>
-                        {post.documents.map((option, i) => (
-                          <li key={`Key${i}`}>{option.id}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))} */}
-                  {/* {vjob.coBorrowers
-                    ? vjob.coBorrowers.map((o, i) => {
-                        {
-                          o.documents.map((ob, index) => {
-                            return <Grid key={i}>{ob.id}</Grid>;
-                          });
-                        }
-                      })
-                    : "nn"} */}
-                  {/* // ? vjob.documents.map((o, i) => { */}
-                  {/* //     return <Grid key={i}>{o.id}</Grid>; */}
-                  {/* //   }) */}
-                  {/* // : "hh"} */}
+                  Documents:
+                  {vjobp.map((j, k) => {
+                    {
+                      j.documents.map((o, i) => {
+                        console.log(o.id);
+                      });
+                    }
+                  })}
                 </Grid>
               </CardContent>
             </Collapse>
@@ -1344,7 +1354,6 @@ function Profile(props) {
           </Card>
         </Grid>
       </Grid>
-      
     </div>
   );
 }
