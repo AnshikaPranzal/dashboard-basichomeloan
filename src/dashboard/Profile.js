@@ -808,6 +808,7 @@ function Profile(props) {
                   // opacity: 1.5,
                   fontFamily: "Roboto",
                   letterSpacing: 0.48,
+                  fontSize: 16,
                 }}
               >
                 Borrower Details
@@ -852,7 +853,15 @@ function Profile(props) {
                   >
                     Name
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {/* {vjob.primaryBorrower.map((ob, i) => { */}
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.firstName
@@ -877,7 +886,15 @@ function Profile(props) {
                   >
                     Phone Number
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {/* {vjob.mobile} */}
                     {vjob.primaryBorrower ? vjob.primaryBorrower.mobile : ""}
                   </Grid>
@@ -895,7 +912,15 @@ function Profile(props) {
                   >
                     Gender
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.primaryBorrower ? vjob.primaryBorrower.gender : ""}
                   </Grid>
                 </Grid>
@@ -912,7 +937,15 @@ function Profile(props) {
                   >
                     Profession Name
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.professionName
                       : ""}
@@ -931,7 +964,15 @@ function Profile(props) {
                   >
                     Company Name
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.companyName
                       : ""}
@@ -1138,6 +1179,7 @@ function Profile(props) {
                   marginLeft: "2.8rem",
                   fontWeight: 500,
                   letterSpacing: 0.48,
+                  fontSize: 16,
                 }}
               >
                 Bank Details
@@ -1228,6 +1270,7 @@ function Profile(props) {
                   marginLeft: "2.8rem",
                   fontWeight: 500,
                   letterSpacing: 0.48,
+                  fontSize: 16,
                 }}
               >
                 OSV
