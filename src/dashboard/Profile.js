@@ -124,7 +124,18 @@ function Profile(props) {
     loadAlljobs();
   }, [refresh1]);
 
-  const [vjob, setvjob] = useState([]);
+  const [vjob, setvjob] = useState([
+    {
+      // coBorrowers: {
+      coBorrowers: [
+        {
+          documents: [],
+        },
+      ],
+    },
+    // },
+    // },
+  ]);
   const [vjobp, setvjobp] = useState([]);
 
   //   const [errorF, seterrorF] = useState(false);
@@ -1084,19 +1095,38 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
-                          return o.companyName;
+                          o.documents.map((ob, i) => {
+                            return <Grid key={i}>{ob.id}</Grid>;
+                          });
                         })
                       : ""}
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  {vjob.coBorrowers
-                    ? vjob.coBorrowers.documents
-                      ? vjob.coBorrowers.documents.map((o, i) => {
-                          return o.id;
-                        })
-                      : " 678"
-                    : " "}
+                  {/* return{" "} */}
+                  {/* {vjob.coBorrowers.map((post, index) => (
+                    <div key={`Key${index}`}>
+                      {/* <h3>{post.question}</h3> */}
+                  {/* <ul>
+                        {post.documents.map((option, i) => (
+                          <li key={`Key${i}`}>{option.id}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))} */}
+                  {/* {vjob.coBorrowers
+                    ? vjob.coBorrowers.map((o, i) => {
+                        {
+                          o.documents.map((ob, index) => {
+                            return <Grid key={i}>{ob.id}</Grid>;
+                          });
+                        }
+                      })
+                    : "nn"} */}
+                  {/* // ? vjob.documents.map((o, i) => { */}
+                  {/* //     return <Grid key={i}>{o.id}</Grid>; */}
+                  {/* //   }) */}
+                  {/* // : "hh"} */}
                 </Grid>
               </CardContent>
             </Collapse>
