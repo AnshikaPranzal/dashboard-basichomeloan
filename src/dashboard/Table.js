@@ -20,6 +20,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import lead from '../images/Group 2408.svg'
+import osvi from '../images/Group 2412.svg'
+import disb from '../images/Group 2424.svg'
 
 function TableCard() {
   const [jobs, setjobs] = useState([]);
@@ -172,7 +175,7 @@ function TableCard() {
                   Name
                 </th>
                 <th className='border-0' style={{ fontFamily: "Roboto" }}>
-                  Basic App ID
+                  Basic App ID/<br></br>Bank App ID
                 </th>
                 <th className='border-0' style={{ fontFamily: "Roboto" }}>
                   Bank Name
@@ -245,7 +248,7 @@ function TableCard() {
                         }}
                       >
                         {" "}
-                        {product.basicAppID}
+                        {product.basicAppID}/<br></br>{product.bankAppID}
                       </td>
                       <td
                         style={{
@@ -299,7 +302,9 @@ function TableCard() {
                           fontFamily: "Roboto",
                         }}
                       >
-                        {product.applicationStage}
+                        {product.applicationStage === "Lead" && (<img src={lead}></img>)}
+                        {product.applicationStage === "OSV" && (<img src={osvi}></img>)}
+                        {product.applicationStage === "Disbursed" && (<img src={disb}></img>)}
                       </td>
                       <td>
                         <i
@@ -314,6 +319,7 @@ function TableCard() {
           </Table>
         </CardBody>
       </Card>
+      
     </>
   );
 }

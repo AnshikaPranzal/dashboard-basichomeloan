@@ -1390,6 +1390,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
 import { GETALLLEADS, getDocConfig } from "../helper/index";
+import lead from '../images/Group 2408.svg'
+import osvi from '../images/Group 2412.svg'
 import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -1494,10 +1496,17 @@ function Profile(props) {
   };
 
   const [refresh1, setrefresh1] = useState(true);
+<<<<<<< HEAD
   const [property, setproperty] = useState([]);
   const [borrower, setborrower] = useState([]);
   const [osv, setosv] = useState([]);
   const [bank, setbank] = useState([]);
+=======
+  const [property, setproperty] = useState([])
+  const [borrower, setborrower] = useState([])
+  const [osv, setosv] = useState([])
+  const [bank, setbank] = useState([])
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
   useEffect(() => {
     loadAlljobs();
   }, [refresh1]);
@@ -1510,16 +1519,26 @@ function Profile(props) {
           seterrorF(data.error);
         } else {
           setjobs1(data);
+<<<<<<< HEAD
           const h = await Promise.resolve(setvjobs1(data.result));
         }
     });
   };
   console.log("sammm", vjobs1, "kk", property, borrower, osv);
+=======
+          const h = await Promise.resolve(setvjobs1(data.result))
+          
+        }
+    });
+  };
+  console.log("sammm", vjobs1,"kk",property,borrower,osv);
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
     loadDoc();
   }, [refresh3]);
+<<<<<<< HEAD
   useEffect(() => {
     setproperty(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
@@ -1531,6 +1550,16 @@ function Profile(props) {
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
     );
   }, [vjobs1]);
+=======
+  useEffect(()=>{
+    setproperty(vjobs1.filter(e=> e.belongsToEntity == "ApplicationProperty"))
+    setborrower(vjobs1.filter(e=> e.belongsToEntity == "ApplicationCustomer"))
+    borrower.sort((a, b) => {
+      return a.docCategoryId - b.docCategoryId;
+  });
+    setosv(vjobs1.filter(e=> e.belongsToEntity == "ApplicationTeleVerification"))
+  },[vjobs1])
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
   const [vjob, setvjob] = useState(
     {
       // coBorrowers: {
@@ -1557,8 +1586,12 @@ function Profile(props) {
 
   console.log("ghgg", vjob.primaryBorrower.documents);
   const [vjobp, setvjobp] = useState([]);
+<<<<<<< HEAD
   const [vjobq, setvjobq] = useState([]);
 
+=======
+    
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
   //   const [errorF, seterrorF] = useState(false);
 
   const getajob = (id) => {
@@ -1571,13 +1604,18 @@ function Profile(props) {
           setvjob(data.result);
           console.log("app", data.result);
           setvjobp(data.result.coBorrowers);
+<<<<<<< HEAD
           setvjobq(data.result.primaryBorrower);
           console.log("ggii", data.result.primaryBorrower);
           // console.log(vjobp, data.result.coBorrowers);
+=======
+          console.log("ggii");
+          console.log(vjobp, data.result.coBorrowers);
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
         }
     });
   };
-  // console.log("hi", vjobp[0]);
+  console.log("hi", vjob);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -1645,6 +1683,7 @@ function Profile(props) {
                   <div style={{ fontWeight: 600, fontFamily: "Open Sans" }}>
                     {" "}
                     <div>
+<<<<<<< HEAD
                       {vjobs &&
                         vjobs.map((obj2, i) => {
                           return (
@@ -1666,6 +1705,26 @@ function Profile(props) {
                             </div>
                           );
                         })}
+=======
+                      {vjobs && vjobs.map((obj2, i) => {
+                        return (
+                          <div>
+                            {obj2.id === vjob.id && (
+                              <img
+                                // className='circular-image-small'
+                                src={obj2.id === vjob.id && obj2.profilePicUrl}
+                                style={{
+                                  width: "4rem",
+                                  height: "4rem",
+                                  borderRadius: "2rem",
+                                }}
+                                alt='user'
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                     </div>
                     <div
                       style={{
@@ -1677,6 +1736,7 @@ function Profile(props) {
                         opacity: 1,
                       }}
                     >
+<<<<<<< HEAD
                       {vjobs &&
                         vjobs.map((obj2, i) => {
                           return (
@@ -1685,6 +1745,13 @@ function Profile(props) {
                             </div>
                           );
                         })}
+=======
+                      {vjobs && vjobs.map((obj2, i) => {
+                        return (
+                          <div>{obj2.id === vjob.id && obj2.customerName}</div>
+                        );
+                      })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                     </div>
                   </div>
                   <div
@@ -1707,12 +1774,18 @@ function Profile(props) {
                         opacity: 1,
                       }}
                     >
+<<<<<<< HEAD
                       {vjobs &&
                         vjobs.map((obj2, i) => {
                           return (
                             <div>{obj2.id === vjob.id && obj2.mobile}</div>
                           );
                         })}
+=======
+                      {vjobs && vjobs.map((obj2, i) => {
+                        return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
+                      })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                     </div>
                   </div>
                   <div
@@ -1782,6 +1855,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
+<<<<<<< HEAD
                     {vjobs &&
                       vjobs.map((obj2, i) => {
                         return (
@@ -1790,6 +1864,17 @@ function Profile(props) {
                           </div>
                         );
                       })}
+=======
+                    {vjobs && vjobs.map((obj2, i) => {
+                      return (
+                        <div>
+                          {obj2.id === vjob.id && obj2.applicationStage === "Lead" && (<img src={lead}></img>)}
+                          {obj2.id === vjob.id && obj2.applicationStage === "OSV" && (<img src={osvi}></img>)}
+
+                        </div>
+                      );
+                    })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                     {/* {vjob.applicationStatus}{" "} */}
                   </div>
                   <div
@@ -1925,12 +2010,20 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+<<<<<<< HEAD
                     {vjobs &&
                       vjobs.map((obj2, i) => {
                         return (
                           <div>{obj2.id === vjob.id && obj2.customerName}</div>
                         );
                       })}
+=======
+                    {vjobs && vjobs.map((obj2, i) => {
+                      return (
+                        <div>{obj2.id === vjob.id && obj2.customerName}</div>
+                      );
+                    })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -1955,10 +2048,16 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+<<<<<<< HEAD
                     {vjobs &&
                       vjobs.map((obj2, i) => {
                         return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
                       })}
+=======
+                    {vjobs && vjobs.map((obj2, i) => {
+                      return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
+                    })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -2008,10 +2107,16 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+<<<<<<< HEAD
                     {vjobs &&
                       vjobs.map((obj2, i) => {
                         return <div>{obj2.id === vjob.id && obj2.amount}</div>;
                       })}
+=======
+                    {vjobs && vjobs.map((obj2, i) => {
+                      return <div>{obj2.id === vjob.id && obj2.amount}</div>;
+                    })}
+>>>>>>> 0eab880487f21d6803f4046359f5db50e09f5290
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
