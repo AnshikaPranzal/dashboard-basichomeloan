@@ -978,10 +978,15 @@ function Profile(props) {
                                       }}
                                     >
                                       <a
-                                        href={j.fileOneSignedUrl}
+                                        onClick={() => {
+                                          setUrl(j.fileOneSignedUrl);
+                                        }}
+                                        href={`/verify/${j.id}`}
                                         target='_blank'
                                       >
-                                        <Visibility />
+                                        <Visibility
+                                          style={{ color: "black" }}
+                                        />
                                       </a>
                                     </Grid>
                                   </Grid>
@@ -1442,10 +1447,15 @@ function Profile(props) {
                                         }}
                                       >
                                         <a
-                                          href={j.fileOneSignedUrl}
+                                          onClick={() => {
+                                            setUrl(j.fileOneSignedUrl);
+                                          }}
+                                          href={`/verify/${j.id}`}
                                           target='_blank'
                                         >
-                                          <Visibility />
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
                                         </a>
                                       </Grid>
                                     </Grid>
@@ -1645,10 +1655,15 @@ function Profile(props) {
                                       }}
                                     >
                                       <a
-                                        href={j.fileOneSignedUrl}
+                                        onClick={() => {
+                                          setUrl(j.fileOneSignedUrl);
+                                        }}
+                                        href={`/verify/${j.id}`}
                                         target='_blank'
                                       >
-                                        <Visibility />
+                                        <Visibility
+                                          style={{ color: "black" }}
+                                        />
                                       </a>
                                     </Grid>
                                   </Grid>
@@ -1833,10 +1848,15 @@ function Profile(props) {
                                       }}
                                     >
                                       <a
-                                        href={j.fileOneSignedUrl}
+                                        onClick={() => {
+                                          setUrl(j.fileOneSignedUrl);
+                                        }}
+                                        href={`/verify/${j.id}`}
                                         target='_blank'
                                       >
-                                        <Visibility />
+                                        <Visibility
+                                          style={{ color: "black" }}
+                                        />
                                       </a>
                                     </Grid>
                                   </Grid>
