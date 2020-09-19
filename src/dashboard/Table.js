@@ -83,7 +83,7 @@ function TableCard() {
   };
 
   const [refresh, setrefresh] = useState(true);
-
+  const status = ['OSVRejected','SanctionRejected','Lead','Cancelled','Disbursed','OSVApproved','RejectedForBasicFulfillment','FileLoginComplete','CustomerVerificationSkipped','CustomerConsentPending','CustomerRejected','AcceptedForBasicFulfillment','SentForBasicFulfillment','SanctionExpired','PendingOSV','CustomerApproved','Sanctioned','Withdrawn','OSVStampped','OSVStampPending']
   useEffect(() => {
     loadAlljobs();
   }, [refresh]);
@@ -97,12 +97,12 @@ function TableCard() {
           <div className='d-flex align-items-center'>
             <div>
               <Row>
-                <Col md={6}>
+                <Col md={10}>
                   <CardTitle>
                     <h4>My Leads</h4>
                   </CardTitle>
                 </Col>
-                <Col md={6}>
+                <Col md={2}>
                   <Button
                     ref={anchorRef}
                     aria-controls={open ? "menu-list-grow" : undefined}
@@ -143,38 +143,16 @@ function TableCard() {
                               >
                                 All
                               </MenuItem>
-                              <MenuItem
+                              {status.map((obj,k)=>(
+                                <MenuItem
                                 onClick={(e) => {
-                                  filter("Lead");
+                                  filter(obj);
                                   handleClose(e);
                                 }}
                               >
-                                Lead
+                                {obj}
                               </MenuItem>
-                              <MenuItem
-                                onClick={(e) => {
-                                  filter("PendingOSV");
-                                  handleClose(e);
-                                }}
-                              >
-                                PendingOSV
-                              </MenuItem>
-                              <MenuItem
-                                onClick={(e) => {
-                                  filter("Disbursed");
-                                  handleClose(e);
-                                }}
-                              >
-                                Disbursed
-                              </MenuItem>
-                              <MenuItem
-                                onClick={(e) => {
-                                  filter("SentForBasicFulfillment");
-                                  handleClose(e);
-                                }}
-                              >
-                                SentForBasicFulfillment
-                              </MenuItem>
+                              ))}
                             </MenuList>
                           </ClickAwayListener>
                         </Paper>
