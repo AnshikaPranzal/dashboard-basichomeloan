@@ -136,7 +136,7 @@ function Profile(props) {
     // },
     // },
   );
-  console.log("ghgg",vjob.coBorrowers.documents)
+  // console.log("ghgg",vjob.coBorrowers.documents)
   const [vjobp, setvjobp] = useState([]);
 
   //   const [errorF, seterrorF] = useState(false);
@@ -205,7 +205,7 @@ function Profile(props) {
               <div
                 style={{
                   backgroundColor: "#f1f3f8",
-                  borderRadius: "10px",
+                  borderRadius: "3px",
                   // width: 290,
                   // height: "150%",
                 }}

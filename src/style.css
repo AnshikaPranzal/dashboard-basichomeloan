@@ -6,6 +6,21 @@
   font-style: normal;
 }
 
+.login{
+  background: #AAF1F2;
+  height: 100vh
+}
+.login-col{
+  background: #ffffff;
+  height: 80vh;
+  margin-top: 10vh;
+  border-radius: 2rem;
+}
+
+.login-card{
+  padding: 45px 0px;
+}
+
 .card-dashboard{
   margin-top: 3vh;
 }
@@ -34,5 +49,7 @@ body {
   -webkit-font-smoothing: antialiased;
   /* font-size: 15px; */
   font-size: 1.3rem !important;
-  color: #5c5c77;
+  color: #646c9a;
+  display: flex;
+  flex-direction: column;
 }
