@@ -55,3 +55,53 @@ export const getDocConfig = () => {
       console.log(err);
     });
 };
+
+export const addItem = (id, next) => {
+  let user = {};
+  if (typeof window !== undefined) {
+    if (localStorage.getItem("user")) {
+      user = JSON.parse(localStorage.getItem("user"));
+    }
+  }
+
+  user = JSON.parse(localStorage.getItem("user"));
+  // localStorage.setItem("cart",JSON.stringify(cart))
+  next();
+};
+
+export const removeItem = (id) => {
+  let user = {};
+  if (typeof window !== undefined) {
+    if (localStorage.getItem("user")) {
+      user = JSON.parse(localStorage.getItem("user"));
+    }
+    var id = localStorage.getItem("id");
+    var accepted = localStorage.getItem("Accepted");
+    var notaccepted = localStorage.getItem("NotAccepted");
+  }
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      id: id,
+      accepted: "true",
+      notaccepted: "true",
+    })
+  );
+  // localStorage.setItem("cart",JSON.stringify(cart))
+  return user;
+};
+
+export const loadCart = () => {
+  if (typeof window !== undefined) {
+    if (localStorage.getItem("user")) {
+      return JSON.parse(localStorage.getItem("user"));
+    }
+  }
+};
+
+export const cartEmpty = (next) => {
+  if (typeof window !== undefined) {
+    localStorage.removeItem("user");
+    next();
+  }
+};

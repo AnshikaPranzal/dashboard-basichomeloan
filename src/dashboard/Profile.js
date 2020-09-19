@@ -16,11 +16,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
-import { GETALLLEADS, getDocConfig } from "../helper/index";
+import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
-import { Link } from 'react-router-dom'
-import { Button } from '@material-ui/core';
-import { Modal } from 'reactstrap'
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { Modal } from "reactstrap";
 import Verify from "./VerifyDocument";
 // import { Link } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -102,14 +102,14 @@ function Profile(props) {
   const [jobs, setjobs] = useState([]);
   const [jobs1, setjobs1] = useState([]);
   const [vjobs1, setvjobs1] = useState([]);
-  const [show, setshow] = useState(false)
-  const handleClose=()=>{
-    setshow(false)
-  }
-  const setUrl = (url)=>{
-    localStorage.setItem("recent",url)
-    return true
-  }
+  const [show, setshow] = useState(false);
+  const handleClose = () => {
+    setshow(false);
+  };
+  const setUrl = (url) => {
+    localStorage.setItem("recent", url);
+    return true;
+  };
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
