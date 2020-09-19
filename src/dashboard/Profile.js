@@ -18,6 +18,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
 import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
+import { Link } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -1287,9 +1288,26 @@ function Profile(props) {
                           console.log(n)
                           return(
                             <>
-                            {n.id === j.docConfigId && (
+                            {n.id === j.docConfigId &&  (
                               <>
-                              {n.id}
+                              <Grid container>
+                                <Grid item>
+                                {n.keyCaptionOneRequired && (<span>*</span>)}{n.keyCaptionOne}
+                                </Grid>
+                                <Grid item>
+                                {j.docKeyOneValue}
+                                </Grid>
+                              </Grid>
+                              <Grid container>
+                                <Grid item>
+                                {j.docKeyCaption}
+                                </Grid>
+                                <Grid item>
+                                  <a href={j.fileOneSignedUrl} target="_blank">hi</a>
+                                
+                                </Grid>
+                              </Grid>
+                              
                               </>
                             )}
                             </>
