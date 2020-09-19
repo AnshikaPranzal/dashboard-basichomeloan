@@ -17,6 +17,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
 import { GETALLLEADS, getDocConfig } from "../helper/index";
+import lead from '../images/Group 2408.svg'
+import osvi from '../images/Group 2412.svg'
 import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -151,6 +153,9 @@ function Profile(props) {
   useEffect(()=>{
     setproperty(vjobs1.filter(e=> e.belongsToEntity == "ApplicationProperty"))
     setborrower(vjobs1.filter(e=> e.belongsToEntity == "ApplicationCustomer"))
+    borrower.sort((a, b) => {
+      return a.docCategoryId - b.docCategoryId;
+  });
     setosv(vjobs1.filter(e=> e.belongsToEntity == "ApplicationTeleVerification"))
   },[vjobs1])
   const [vjob, setvjob] = useState(
@@ -184,12 +189,12 @@ function Profile(props) {
           setvjob(data.result);
           // console.log(data.result);
           setvjobp(data.result.coBorrowers);
-          // console.log("ggii");
-          // console.log(vjobp, data.result.coBorrowers);
+          console.log("ggii");
+          console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  // console.log("hi", vjobp[0]);
+  console.log("hi", vjob);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -385,7 +390,9 @@ function Profile(props) {
                     {vjobs && vjobs.map((obj2, i) => {
                       return (
                         <div>
-                          {obj2.id === vjob.id && obj2.applicationStage}
+                          {obj2.id === vjob.id && obj2.applicationStage === "Lead" && (<img src={lead}></img>)}
+                          {obj2.id === vjob.id && obj2.applicationStage === "OSV" && (<img src={osvi}></img>)}
+
                         </div>
                       );
                     })}
