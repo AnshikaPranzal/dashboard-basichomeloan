@@ -20,9 +20,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import lead from '../images/Group 2408.svg'
-import osvi from '../images/Group 2412.svg'
-import disb from '../images/Group 2424.svg'
+import lead from "../images/Group 2408.svg";
+import osvi from "../images/Group 2412.svg";
+import disb from "../images/Group 2424.svg";
 
 function TableCard() {
   const [jobs, setjobs] = useState([]);
@@ -86,7 +86,28 @@ function TableCard() {
   };
 
   const [refresh, setrefresh] = useState(true);
-  const status = ['OSVRejected','SanctionRejected','Lead','Cancelled','Disbursed','OSVApproved','RejectedForBasicFulfillment','FileLoginComplete','CustomerVerificationSkipped','CustomerConsentPending','CustomerRejected','AcceptedForBasicFulfillment','SentForBasicFulfillment','SanctionExpired','PendingOSV','CustomerApproved','Sanctioned','Withdrawn','OSVStampped','OSVStampPending']
+  const status = [
+    "OSVRejected",
+    "SanctionRejected",
+    "Lead",
+    "Cancelled",
+    "Disbursed",
+    "OSVApproved",
+    "RejectedForBasicFulfillment",
+    "FileLoginComplete",
+    "CustomerVerificationSkipped",
+    "CustomerConsentPending",
+    "CustomerRejected",
+    "AcceptedForBasicFulfillment",
+    "SentForBasicFulfillment",
+    "SanctionExpired",
+    "PendingOSV",
+    "CustomerApproved",
+    "Sanctioned",
+    "Withdrawn",
+    "OSVStampped",
+    "OSVStampPending",
+  ];
   useEffect(() => {
     loadAlljobs();
   }, [refresh]);
@@ -146,15 +167,15 @@ function TableCard() {
                               >
                                 All
                               </MenuItem>
-                              {status.map((obj,k)=>(
+                              {status.map((obj, k) => (
                                 <MenuItem
-                                onClick={(e) => {
-                                  filter(obj);
-                                  handleClose(e);
-                                }}
-                              >
-                                {obj}
-                              </MenuItem>
+                                  onClick={(e) => {
+                                    filter(obj);
+                                    handleClose(e);
+                                  }}
+                                >
+                                  {obj}
+                                </MenuItem>
                               ))}
                             </MenuList>
                           </ClickAwayListener>
@@ -208,18 +229,20 @@ function TableCard() {
                       <td>
                         <Row>
                           <Col md={2}>
-                            <Link to={`/${product.id}`}>
-                              <img
-                                // className='circular-image-small'
-                                src={product.profilePicUrl}
-                                style={{
-                                  width: "4rem",
-                                  height: "4rem",
-                                  borderRadius: "2rem",
-                                }}
-                                alt='user'
-                              />
-                            </Link>
+                            {product.applicationStatus === "PendingOSV" && (
+                              <Link to={`/${product.id}`}>
+                                <img
+                                  // className='circular-image-small'
+                                  src={product.profilePicUrl}
+                                  style={{
+                                    width: "4rem",
+                                    height: "4rem",
+                                    borderRadius: "2rem",
+                                  }}
+                                  alt='user'
+                                />
+                              </Link>
+                            )}
                           </Col>
                           <Col md={8}>
                             <span
@@ -248,7 +271,8 @@ function TableCard() {
                         }}
                       >
                         {" "}
-                        {product.basicAppID}/<br></br>{product.bankAppID}
+                        {product.basicAppID}/<br></br>
+                        {product.bankAppID}
                       </td>
                       <td
                         style={{
@@ -302,9 +326,15 @@ function TableCard() {
                           fontFamily: "Roboto",
                         }}
                       >
-                        {product.applicationStage === "Lead" && (<img src={lead}></img>)}
-                        {product.applicationStage === "OSV" && (<img src={osvi}></img>)}
-                        {product.applicationStage === "Disbursed" && (<img src={disb}></img>)}
+                        {product.applicationStage === "Lead" && (
+                          <img src={lead}></img>
+                        )}
+                        {product.applicationStage === "OSV" && (
+                          <img src={osvi}></img>
+                        )}
+                        {product.applicationStage === "Disbursed" && (
+                          <img src={disb}></img>
+                        )}
                       </td>
                       <td>
                         <i
@@ -319,7 +349,6 @@ function TableCard() {
           </Table>
         </CardBody>
       </Card>
-      
     </>
   );
 }
