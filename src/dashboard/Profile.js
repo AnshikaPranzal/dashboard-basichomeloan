@@ -107,7 +107,7 @@ function Profile(props) {
 
   const loadAlljobs = () => {
     GETALLLEADS().then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data)
         if (data.error) {
           seterrorF(data.error);
@@ -128,19 +128,17 @@ function Profile(props) {
 
   const loadDoc = () => {
     getDocConfig().then((data) => {
-      console.log("samm", data.result);
+      // console.log(data.result);
       if (data)
         if (data.error) {
           seterrorF(data.error);
         } else {
           setjobs1(data);
           setvjobs1(data.result);
-
-          console.log("sammm", vjobs1);
         }
     });
   };
-
+  console.log("sammm", vjobs1);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
@@ -163,7 +161,7 @@ function Profile(props) {
     // },
     // },
   );
-  console.log("ghgg", vjob.coBorrowers.documents);
+  // console.log("ghgg", vjob.coBorrowers.documents);
   const [vjobp, setvjobp] = useState([]);
 
   //   const [errorF, seterrorF] = useState(false);
@@ -174,16 +172,16 @@ function Profile(props) {
         if (data.error) {
           seterrorF(data.error);
         } else {
-          console.log(data);
+          // console.log(data);
           setvjob(data.result);
-          console.log(data.result);
+          // console.log(data.result);
           setvjobp(data.result.coBorrowers);
-          console.log("ggii");
-          console.log(vjobp, data.result.coBorrowers);
+          // console.log("ggii");
+          // console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  console.log("hi", vjobp[0]);
+  // console.log("hi", vjobp[0]);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -222,7 +220,7 @@ function Profile(props) {
         </Toolbar>
       </AppBar>
       {vjobp.map((j, k) => {
-        console.log("jiik", j.documents);
+        // console.log("jiik", j.documents);
       })}
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
@@ -1168,6 +1166,7 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
+                          // console.log(vjobp.id);
                           return o.companyName;
                         })
                       : ""}
@@ -1175,13 +1174,24 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   Documents:
-                  {vjobp.map((j, k) => {
-                    {
-                      j.documents.map((o, i) => {
-                        console.log(o.id);
-                      });
-                    }
-                  })}
+                  <Grid item xs={12}>
+                    {vjobs1.map(
+                      (o, i) =>
+                        o.belongsToEntity === "ApplicationCustomer" &&
+                        o.id === vjobp.id &&
+                        o.id
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    {vjobs1.map(
+                      (o, i) =>
+                        o.belongsToEntity === "ApplicationCustomer" &&
+                        o.docCategoryName === "KYC" &&
+                        o.docCategoryDescription
+
+                      // o.id
+                    )}
+                  </Grid>
                 </Grid>
               </CardContent>
             </Collapse>
