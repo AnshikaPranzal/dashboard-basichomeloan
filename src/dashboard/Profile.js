@@ -107,7 +107,7 @@ function Profile(props) {
 
   const loadAlljobs = () => {
     GETALLLEADS().then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data)
         if (data.error) {
           seterrorF(data.error);
@@ -121,31 +121,38 @@ function Profile(props) {
   };
 
   const [refresh1, setrefresh1] = useState(true);
-
+  const [property, setproperty] = useState([])
+  const [borrower, setborrower] = useState([])
+  const [osv, setosv] = useState([])
+  const [bank, setbank] = useState([])
   useEffect(() => {
     loadAlljobs();
   }, [refresh1]);
 
   const loadDoc = () => {
-    getDocConfig().then((data) => {
-      console.log("samm", data.result);
+    getDocConfig().then(async (data) => {
+      // console.log(data.result);
       if (data)
         if (data.error) {
           seterrorF(data.error);
         } else {
           setjobs1(data);
-          setvjobs1(data.result);
-
-          console.log("sammm", vjobs1);
+          const h = await Promise.resolve(setvjobs1(data.result))
+          
         }
     });
   };
+  console.log("sammm", vjobs1,"kk",property,borrower,osv);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
     loadDoc();
   }, [refresh3]);
-
+  useEffect(()=>{
+    setproperty(vjobs1.filter(e=> e.belongsToEntity == "ApplicationProperty"))
+    setborrower(vjobs1.filter(e=> e.belongsToEntity == "ApplicationCustomer"))
+    setosv(vjobs1.filter(e=> e.belongsToEntity == "ApplicationTeleVerification"))
+  },[vjobs1])
   const [vjob, setvjob] = useState(
     {
       // coBorrowers: {
@@ -162,9 +169,9 @@ function Profile(props) {
     // },
     // },
   );
-  console.log("ghgg", vjob.coBorrowers.documents);
+  // console.log("ghgg", vjob.coBorrowers.documents);
   const [vjobp, setvjobp] = useState([]);
-
+    
   //   const [errorF, seterrorF] = useState(false);
 
   const getajob = (id) => {
@@ -173,16 +180,16 @@ function Profile(props) {
         if (data.error) {
           seterrorF(data.error);
         } else {
-          console.log(data);
+          // console.log(data);
           setvjob(data.result);
-          console.log(data.result);
+          // console.log(data.result);
           setvjobp(data.result.coBorrowers);
-          console.log("ggii");
-          console.log(vjobp, data.result.coBorrowers);
+          // console.log("ggii");
+          // console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  console.log("hi", vjobp[0]);
+  // console.log("hi", vjobp[0]);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -221,7 +228,7 @@ function Profile(props) {
         </Toolbar>
       </AppBar>
       {vjobp.map((j, k) => {
-        console.log("jiik", j.documents);
+        // console.log("jiik", j.documents);
       })}
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
@@ -247,7 +254,7 @@ function Profile(props) {
                   <div style={{ fontWeight: 600, fontFamily: "Open Sans" }}>
                     {" "}
                     <div>
-                      {vjobs.map((obj2, i) => {
+                      {vjobs && vjobs.map((obj2, i) => {
                         return (
                           <div>
                             {obj2.id === vjob.id && (
@@ -276,7 +283,7 @@ function Profile(props) {
                         opacity: 1,
                       }}
                     >
-                      {vjobs.map((obj2, i) => {
+                      {vjobs && vjobs.map((obj2, i) => {
                         return (
                           <div>{obj2.id === vjob.id && obj2.customerName}</div>
                         );
@@ -303,7 +310,7 @@ function Profile(props) {
                         opacity: 1,
                       }}
                     >
-                      {vjobs.map((obj2, i) => {
+                      {vjobs && vjobs.map((obj2, i) => {
                         return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
                       })}
                     </div>
@@ -375,7 +382,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    {vjobs.map((obj2, i) => {
+                    {vjobs && vjobs.map((obj2, i) => {
                       return (
                         <div>
                           {obj2.id === vjob.id && obj2.applicationStage}
@@ -517,7 +524,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs.map((obj2, i) => {
+                    {vjobs && vjobs.map((obj2, i) => {
                       return (
                         <div>{obj2.id === vjob.id && obj2.customerName}</div>
                       );
@@ -546,7 +553,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs.map((obj2, i) => {
+                    {vjobs && vjobs.map((obj2, i) => {
                       return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
                     })}
                   </Grid>
@@ -598,7 +605,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs.map((obj2, i) => {
+                    {vjobs && vjobs.map((obj2, i) => {
                       return <div>{obj2.id === vjob.id && obj2.amount}</div>;
                     })}
                   </Grid>
@@ -1167,6 +1174,7 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
+                          // console.log(vjobp.id);
                           return o.companyName;
                         })
                       : ""}
@@ -1174,13 +1182,23 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   Documents:
-                  {vjobp.map((j, k) => {
-                    {
-                      j.documents.map((o, i) => {
-                        console.log(o.id);
-                      });
-                    }
-                  })}
+                  <Grid item xs={12}>
+                    {vjobs1.map(
+                      (o, i) =>
+                        o.belongsToEntity === "ApplicationCustomer" &&
+                        o.id === vjobp.id &&
+                        o.id
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    {vjobs1.map(
+                      (o, i) =>
+                        o.belongsToEntity === "ApplicationCustomer" &&
+                        o.docCategoryName
+
+                      // o.id
+                    )}
+                  </Grid>
                 </Grid>
               </CardContent>
             </Collapse>
