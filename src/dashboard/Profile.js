@@ -18,7 +18,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION } from "../helper/index";
 import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { Visibility } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -142,7 +144,7 @@ function Profile(props) {
         }
     });
   };
-  console.log("sammm", vjobs1, "kk", property, borrower, osv);
+  console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
@@ -155,6 +157,7 @@ function Profile(props) {
     setborrower(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationCustomer")
     );
+    setbank(vjobs1.filter((e) => e.belongsToEntity == "ApplicationBank"));
     setosv(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
     );
@@ -186,7 +189,7 @@ function Profile(props) {
   // console.log("ghgg", vjob.coBorrowers.documents);
   const [vjobp, setvjobp] = useState([]);
   const [vjobq, setvjobq] = useState({
-    documents:[]
+    documents: [],
   });
 
   //   const [errorF, seterrorF] = useState(false);
@@ -248,7 +251,7 @@ function Profile(props) {
       {/* {vjobp.map((j, k) => {
         console.log("jiik", j.documents);
       })} */}
-      
+
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
@@ -867,69 +870,117 @@ function Profile(props) {
                     {/* {vjob.documments.id == null ? "" : vjob.bankId} */}
                   </Grid>
                 </Grid>
-                <Grid container item xs={12} style={{ marginTop: "2rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      fontWeight: 400,
-                      // color: "#ACACAC",
-                      // opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {property.keyCaptionOne && property.keyCaptionOneRequired
-                      ? "*"
-                      : ""}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* keyCaptionOne */}
-                    {/* {vjob.documments.id == null ? "" : vjob.bankId} */}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "2rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      fontWeight: 400,
-                      // color: "#ACACAC",
-                      // opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {property.keyCaptionTwo && property.keyCaptionTwoRequired
-                      ? "*"
-                      : ""}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* keyCaptionOne */}
-                    {/* {vjob.documments.id == null ? "" : vjob.bankId} */}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "2rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      fontWeight: 400,
-                      // color: "#ACACAC",
-                      // opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {property.keyCaptionThree &&
-                    property.keyCaptionThreeRequired
-                      ? "*"
-                      : ""}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* keyCaptionOne */}
-                    {/* {vjob.documments.id == null ? "" : vjob.bankId} */}
-                  </Grid>
+
+                <Grid item xs={12}>
+                  {vjobq.documents.map((j, k) => {
+                    console.log("jiik", j.docConfigId);
+                    return (
+                      <>
+                        {property.map((n, m) => {
+                          console.log(n);
+                          return (
+                            <>
+                              {n.id === j.docConfigId && (
+                                <>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginLeft: "2.8rem",
+                                      marginLeft: "1rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionOneRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionOne}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionTwoRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionTwo}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionThreeRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionThree}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {j.docKeyOneValue}
+                                    </Grid>
+                                  </Grid>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginLeft: "2.8",
+                                      marginTop: "1rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {j.docKeyCaption}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        textAlign: "center",
+                                        paddingRight: "18%",
+                                      }}
+                                    >
+                                      <a
+                                        href={j.fileOneSignedUrl}
+                                        target='_blank'
+                                      >
+                                        <Visibility />
+                                      </a>
+                                    </Grid>
+                                  </Grid>
+                                </>
+                              )}
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  })}
                 </Grid>
               </CardContent>
             </Collapse>
@@ -1277,132 +1328,123 @@ function Profile(props) {
                       : ""}
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ marginLeft: "2.8rem", marginTop: "2rem" }}
+                >
                   Document:
                   <Grid item xs={12}>
-                  {vjobq.documents.map((j, k) => {
+                    {vjobq.documents.map((j, k) => {
                       console.log("jiik", j.docConfigId);
-                      return(
+                      return (
                         <>
-                        {borrower.map((n,m)=>{
-                          console.log(n)
-                          return(
-                            <>
-                            {n.id === j.docConfigId &&  (
+                          {borrower.map((n, m) => {
+                            console.log(n);
+                            return (
                               <>
-                              <Grid container>
-                                <Grid item>
-                                {n.keyCaptionOneRequired && (<span>*</span>)}{n.keyCaptionOne}
-                                </Grid>
-                                <Grid item>
-                                {j.docKeyOneValue}
-                                </Grid>
-                              </Grid>
-                              <Grid container>
-                                <Grid item>
-                                {j.docKeyCaption}
-                                </Grid>
-                                <Grid item>
-                                  <a href={j.fileOneSignedUrl} target="_blank">hi</a>
-                                
-                                </Grid>
-                              </Grid>
-                              
+                                {n.id === j.docConfigId && (
+                                  <>
+                                    <Grid
+                                      container
+                                      style={{
+                                        marginLeft: "2.8rem",
+                                        marginTop: "1rem",
+                                      }}
+                                    >
+                                      <Grid
+                                        item
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionOneRequired && (
+                                          <span>*</span>
+                                        )}
+                                        {n.keyCaptionOne}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionTwoRequired && (
+                                          <span>*</span>
+                                        )}
+                                        {n.keyCaptionTwo}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionThreeRequired && (
+                                          <span>*</span>
+                                        )}
+                                        {n.keyCaptionThree}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyOneValue}
+                                      </Grid>
+                                    </Grid>
+                                    <Grid
+                                      container
+                                      style={{
+                                        // marginLeft: "2.8rem",
+                                        marginTop: "1rem",
+                                      }}
+                                    >
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                          // marginTop: "1rem",
+                                        }}
+                                      >
+                                        {j.docKeyCaption}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          textAlign: "center",
+                                          paddingRight: "18%",
+                                        }}
+                                      >
+                                        <a
+                                          href={j.fileOneSignedUrl}
+                                          target='_blank'
+                                        >
+                                          <Visibility />
+                                        </a>
+                                      </Grid>
+                                    </Grid>
+                                  </>
+                                )}
                               </>
-                            )}
-                            </>
-                          )
-                        })}
+                            );
+                          })}
                         </>
-                      )
+                      );
                     })}
-                    {borrower.keyCaptionOne === null
-                      ? " "
-                      : borrower.keyCaptionOne}
-                    {borrower.keyCaptionOneRequired ? "*" : ""}
-                    {/* {vjobs1.map(
-                      (o, i) =>
-                        o.belongsToEntity === "ApplicationCustomer" &&
-                        o.id === vjobp.id &&
-                        o.id
-                    )} */}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* {vjob.coBorrowers.documents.map((o, i) => {
-                     return  o.id === borrower.docCategoryId ? docKeyOneValue : " ";
-                    })} */}
-                    {/* {vjobs1.map(
-                      (o, i) =>
-                        o.belongsToEntity === "ApplicationCustomer" &&
-                        o.docCategoryName
-
-                      // o.id
-                    )} */}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {borrower.keyCaptionTwo === null
-                      ? " "
-                      : borrower.keyCaptionTwo}
-                    {borrower.keyCaptionTwoRequired ? "*" : ""}
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    style={{
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {vjob.coBorrowers
-                      ? vjob.coBorrowers.map((o, i) => {
-                          // console.log(vjobp.id);
-                          return o.companyName;
-                        })
-                      : ""}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {borrower.keyCaptionThree === null
-                      ? " "
-                      : borrower.keyCaptionThree}
-                    {borrower.keyCaptionThreeRequired ? "*" : " "}
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    style={{
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {vjob.coBorrowers
-                      ? vjob.coBorrowers.map((o, i) => {
-                          // console.log(vjobp.id);
-                        })
-                      : ""}
                   </Grid>
                 </Grid>
               </CardContent>
@@ -1496,6 +1538,118 @@ function Profile(props) {
                 >
                   Documents:
                 </Grid>
+                <Grid item xs={12}>
+                  {vjobq.documents.map((j, k) => {
+                    console.log("jiik", j.docConfigId);
+                    return (
+                      <>
+                        {bank.map((n, m) => {
+                          console.log(n);
+                          return (
+                            <>
+                              {n.id === j.docConfigId && (
+                                <>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginLeft: "2.8rem",
+                                      marginTop: "1rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionOneRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionOne}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionTwoRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionTwo}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionThreeRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionThree}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {j.docKeyOneValue}
+                                    </Grid>
+                                  </Grid>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginTop: "1rem",
+                                      marginLeft: "2.8rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {j.docKeyCaption}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        textAlign: "center",
+                                        paddingRight: "18%",
+                                      }}
+                                    >
+                                      <a
+                                        href={j.fileOneSignedUrl}
+                                        target='_blank'
+                                      >
+                                        <Visibility />
+                                      </a>
+                                    </Grid>
+                                  </Grid>
+                                </>
+                              )}
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  })}
+                </Grid>
+                {/* </Grid> */}
               </CardContent>
             </Collapse>
           </Card>
@@ -1571,60 +1725,119 @@ function Profile(props) {
                 >
                   Documents:
                 </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {osv.keyCaptionOne === null ? " " : osv.keyCaptionOne}
-                    {osv.keyCaptionOneRequired ? "*" : " "}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {vjob.bankBranchName}
-                  </Grid>
+                <Grid item xs={12}>
+                  {vjobq.documents.map((j, k) => {
+                    console.log("jiik", j.docConfigId);
+                    return (
+                      <>
+                        {osv.map((n, m) => {
+                          console.log(n);
+                          return (
+                            <>
+                              {n.id === j.docConfigId && (
+                                <>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginLeft: "2.8rem",
+                                      marginTop: "1rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionOneRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionOne}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionTwoRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionTwo}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {n.keyCaptionThreeRequired && (
+                                        <span>*</span>
+                                      )}
+                                      {n.keyCaptionThree}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                      }}
+                                    >
+                                      {j.docKeyOneValue}
+                                    </Grid>
+                                  </Grid>
+                                  <Grid
+                                    container
+                                    style={{
+                                      marginLeft: "2.8rem",
+                                      marginTop: "1rem",
+                                    }}
+                                  >
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        color: "#ACACAC",
+                                        opacity: 1.5,
+                                        fontFamily: "Roboto",
+                                        // marginTop: "1rem",
+                                      }}
+                                    >
+                                      {j.docKeyCaption}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      style={{
+                                        textAlign: "center",
+                                        paddingRight: "18%",
+                                      }}
+                                    >
+                                      <a
+                                        href={j.fileOneSignedUrl}
+                                        target='_blank'
+                                      >
+                                        <Visibility />
+                                      </a>
+                                    </Grid>
+                                  </Grid>
+                                </>
+                              )}
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  })}
                 </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {osv.keyCaptionTwo === null ? " " : osv.keyCaptionTwo}
-                    {osv.keyCaptionTwoRequired ? "*" : " "}
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* {vjob.bankBranchName} */}
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
-                  <Grid
-                    item
-                    xs={12}
-                    style={{
-                      marginLeft: "2rem",
-                      color: "#ACACAC",
-                      opacity: 1.5,
-                      fontFamily: "Roboto",
-                    }}
-                  >
-                    {osv.keyCaptionThree === null ? " " : osv.keyCaptionThree}
-                    {osv.keyCaptionThreeRequired ? "*" : " "}
-                  </Grid>
-                  <Grid item xs={12}>
-                    {vjob.bankBranchName}
-                  </Grid>
-                </Grid>
+                {/* </Grid> */}
               </CardContent>
             </Collapse>
           </Card>
