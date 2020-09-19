@@ -19,6 +19,9 @@ import { GETAPPLICATION } from "../helper/index";
 import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 import { Link } from 'react-router-dom'
+import { Button } from '@material-ui/core';
+import { Modal } from 'reactstrap'
+import Verify from "./VerifyDocument";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -96,6 +99,14 @@ function Profile(props) {
   const [jobs, setjobs] = useState([]);
   const [jobs1, setjobs1] = useState([]);
   const [vjobs1, setvjobs1] = useState([]);
+  const [show, setshow] = useState(false)
+  const handleClose=()=>{
+    setshow(false)
+  }
+  const setUrl = (url)=>{
+    localStorage.setItem("recent",url)
+    return true
+  }
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
@@ -1303,8 +1314,14 @@ function Profile(props) {
                                 {j.docKeyCaption}
                                 </Grid>
                                 <Grid item>
-                                  <a href={j.fileOneSignedUrl} target="_blank">hi</a>
-                                
+                                  {/* <span style={{cursor:"pointer"}} onClick={()=>{localStorage.set("recent",j.fileOneSignedUrl)})}>ji</span> */}
+                                  <a  onClick={()=>{setUrl(j.fileOneSignedUrl)}} href={`/verify/${j.id}`} target="_blank">hi</a>
+                                  {/* <Link to={`/verify/${j.fileOneSignedUrl}`}>open</Link> */}
+                                  <Modal isOpen={show} >
+                                   
+                                    <Verify></Verify>
+                                      
+                                  </Modal>
                                 </Grid>
                               </Grid>
                               

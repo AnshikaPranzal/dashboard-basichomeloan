@@ -4,6 +4,8 @@ import Dashboard from "./dashboard/Dashboard";
 import Review from "./dashboard/Profile";
 import "./style.css";
 import Login from "./dashboard/Login";
+import Verify from "./dashboard/VerifyDocument";
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div>
@@ -12,6 +14,7 @@ function App() {
           <Route exact path={"/dashboard"} component={Dashboard} />
           <Route exact path={"/:id"} component={Review} />
           <Route exact path={"/"} component={Login} />
+          <Route exact path={"/verify/:url"} component={Verify} />
         </Switch>
       </Router>
     </div>
