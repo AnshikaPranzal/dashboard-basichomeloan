@@ -24,7 +24,13 @@ import { Modal } from "reactstrap";
 import Verify from "./VerifyDocument";
 // import { Link } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import { Visibility } from "@material-ui/icons";
+import { CheckCircleOutline, Visibility } from "@material-ui/icons";
+import { stamp } from "../images/2076-512.png";
+// import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import AssignmentTurnedInOutlinedIcon from "@material-ui/icons/AssignmentTurnedInOutlined";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import BrandingWatermarkOutlinedIcon from "@material-ui/icons/BrandingWatermarkOutlined";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -971,11 +977,13 @@ function Profile(props) {
                                     </Grid>
                                     <Grid
                                       item
-                                      xs={6}
-                                      style={{
-                                        textAlign: "center",
-                                        paddingRight: "18%",
-                                      }}
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
                                     >
                                       <a
                                         onClick={() => {
@@ -988,6 +996,38 @@ function Profile(props) {
                                           style={{ color: "black" }}
                                         />
                                       </a>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isStampingReq && (
+                                        <BrandingWatermarkOutlinedIcon
+                                          style={{ color: "#0088FC" }}
+                                        />
+                                      )}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isVerificationReq && (
+                                        <CheckCircleIcon
+                                          style={{ color: "#66BB6A" }}
+                                        />
+                                      )}
                                     </Grid>
                                   </Grid>
                                 </>
@@ -1440,11 +1480,13 @@ function Profile(props) {
                                       </Grid>
                                       <Grid
                                         item
-                                        xs={6}
-                                        style={{
-                                          textAlign: "center",
-                                          paddingRight: "18%",
-                                        }}
+                                        xs={2}
+                                        style={
+                                          {
+                                            // textAlign: "center",
+                                            // paddingRight: "18%",
+                                          }
+                                        }
                                       >
                                         <a
                                           onClick={() => {
@@ -1457,6 +1499,39 @@ function Profile(props) {
                                             style={{ color: "black" }}
                                           />
                                         </a>
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={2}
+                                        style={
+                                          {
+                                            // textAlign: "center",
+                                            // paddingRight: "18%",
+                                          }
+                                        }
+                                      >
+                                        {j.isStampingReq && (
+                                          <BrandingWatermarkOutlinedIcon
+                                            style={{ color: "#0088FC" }}
+                                          />
+                                        )}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={2}
+                                        style={
+                                          {
+                                            // textAlign: "center",
+                                            // paddingRight: "18%",
+                                          }
+                                        }
+                                      >
+                                        {j.isVerificationReq && (
+                                          <CheckCircleIcon
+                                            style={{ color: "#66BB6A" }}
+                                          />
+                                          // <AssignmentTurnedInOutlinedIcon />
+                                        )}
                                       </Grid>
                                     </Grid>
                                   </>
@@ -1646,14 +1721,7 @@ function Profile(props) {
                                     >
                                       {j.docKeyCaption}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={6}
-                                      style={{
-                                        textAlign: "center",
-                                        paddingRight: "18%",
-                                      }}
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
                                           setUrl(j.fileOneSignedUrl);
@@ -1665,6 +1733,38 @@ function Profile(props) {
                                           style={{ color: "black" }}
                                         />
                                       </a>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isStampingReq && (
+                                        <BrandingWatermarkOutlinedIcon
+                                          style={{ color: "#0088FC" }}
+                                        />
+                                      )}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isVerificationReq && (
+                                        <CheckCircleIcon
+                                          style={{ color: "#66BB6A" }}
+                                        />
+                                      )}
                                     </Grid>
                                   </Grid>
                                 </>
@@ -1839,14 +1939,7 @@ function Profile(props) {
                                     >
                                       {j.docKeyCaption}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={6}
-                                      style={{
-                                        textAlign: "center",
-                                        paddingRight: "18%",
-                                      }}
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
                                           setUrl(j.fileOneSignedUrl);
@@ -1858,6 +1951,38 @@ function Profile(props) {
                                           style={{ color: "black" }}
                                         />
                                       </a>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isStampingReq && (
+                                        <BrandingWatermarkOutlinedIcon
+                                          style={{ color: "#0088FC" }}
+                                        />
+                                      )}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      {j.isVerificationReq && (
+                                        <CheckCircleIcon
+                                          style={{ color: "#66BB6A" }}
+                                        />
+                                      )}
                                     </Grid>
                                   </Grid>
                                 </>
