@@ -80,12 +80,13 @@ function TableCard() {
     if (status === "") {
       setvjobs(tjobs);
     } else {
-      console.log(tjobs.filter((e) => e.applicationStatus == status));
+      // console.log(tjobs.filter((e) => e.applicationStatus == status));
       setvjobs(tjobs.filter((e) => e.applicationStatus == status));
     }
   };
 
   const [refresh, setrefresh] = useState(true);
+  const filteredStatus = []
   const status = [
     "OSVRejected",
     "SanctionRejected",
@@ -118,8 +119,8 @@ function TableCard() {
     <>
       <Card className='card-dashboard'>
         <CardBody>
-          <div className='d-flex align-items-center'>
-            <div>
+          <div className='align-items-center'>
+            {/* <div> */}
               <Row>
                 <Col md={10}>
                   <CardTitle>
@@ -141,6 +142,7 @@ function TableCard() {
                     role={undefined}
                     transition
                     disablePortal
+                    style={{zIndex:10000}}
                   >
                     {({ TransitionProps, placement }) => (
                       <Grow
@@ -187,7 +189,7 @@ function TableCard() {
               </Row>
 
               {/* <CardSubtitle>Click on them to join</CardSubtitle> */}
-            </div>
+            {/* </div> */}
           </div>
           <Table className='no-wrap v-middle card-dashboard' responsive>
             <thead>
@@ -229,7 +231,7 @@ function TableCard() {
                       <td>
                         <Row>
                           <Col md={2}>
-                            {product.applicationStatus === "PendingOSV" && (
+                            {product.applicationStatus === "PendingOSV" ? (
                               <Link to={`/${product.id}`}>
                                 <img
                                   // className='circular-image-small'
@@ -242,6 +244,19 @@ function TableCard() {
                                   alt='user'
                                 />
                               </Link>
+                            ):(
+                              
+                                <img
+                                  // className='circular-image-small'
+                                  src={product.profilePicUrl}
+                                  style={{
+                                    width: "4rem",
+                                    height: "4rem",
+                                    borderRadius: "2rem",
+                                  }}
+                                  alt='user'
+                                />
+                              
                             )}
                           </Col>
                           <Col md={8}>
