@@ -296,7 +296,12 @@ function Profile(props) {
         <br></br>
         <br></br>
 
-        <Button variant='contained' color='primary' type='submit'>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          onClick={handleClose1}
+        >
           Close
         </Button>
       </p>
