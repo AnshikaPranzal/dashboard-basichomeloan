@@ -21,16 +21,13 @@ import Divider from "@material-ui/core/Divider";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
-import { Modal } from "reactstrap";
+import Modal from "@material-ui/core/Modal";
 import Verify from "./VerifyDocument";
+// import Modal from "@material-ui/core/Modal";
+
 // import { Link } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { CheckCircleOutline, Visibility } from "@material-ui/icons";
-// import { stamp } from "../images/2076-512.png";
-// import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-import AssignmentTurnedInOutlinedIcon from "@material-ui/icons/AssignmentTurnedInOutlined";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import BrandingWatermarkOutlinedIcon from "@material-ui/icons/BrandingWatermarkOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +101,29 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 13,
     },
   },
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
 function Profile(props) {
   const [jobs, setjobs] = useState([]);
   const [jobs1, setjobs1] = useState([]);
@@ -114,9 +133,9 @@ function Profile(props) {
     setshow(false);
   };
   const setUrl = (url) => {
-    var obj = []
+    var obj = [];
     localStorage.setItem("recent", url);
-    localStorage.setItem("verification",JSON.stringify(obj))
+    localStorage.setItem("verification", JSON.stringify(obj));
     return true;
   };
   const [vjobs, setvjobs] = useState([
@@ -259,6 +278,31 @@ function Profile(props) {
   const handleExpandClick4 = () => {
     setExpanded4(!expanded4);
   };
+
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen1 = () => {
+    setOpen(true);
+  };
+
+  const handleClose1 = () => {
+    setOpen(false);
+  };
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <p id='simple-modal-description' style={{ textAlign: "center" }}>
+        <input type='text' />
+        <br></br>
+        <br></br>
+
+        <Button variant='contained' color='primary' type='submit'>
+          Close
+        </Button>
+      </p>
+      {/* <SimpleModal /> */}
+    </div>
+  );
 
   return (
     <div>
@@ -2072,12 +2116,13 @@ function Profile(props) {
               </CardContent>
             </Collapse>
           </Card>
-          <Row style={{marginTop:"2rem"}}>
+
+          <Row style={{ marginTop: "2rem" }}>
             <Col md={6}>
               <Button
                 className='login-otp'
                 style={{ background: "#0088FC", width: "100%" }}
-                onClick={()=>addItem(true)}
+                onClick={() => addItem(true)}
               >
                 Approve
               </Button>
@@ -2087,15 +2132,22 @@ function Profile(props) {
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
+                onClick={handleOpen1}
               >
                 Reject
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose1}
+                aria-labelledby='simple-modal-title'
+                aria-describedby='simple-modal-description'
+              >
+                {body}
+              </Modal>
             </Col>
           </Row>
         </Grid>
-
       </Grid>
-      
     </div>
   );
 }
