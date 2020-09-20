@@ -1008,9 +1008,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isStampingReq && (
-                                        <BrandingWatermarkOutlinedIcon
-                                          style={{ color: "#0088FC" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+                                            marginRight: "1rem",
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#0088FC",
+                                          }}
+                                        >
+                                          Stamping Required
+                                        </div>
                                       )}
                                     </Grid>
                                     <Grid
@@ -1024,9 +1033,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isVerificationReq && (
-                                        <CheckCircleIcon
-                                          style={{ color: "#66BB6A" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#66BB6A",
+                                          }}
+                                        >
+                                          Verfication Required
+                                        </div>
                                       )}
                                     </Grid>
                                   </Grid>
@@ -1480,7 +1498,7 @@ function Profile(props) {
                                       </Grid>
                                       <Grid
                                         item
-                                        xs={2}
+                                        xs={1}
                                         style={
                                           {
                                             // textAlign: "center",
@@ -1511,9 +1529,18 @@ function Profile(props) {
                                         }
                                       >
                                         {j.isStampingReq && (
-                                          <BrandingWatermarkOutlinedIcon
-                                            style={{ color: "#0088FC" }}
-                                          />
+                                          <div
+                                            style={{
+                                              // width: "20%"
+                                              marginRight: "1rem",
+                                              paddingLeft: "1rem",
+                                              fontFamily: "Roboto",
+                                              fontSize: 10,
+                                              color: "#0088FC",
+                                            }}
+                                          >
+                                            Stamping Required
+                                          </div>
                                         )}
                                       </Grid>
                                       <Grid
@@ -1527,10 +1554,18 @@ function Profile(props) {
                                         }
                                       >
                                         {j.isVerificationReq && (
-                                          <CheckCircleIcon
-                                            style={{ color: "#66BB6A" }}
-                                          />
-                                          // <AssignmentTurnedInOutlinedIcon />
+                                          <div
+                                            style={{
+                                              // width: "20%"
+
+                                              paddingLeft: "1rem",
+                                              fontFamily: "Roboto",
+                                              fontSize: 10,
+                                              color: "#66BB6A",
+                                            }}
+                                          >
+                                            Verfication Required
+                                          </div>
                                         )}
                                       </Grid>
                                     </Grid>
@@ -1745,9 +1780,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isStampingReq && (
-                                        <BrandingWatermarkOutlinedIcon
-                                          style={{ color: "#0088FC" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+                                            marginRight: "1rem",
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#0088FC",
+                                          }}
+                                        >
+                                          Stamping Required
+                                        </div>
                                       )}
                                     </Grid>
                                     <Grid
@@ -1761,9 +1805,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isVerificationReq && (
-                                        <CheckCircleIcon
-                                          style={{ color: "#66BB6A" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#66BB6A",
+                                          }}
+                                        >
+                                          Verfication Required
+                                        </div>
                                       )}
                                     </Grid>
                                   </Grid>
@@ -1963,9 +2016,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isStampingReq && (
-                                        <BrandingWatermarkOutlinedIcon
-                                          style={{ color: "#0088FC" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+                                            marginRight: "1rem",
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#0088FC",
+                                          }}
+                                        >
+                                          Stamping Required
+                                        </div>
                                       )}
                                     </Grid>
                                     <Grid
@@ -1979,9 +2041,18 @@ function Profile(props) {
                                       }
                                     >
                                       {j.isVerificationReq && (
-                                        <CheckCircleIcon
-                                          style={{ color: "#66BB6A" }}
-                                        />
+                                        <div
+                                          style={{
+                                            // width: "20%"
+
+                                            paddingLeft: "1rem",
+                                            fontFamily: "Roboto",
+                                            fontSize: 10,
+                                            color: "#66BB6A",
+                                          }}
+                                        >
+                                          Verfication Required
+                                        </div>
                                       )}
                                     </Grid>
                                   </Grid>
