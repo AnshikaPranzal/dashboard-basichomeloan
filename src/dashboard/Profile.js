@@ -20,12 +20,13 @@ import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import { Row, Col } from "reactstrap";
 import { Modal } from "reactstrap";
 import Verify from "./VerifyDocument";
 // import { Link } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { CheckCircleOutline, Visibility } from "@material-ui/icons";
-import { stamp } from "../images/2076-512.png";
+// import { stamp } from "../images/2076-512.png";
 // import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import AssignmentTurnedInOutlinedIcon from "@material-ui/icons/AssignmentTurnedInOutlined";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -113,7 +114,9 @@ function Profile(props) {
     setshow(false);
   };
   const setUrl = (url) => {
+    var obj = []
     localStorage.setItem("recent", url);
+    localStorage.setItem("verification",JSON.stringify(obj))
     return true;
   };
   const [vjobs, setvjobs] = useState([
@@ -2069,8 +2072,30 @@ function Profile(props) {
               </CardContent>
             </Collapse>
           </Card>
+          <Row style={{marginTop:"2rem"}}>
+            <Col md={6}>
+              <Button
+                className='login-otp'
+                style={{ background: "#0088FC", width: "100%" }}
+                onClick={()=>addItem(true)}
+              >
+                Approve
+              </Button>
+            </Col>
+            <Col md={6}>
+              <Button
+                className='login-otp'
+                style={{ background: "#ACACAC", width: "100%" }}
+                // onClick={addItem}
+              >
+                Reject
+              </Button>
+            </Col>
+          </Row>
         </Grid>
+
       </Grid>
+      
     </div>
   );
 }

@@ -57,7 +57,7 @@ export const getDocConfig = () => {
 };
 
 export const addItem = (id, next) => {
-  let user = {};
+  let user = [];
   if (typeof window !== undefined) {
     if (localStorage.getItem("user")) {
       user = JSON.parse(localStorage.getItem("user"));

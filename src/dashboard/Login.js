@@ -2,16 +2,16 @@ import React from 'react';
 import { Row, Col, Card, CardTitle,Input,Button } from 'reactstrap';
 import logo from '../images/Group 2455.svg'
 // import { Input } from '@material-ui/core';
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 
 const Login = ()=>{
 
-    const authorize = (user)=>{
-        Auth.setPreferredMFA(user, 'TOTP').then((data) => {
-            console.log(data);
-            // ...
-        }).catch(e => {console.log(e,"kk")});
-    }
+    // const authorize = (user)=>{
+    //     Auth.setPreferredMFA(user, 'TOTP').then((data) => {
+    //         console.log(data);
+    //         // ...
+    //     }).catch(e => {console.log(e,"kk")});
+    // }
     
     return(
         <React.Fragment>
@@ -25,7 +25,7 @@ const Login = ()=>{
                         {/* <Input type="number" className="login-input"></Input> */}
                         <Input type="number" placeholder="Enter Mobile No." className="login-input"></Input>
                         <Input type="number" placeholder="Enter OTP" className="login-otp"></Input>
-                        <Button onClick={()=>{authorize(8709230250)}} className="login-otp">Get OTP</Button>
+                        <Button className="login-otp">Get OTP</Button>
                     </Card>
                 </Col>
             </Row>
