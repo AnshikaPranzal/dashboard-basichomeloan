@@ -62,6 +62,7 @@ function TableCard() {
   };
 
   const loadAlljobs = () => {
+    console.log(localStorage.getItem("userToken"));
     GETALLLEADS().then((data) => {
       console.log(data.result);
       if (data)
@@ -86,7 +87,7 @@ function TableCard() {
   };
 
   const [refresh, setrefresh] = useState(true);
-  const filteredStatus = []
+  const filteredStatus = [];
   const status = [
     "OSVRejected",
     "SanctionRejected",
@@ -117,108 +118,108 @@ function TableCard() {
     // <Card elevation={3} className='pt-5 mb-6'>
     //   <div className='card-title px-6 mb-3'>top selling products</div>
     <>
-      <Card className='card-dashboard'>
+      <Card className="card-dashboard">
         <CardBody>
-          <div className='align-items-center'>
+          <div className="align-items-center">
             {/* <div> */}
-              <Row>
-                <Col md={10}>
-                  <CardTitle>
-                    <h4>My Leads</h4>
-                  </CardTitle>
-                </Col>
-                <Col md={2}>
-                  <Button
-                    ref={anchorRef}
-                    aria-controls={open ? "menu-list-grow" : undefined}
-                    aria-haspopup='true'
-                    onClick={handleToggle}
-                  >
-                    <FilterListIcon></FilterListIcon> Status
-                  </Button>
-                  <Popper
-                    open={open}
-                    anchorEl={anchorRef.current}
-                    role={undefined}
-                    transition
-                    disablePortal
-                    style={{zIndex:10000}}
-                  >
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
-                        style={{
-                          transformOrigin:
-                            placement === "bottom"
-                              ? "center top"
-                              : "center bottom",
-                        }}
-                      >
-                        <Paper>
-                          <ClickAwayListener onClickAway={handleClose}>
-                            <MenuList
-                              autoFocusItem={open}
-                              id='menu-list-grow'
-                              onKeyDown={handleListKeyDown}
+            <Row>
+              <Col md={10}>
+                <CardTitle>
+                  <h4>My Leads</h4>
+                </CardTitle>
+              </Col>
+              <Col md={2}>
+                <Button
+                  ref={anchorRef}
+                  aria-controls={open ? "menu-list-grow" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleToggle}
+                >
+                  <FilterListIcon></FilterListIcon> Status
+                </Button>
+                <Popper
+                  open={open}
+                  anchorEl={anchorRef.current}
+                  role={undefined}
+                  transition
+                  disablePortal
+                  style={{ zIndex: 10000 }}
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === "bottom"
+                            ? "center top"
+                            : "center bottom",
+                      }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                          <MenuList
+                            autoFocusItem={open}
+                            id="menu-list-grow"
+                            onKeyDown={handleListKeyDown}
+                          >
+                            <MenuItem
+                              onClick={(e) => {
+                                filter("");
+                                handleClose(e);
+                              }}
                             >
+                              All
+                            </MenuItem>
+                            {status.map((obj, k) => (
                               <MenuItem
                                 onClick={(e) => {
-                                  filter("");
+                                  filter(obj);
                                   handleClose(e);
                                 }}
                               >
-                                All
+                                {obj}
                               </MenuItem>
-                              {status.map((obj, k) => (
-                                <MenuItem
-                                  onClick={(e) => {
-                                    filter(obj);
-                                    handleClose(e);
-                                  }}
-                                >
-                                  {obj}
-                                </MenuItem>
-                              ))}
-                            </MenuList>
-                          </ClickAwayListener>
-                        </Paper>
-                      </Grow>
-                    )}
-                  </Popper>
-                </Col>
-              </Row>
+                            ))}
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </Col>
+            </Row>
 
-              {/* <CardSubtitle>Click on them to join</CardSubtitle> */}
+            {/* <CardSubtitle>Click on them to join</CardSubtitle> */}
             {/* </div> */}
           </div>
-          <Table className='no-wrap v-middle card-dashboard' responsive>
+          <Table className="no-wrap v-middle card-dashboard" responsive>
             <thead>
-              <tr className='border-0'>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+              <tr className="border-0">
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Name
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Basic App ID/<br></br>Bank App ID
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Bank Name
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Loan Type
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Amount
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Status Date
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Status
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Stage
                 </th>
-                <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                <th className="border-0" style={{ fontFamily: "Roboto" }}>
                   Verified
                 </th>
               </tr>
@@ -241,27 +242,25 @@ function TableCard() {
                                     height: "4rem",
                                     borderRadius: "2rem",
                                   }}
-                                  alt='user'
+                                  alt="user"
                                 />
                               </Link>
-                            ):(
-                              
-                                <img
-                                  // className='circular-image-small'
-                                  src={product.profilePicUrl}
-                                  style={{
-                                    width: "4rem",
-                                    height: "4rem",
-                                    borderRadius: "2rem",
-                                  }}
-                                  alt='user'
-                                />
-                              
+                            ) : (
+                              <img
+                                // className='circular-image-small'
+                                src={product.profilePicUrl}
+                                style={{
+                                  width: "4rem",
+                                  height: "4rem",
+                                  borderRadius: "2rem",
+                                }}
+                                alt="user"
+                              />
                             )}
                           </Col>
                           <Col md={8}>
                             <span
-                              className='name'
+                              className="name"
                               style={{ fontFamily: "Roboto" }}
                             >
                               <div
@@ -353,8 +352,8 @@ function TableCard() {
                       </td>
                       <td>
                         <i
-                          className='fa fa-check text-success'
-                          aria-hidden='true'
+                          className="fa fa-check text-success"
+                          aria-hidden="true"
                         ></i>
                       </td>
                     </tr>
