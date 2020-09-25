@@ -15,7 +15,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { GETAPPLICATION } from "../helper/index";
+import { GETAPPLICATION, approveOSV } from "../helper/index";
 import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
 import { Link } from "react-router-dom";
@@ -147,7 +147,50 @@ function Profile(props) {
   // eslint-disable-next-line no-unused-vars
   const [errorF, seterrorF] = useState(false);
   const [update, setupdate] = useState(false);
-
+  // const [application, setApplication] = useState({
+  //   status: "",
+  //   reason:"",
+  //   documents: JSON.parse(localStorage.getItem(`darray${props.match.params.id}`))
+  // })
+  const [reasons, setReasons] = useState("")
+  const handleChange = (name) => (event) => {
+    setReasons(event.target.value)
+  }
+  // const [r,setR] = useState(Boolean)
+  // const respond = () => {
+  //       if(reason !== "" && status === "OSVRejected"){
+  //         OSVcheck(props.match.params.id)
+  //       }else if(reason === "" && status === "OSVRejected"){
+  //         return alert("Fill in reason for Rejecting!")
+  //       }else{
+  //         OSVcheck(props.match.params.id)
+  //       }
+  // }
+  const OSVcheck = (id,application) => {
+    let docs=""
+    approveOSV(id,application)
+    .then(data => {
+      console.log(data)
+    if(data){
+      if(application.status === "OSVVerified"){
+      if(data.result !== undefined){
+        if(data.result.pendingDocuments.length !== 0){
+          data.result.pendingDocuments.map((o,i) => {
+            docs = `${docs}, ${o.docKeyCaption}`
+          })
+          return alert(`${docs}, these files are yet to be verified`)
+        }
+      }}else{
+        if(data.message === "Data Updated Successfully"){
+          return alert("Application Rejected")
+        }
+      }
+      if(data.isError){
+        return alert(data.responseException.exceptionMessage)
+      }
+    }})
+    .catch(err => console.log(err))
+  }
   const loadAlljobs = () => {
     GETALLLEADS().then((data) => {
       // console.log(data);
@@ -184,7 +227,7 @@ function Profile(props) {
         }
     });
   };
-  console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
+  // console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
@@ -250,7 +293,7 @@ function Profile(props) {
         }
     });
   };
-  console.log("hi", vjobq);
+  // console.log("hi", vjobq);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -287,19 +330,26 @@ function Profile(props) {
   };
 
   const handleClose1 = () => {
+    // setApplication({
+    //   ...application,
+    //   status: "OSVRejected",
+    // })
+    // respond()
+    OSVcheck(props.match.params.id,{status:"OSVRejected",reason: reasons, documents: JSON.parse(localStorage.getItem(`darray${props.match.params.id}`)) })
     setOpen(false);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <p id='simple-modal-description' style={{ textAlign: "center" }}>
-        <input type='text' />
+      <p id="simple-modal-description" style={{ textAlign: "center" }}>
+        <input type="text" 
+        onChange={handleChange("reason")}/>
         <br></br>
         <br></br>
 
         <Button
-          variant='contained'
-          color='primary'
-          type='submit'
+          variant="contained"
+          color="primary"
+          type="submit"
           onClick={handleClose1}
         >
           Close
@@ -313,7 +363,7 @@ function Profile(props) {
     <div>
       <AppBar style={{ backgroundColor: "white" }}>
         <Toolbar>
-          <Typography variant='h6' style={{ color: "black" }}>
+          <Typography variant="h6" style={{ color: "black" }}>
             Basic HomeLoan
           </Typography>
         </Toolbar>
@@ -361,7 +411,7 @@ function Profile(props) {
                                     height: "4rem",
                                     borderRadius: "2rem",
                                   }}
-                                  alt='user'
+                                  alt="user"
                                 />
                               )}
                             </div>
@@ -597,12 +647,12 @@ function Profile(props) {
                 })}
                 onClick={handleExpandClick}
                 aria-expanded={expanded}
-                aria-label='show more'
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={expanded} timeout='auto' unmountOnExit>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid
@@ -787,12 +837,12 @@ function Profile(props) {
                 })}
                 onClick={handleExpandClick3}
                 aria-expanded={expanded3}
-                aria-label='show more'
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={expanded3} timeout='auto' unmountOnExit>
+            <Collapse in={expanded3} timeout="auto" unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid
@@ -943,11 +993,11 @@ function Profile(props) {
 
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {property.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1041,8 +1091,8 @@ function Profile(props) {
                                         onClick={() => {
                                           setUrl(j.fileOneSignedUrl);
                                         }}
-                                        href={`/verify/${j.id}`}
-                                        target='_blank'
+                                        href={`/verify/${props.match.params.id}/${j.id}`}
+                                        target="_blank"
                                       >
                                         <Visibility
                                           style={{ color: "black" }}
@@ -1132,12 +1182,12 @@ function Profile(props) {
                 })}
                 onClick={handleExpandClick2}
                 aria-expanded={expanded2}
-                aria-label='show more'
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={expanded2} timeout='auto' unmountOnExit>
+            <Collapse in={expanded2} timeout="auto" unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid
@@ -1463,11 +1513,11 @@ function Profile(props) {
                   Document:
                   <Grid item xs={12}>
                     {vjobq.documents.map((j, k) => {
-                      console.log("jiik", j.docConfigId);
+                      // console.log("jiik", j.docConfigId);
                       return (
                         <>
                           {borrower.map((n, m) => {
-                            console.log(n);
+                            // console.log(n);
                             return (
                               <>
                                 {n.id === j.docConfigId && (
@@ -1562,8 +1612,8 @@ function Profile(props) {
                                           onClick={() => {
                                             setUrl(j.fileOneSignedUrl);
                                           }}
-                                          href={`/verify/${j.id}`}
-                                          target='_blank'
+                                          href={`/verify/${props.match.params.id}/${j.id}`}
+                                          target="_blank"
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -1652,12 +1702,12 @@ function Profile(props) {
                 })}
                 onClick={handleExpandClick1}
                 aria-expanded={expanded1}
-                aria-label='show more'
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={expanded1} timeout='auto' unmountOnExit>
+            <Collapse in={expanded1} timeout="auto" unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid
@@ -1724,11 +1774,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {bank.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1813,8 +1863,8 @@ function Profile(props) {
                                         onClick={() => {
                                           setUrl(j.fileOneSignedUrl);
                                         }}
-                                        href={`/verify/${j.id}`}
-                                        target='_blank'
+                                        href={`/verify/${props.match.params.id}/${j.id}`}
+                                        target="_blank"
                                       >
                                         <Visibility
                                           style={{ color: "black" }}
@@ -1903,12 +1953,12 @@ function Profile(props) {
                 })}
                 onClick={handleExpandClick4}
                 aria-expanded={expanded4}
-                aria-label='show more'
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={expanded4} timeout='auto' unmountOnExit>
+            <Collapse in={expanded4} timeout="auto" unmountOnExit>
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid
@@ -1959,11 +2009,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {osv.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2049,8 +2099,8 @@ function Profile(props) {
                                         onClick={() => {
                                           setUrl(j.fileOneSignedUrl);
                                         }}
-                                        href={`/verify/${j.id}`}
-                                        target='_blank'
+                                        href={`/verify/${props.match.params.id}/${j.id}`}
+                                        target="_blank"
                                       >
                                         <Visibility
                                           style={{ color: "black" }}
@@ -2125,16 +2175,19 @@ function Profile(props) {
           <Row style={{ marginTop: "2rem" }}>
             <Col md={6}>
               <Button
-                className='login-otp'
+                className="login-otp"
                 style={{ background: "#0088FC", width: "100%" }}
-                onClick={() => addItem(true)}
+                onClick={() => {
+                  OSVcheck(props.match.params.id,{status:"OSVVerified",reason: reasons, documents: JSON.parse(localStorage.getItem(`darray${props.match.params.id}`)) })
+                  // respond()
+                }}
               >
                 Approve
               </Button>
             </Col>
             <Col md={6}>
               <Button
-                className='login-otp'
+                className="login-otp"
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
                 onClick={handleOpen1}
@@ -2144,8 +2197,8 @@ function Profile(props) {
               <Modal
                 open={open}
                 onClose={handleClose1}
-                aria-labelledby='simple-modal-title'
-                aria-describedby='simple-modal-description'
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
               >
                 {body}
               </Modal>

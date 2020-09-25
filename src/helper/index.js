@@ -56,6 +56,27 @@ export const getDocConfig = () => {
     });
 };
 
+export const approveOSV = (applicationId, application) => {
+  console.log(application)
+  return fetch(
+    `http://dev-applicationservice.basichomeloan.com/api/v1/Application/Activity/${applicationId}/OSV`,
+    {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(application)
+    }
+  )
+    .then((response) => response.json())
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
 export const addItem = (id, next) => {
   let user = [];
   if (typeof window !== undefined) {
