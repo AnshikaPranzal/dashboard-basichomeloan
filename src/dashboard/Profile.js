@@ -360,7 +360,7 @@ function Profile(props) {
       alert("Approve all");
     } else {
       approveOSV(id, {
-        status: `${name}`,
+        "\"status\"": name
       }).then((data) => {
         console.log(data);
         if (data.error) {
@@ -2403,7 +2403,7 @@ function Profile(props) {
                 // onClick={() => addItem(true)}
                 onClick={(e) => {
                   console.log("hioo");
-                  approve(e, id, "Approved");
+                  approve(e, id, "OSVApproved");
                 }}
               >
                 Approve
