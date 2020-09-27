@@ -23,6 +23,7 @@ import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
 import Verify from "./VerifyDocument";
+import verified from "../images/Group 2125.svg";
 // import Modal from "@material-ui/core/Modal";
 
 // import { Link } from "react-router-dom";
@@ -1091,7 +1092,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -1188,6 +1189,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -1666,7 +1676,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -1788,6 +1798,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -1966,7 +1985,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -2029,6 +2048,7 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+
                                     <Grid
                                       item
                                       xs={2}
@@ -2054,6 +2074,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -2217,7 +2246,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -2306,6 +2335,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
