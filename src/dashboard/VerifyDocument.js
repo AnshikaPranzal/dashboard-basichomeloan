@@ -44,7 +44,7 @@ const Verify = (props) => {
 
   //   let ID = props.match.params;
   console.log(id, "idddd");
-  console.log(localStorage.getItem("recent2"),"wgyugyv")
+  console.log(localStorage.getItem("recent2"), "wgyugyv");
   const approve = (event, id, ID, name) => {
     console.log("sscccs", id);
     event.preventDefault();
@@ -62,12 +62,16 @@ const Verify = (props) => {
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
-
       <Row>
-        
-        <Col md={6}><iframe src={localStorage.getItem("recent")} width='100%'></iframe></Col>
-        
-        {localStorage.getItem("recent2") !== "undefined" && <Col md={6}><iframe src={localStorage.getItem("recent2")} width='100%'></iframe></Col>}
+        <Col md={6}>
+          <iframe src={localStorage.getItem("recent")} width='100%'></iframe>
+        </Col>
+
+        {localStorage.getItem("recent2") !== "undefined" && (
+          <Col md={6}>
+            <iframe src={localStorage.getItem("recent2")} width='100%'></iframe>
+          </Col>
+        )}
       </Row>
       <Row>
         <Col md={6}>
@@ -90,10 +94,6 @@ const Verify = (props) => {
           <Button
             className='login-otp'
             style={{ background: "#ACACAC", width: "100%" }}
-            // onClick={() => {
-            //   setdocs("hi");
-            //   addItem({ documentId: id, verification: "Rejected" });
-            // }}
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Rejected");
