@@ -6,6 +6,7 @@ import "./style.css";
 import Login from "./dashboard/Login";
 import Verify from "./dashboard/VerifyDocument";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
   return (
     <div>
@@ -14,6 +15,8 @@ function App() {
           <Route exact path={"/dashboard"} component={Dashboard} />
           <Route exact path={"/:id"} component={Review} />
           <Route exact path={"/"} component={Login} />
+          {/* <Route exact path={"/verify/:id"} component={Verify} /> */}
+
           <Route exact path={"/verify/:id/:url"} component={Verify} />
         </Switch>
       </Router>
