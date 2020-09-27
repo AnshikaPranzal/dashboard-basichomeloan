@@ -316,15 +316,6 @@ function Profile(props) {
         <br></br>
 
         <Button
-          variant='contained'
-          color='primary'
-          type='submit'
-          onClick={handleClose1}
-        >
-          Close
-        </Button>
-        <Button
-          disabled1={disabled1}
           style={{ marginLeft: "1rem" }}
           variant='contained'
           color='primary'
@@ -332,7 +323,6 @@ function Profile(props) {
           onClick={(e) => {
             approve1(e, id, "Rejected", Name);
             handleClose1();
-            handleChange2();
           }}
         >
           Submit
@@ -2390,12 +2380,15 @@ function Profile(props) {
             <Col md={6}>
               <Button
                 disabled1={disabled1}
+                disabled={disabled}
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
                 onClick={(e) => {
                   handleOpen1();
+
                   handleChange2();
+                  handleChange1();
                 }}
               >
                 Reject
