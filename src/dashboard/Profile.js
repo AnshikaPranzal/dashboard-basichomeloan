@@ -309,19 +309,28 @@ function Profile(props) {
   );
 
   const id = props.match.params.id;
-
-  const approve = (event, id, name) => {
+    const check = ()=>{
+      for(var i=0;i<vjobq.documents.length;i++){
+        if(vjobq.documents[0].verified !== "Approved"){
+          return false;
+        }
+      }
+    }
+  const approve = async (event, id, name) => {
     console.log("sscccs", id);
     event.preventDefault();
-
-    approveOSV(id, {
+    const c = await Promise.resolve(check())
+    if(c === false){
+      alert("Approve all")
+    }
+    else {approveOSV(id, {
       status: `${name}`,
     }).then((data) => {
       console.log(data);
       if (data.error) {
         console.log(data.error);
       }
-    });
+    })};
   };
 
   return (
