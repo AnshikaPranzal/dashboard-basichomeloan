@@ -62,12 +62,12 @@ const Verify = (props) => {
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
-{localStorage.getItem("recent2") === undefined ? <span>k</span> : <span>l</span>}
+{localStorage.getItem("recent2") === "undefined" ? <span>k</span> : <span>l</span>}
       <Row>
         
         <Col md={6}><iframe src={localStorage.getItem("recent")} width='100%'></iframe></Col>
         
-        <Col md={6}><iframe src={localStorage.getItem("recent2")} width='100%'></iframe></Col>
+        {localStorage.getItem("recent2") !== "undefined" && <Col md={6}><iframe src={localStorage.getItem("recent2")} width='100%'></iframe></Col>}
       </Row>
       <Row>
         <Col md={6}>
