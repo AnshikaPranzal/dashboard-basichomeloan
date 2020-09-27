@@ -58,7 +58,7 @@ export const getDocConfig = () => {
 };
 
 export const approveOSV = (applicationId, application) => {
-  console.log(application,"app");
+  console.log(application);
   return fetch(
     `http://dev-applicationservice.basichomeloan.com/api/v1/Application/Activity/${applicationId}/OSV`,
     {
