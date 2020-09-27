@@ -59,10 +59,10 @@ const Verify = (props) => {
     });
   };
 
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const handleChange = () => {
-    setDisabled(false);
+    setDisabled(true);
   };
 
   //   console.log("ddd", vjob);
@@ -85,6 +85,7 @@ const Verify = (props) => {
       <Row>
         <Col md={6}>
           <Button
+            disabled={disabled}
             className='login-otp'
             style={{ background: "#0088FC", width: "100%" }}
             // onClick={() => {
@@ -94,6 +95,7 @@ const Verify = (props) => {
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Approved");
+              handleChange();
             }}
           >
             Approve
@@ -101,6 +103,7 @@ const Verify = (props) => {
         </Col>
         <Col md={6}>
           <Button
+            disabled={disabled}
             className='login-otp'
             style={{ background: "#ACACAC", width: "100%" }}
             onClick={(e) => {

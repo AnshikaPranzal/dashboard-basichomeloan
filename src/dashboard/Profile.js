@@ -295,9 +295,13 @@ function Profile(props) {
   // console.log("textft", text);
 
   const [disabled, setDisabled] = useState(false);
+  const [disabled1, setDisabled1] = useState(false);
 
   const handleChange1 = () => {
     setDisabled(true);
+  };
+  const handleChange2 = () => {
+    setDisabled1(true);
   };
 
   const body = (
@@ -320,6 +324,7 @@ function Profile(props) {
           Close
         </Button>
         <Button
+          disabled1={disabled1}
           style={{ marginLeft: "1rem" }}
           variant='contained'
           color='primary'
@@ -327,6 +332,7 @@ function Profile(props) {
           onClick={(e) => {
             approve1(e, id, "Rejected", Name);
             handleClose1();
+            handleChange2();
           }}
         >
           Submit
@@ -2383,10 +2389,14 @@ function Profile(props) {
             </Col>
             <Col md={6}>
               <Button
+                disabled1={disabled1}
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
-                onClick={handleOpen1}
+                onClick={(e) => {
+                  handleOpen1();
+                  handleChange2();
+                }}
               >
                 Reject
               </Button>
