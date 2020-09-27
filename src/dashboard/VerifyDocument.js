@@ -59,9 +59,18 @@ const Verify = (props) => {
     });
   };
 
+  const [disabled, setDisabled] = useState(false);
+
+  const handleChange = () => {
+    setDisabled(true);
+  };
+
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
+      <Row style={{ fontSize: 19, marginLeft: "5rem" }}>
+        {props.match.params.name}
+      </Row>
       <Row>
         <Col md={6}>
           <iframe src={localStorage.getItem("recent")} width='100%'></iframe>
@@ -76,6 +85,7 @@ const Verify = (props) => {
       <Row>
         <Col md={6}>
           <Button
+            disabled={disabled}
             className='login-otp'
             style={{ background: "#0088FC", width: "100%" }}
             // onClick={() => {
@@ -85,6 +95,7 @@ const Verify = (props) => {
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Approved");
+              handleChange();
             }}
           >
             Approve
@@ -92,11 +103,13 @@ const Verify = (props) => {
         </Col>
         <Col md={6}>
           <Button
+            disabled={disabled}
             className='login-otp'
             style={{ background: "#ACACAC", width: "100%" }}
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Rejected");
+              handleChange();
             }}
           >
             Reject

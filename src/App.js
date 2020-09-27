@@ -17,7 +17,7 @@ function App() {
           <Route exact path={"/"} component={Login} />
           {/* <Route exact path={"/verify/:id"} component={Verify} /> */}
 
-          <Route exact path={"/verify/:id/:url"} component={Verify} />
+          <Route exact path={"/verify/:id/:url/:name"} component={Verify} />
         </Switch>
       </Router>
     </div>

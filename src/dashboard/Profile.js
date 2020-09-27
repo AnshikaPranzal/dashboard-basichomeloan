@@ -23,6 +23,7 @@ import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
 import Verify from "./VerifyDocument";
+import verified from "../images/Group 2125.svg";
 // import Modal from "@material-ui/core/Modal";
 
 // import { Link } from "react-router-dom";
@@ -142,7 +143,6 @@ function Profile(props) {
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
-      // primaryBorrower: [],
     },
   ]);
   // eslint-disable-next-line no-unused-vars
@@ -299,6 +299,16 @@ function Profile(props) {
 
   // console.log("textft", text);
 
+  const [disabled, setDisabled] = useState(false);
+  const [disabled1, setDisabled1] = useState(false);
+
+  const handleChange1 = () => {
+    setDisabled(true);
+  };
+  const handleChange2 = () => {
+    setDisabled1(true);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id='simple-modal-description' style={{ textAlign: "center" }}>
@@ -311,14 +321,7 @@ function Profile(props) {
         <br></br>
 
         <Button
-          variant='contained'
-          color='primary'
-          type='submit'
-          onClick={handleClose1}
-        >
-          Close
-        </Button>
-        <Button
+          style={{ marginLeft: "1rem" }}
           variant='contained'
           color='primary'
           type='submit'
@@ -1096,7 +1099,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -1122,7 +1125,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -1193,6 +1196,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -1671,7 +1683,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -1697,7 +1709,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -1793,6 +1805,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -1971,7 +1992,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -1988,7 +2009,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -2034,6 +2055,7 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+
                                     <Grid
                                       item
                                       xs={2}
@@ -2059,6 +2081,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -2185,7 +2216,7 @@ function Profile(props) {
                                       }}
                                     >
                                       {n.keyCaptionTwoRequired && (
-                                        <span>*</span>
+                                        <span style={{ color: "red" }}>*</span>
                                       )}
                                       {n.keyCaptionTwo}
                                     </Grid>
@@ -2222,7 +2253,7 @@ function Profile(props) {
                                   >
                                     <Grid
                                       item
-                                      xs={6}
+                                      xs={4}
                                       style={{
                                         color: "#ACACAC",
                                         opacity: 1.5,
@@ -2240,7 +2271,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -2311,6 +2342,15 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
+                                    {j.verified === "Approved" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{ paddingLeft: "1rem" }}
+                                      >
+                                        <img src={verified}></img>
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -2332,9 +2372,11 @@ function Profile(props) {
                 className='login-otp'
                 style={{ background: "#0088FC", width: "100%" }}
                 // onClick={() => addItem(true)}
+                disabled={disabled}
                 onClick={(e) => {
                   console.log("hioo");
                   approve(e, id, "OSVApproved");
+                  handleChange1();
                 }}
               >
                 Approve
@@ -2342,10 +2384,17 @@ function Profile(props) {
             </Col>
             <Col md={6}>
               <Button
+                disabled1={disabled1}
+                disabled={disabled}
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
-                onClick={handleOpen1}
+                onClick={(e) => {
+                  handleOpen1();
+
+                  handleChange2();
+                  handleChange1();
+                }}
               >
                 Reject
               </Button>
