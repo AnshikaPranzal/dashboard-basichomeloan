@@ -313,6 +313,7 @@ function Profile(props) {
   const approve = (event, id, name) => {
     console.log("sscccs", id);
     event.preventDefault();
+
     approveOSV(id, {
       status: `${name}`,
     }).then((data) => {
@@ -332,10 +333,13 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+
+      {vjobq.documents.map((j, k) => {
+        return j.verified === "Approved";
+      }) && console.log("ssss")}
       {/* {vjobp.map((j, k) => {
         console.log("jiik", j.documents);
       })} */}
-
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
