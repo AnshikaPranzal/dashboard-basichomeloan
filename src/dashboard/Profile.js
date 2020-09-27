@@ -289,10 +289,28 @@ function Profile(props) {
   const handleClose1 = () => {
     setOpen(false);
   };
+
+  const [title, settitle] = useState({
+    title: "",
+  });
+
+  const handleChange = (name) => (event) => {
+    settitle({
+      [name]: event.target.value,
+    });
+    console.log("nameme", name);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id='simple-modal-description' style={{ textAlign: "center" }}>
-        <input type='text' />
+        <input
+          type='text'
+          name={title}
+          id={title}
+          value={title}
+          onChange={handleChange("title")}
+        />
         <br></br>
         <br></br>
 
@@ -304,33 +322,61 @@ function Profile(props) {
         >
           Close
         </Button>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          onClick={(e) => {
+            console.log("hioo");
+            console.log("oooo");
+            approve1(e, id, "Rejected");
+          }}
+        >
+          Submit
+        </Button>
       </p>
     </div>
   );
 
   const id = props.match.params.id;
-    const check = ()=>{
-      for(var i=0;i<vjobq.documents.length;i++){
-        if(vjobq.documents[0].verified !== "Approved"){
-          return false;
-        }
+  const check = () => {
+    for (var i = 0; i < vjobq.documents.length; i++) {
+      if (vjobq.documents[0].verified !== "Approved") {
+        return false;
       }
     }
-  const approve = async (event, id, name) => {
-    console.log("sscccs", id);
+  };
+
+  const approve1 = (event, id, name, text) => {
+    console.log("texttt", `${text}`);
     event.preventDefault();
-    const c = await Promise.resolve(check())
-    if(c === false){
-      alert("Approve all")
-    }
-    else {approveOSV(id, {
+    approveOSV(id, {
       status: `${name}`,
+      reason: `${text}`,
     }).then((data) => {
       console.log(data);
       if (data.error) {
         console.log(data.error);
       }
-    })};
+    });
+  };
+
+  const approve = async (event, id, name) => {
+    console.log("sscccs", id);
+    event.preventDefault();
+    const c = await Promise.resolve(check());
+    if (c === false) {
+      alert("Approve all");
+    } else {
+      approveOSV(id, {
+        status: `${name}`,
+      }).then((data) => {
+        console.log(data);
+        if (data.error) {
+          console.log(data.error);
+        }
+      });
+    }
   };
 
   return (
@@ -1609,6 +1655,7 @@ function Profile(props) {
                                       </Grid>
                                       <Grid
                                         item
+                                        xs={1}
                                         style={
                                           {
                                             // textAlign: "center",
@@ -1627,12 +1674,13 @@ function Profile(props) {
                                               color: "#0088FC",
                                             }}
                                           >
-                                            Stamping Required
+                                            Stamping<span>*</span>
                                           </div>
                                         )}
                                       </Grid>
                                       <Grid
                                         item
+                                        xs={1}
                                         style={
                                           {
                                             // textAlign: "center",
@@ -1651,7 +1699,7 @@ function Profile(props) {
                                               color: "#66BB6A",
                                             }}
                                           >
-                                            Verfication Required
+                                            Verfication<span>*</span>
                                           </div>
                                         )}
                                       </Grid>
@@ -2363,10 +2411,6 @@ function Profile(props) {
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
                 onClick={handleOpen1}
-                onClick={(e) => {
-                  console.log("hioo");
-                  approve(e, id, "Rejected");
-                }}
               >
                 Reject
               </Button>
