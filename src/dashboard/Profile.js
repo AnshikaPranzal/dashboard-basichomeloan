@@ -336,7 +336,7 @@ function Profile(props) {
   const id = props.match.params.id;
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
-      if (borrower.documents && borrower.documents[0].verified !== "Approved") {
+      if (vjobs1.documents[0].verified !== "Approved") {
         return false;
       }
     }
