@@ -132,9 +132,10 @@ function Profile(props) {
   const handleClose = () => {
     setshow(false);
   };
-  const setUrl = (url) => {
+  const setUrl = (url1,url2) => {
     var obj = [];
-    localStorage.setItem("recent", url);
+    localStorage.setItem("recent", url1);
+    localStorage.setItem("recent2", url2);
     localStorage.setItem("verification", JSON.stringify(obj));
     return true;
   };
@@ -331,6 +332,19 @@ function Profile(props) {
         console.log(data.error);
       }
     })};
+  };
+
+  const reject = (event, id, name) => {
+    console.log("sscccs", id);
+    event.preventDefault();
+    approveOSV(id, {
+      status: `${name}`,
+    }).then((data) => {
+      console.log(data);
+      if (data.error) {
+        console.log(data.error);
+      }
+    });
   };
 
   return (
@@ -1066,7 +1080,7 @@ function Profile(props) {
                                     >
                                       <a
                                         onClick={() => {
-                                          setUrl(j.fileOneSignedUrl);
+                                          setUrl(j.fileOneSignedUrl,j.fileTwoSignedUrl);
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}`}
                                         target='_blank'
@@ -1591,7 +1605,7 @@ function Profile(props) {
                                       <Grid item xs={1}>
                                         <a
                                           onClick={() => {
-                                            setUrl(j.fileOneSignedUrl);
+                                            setUrl(j.fileOneSignedUrl,j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
                                           target='_blank'
@@ -1855,7 +1869,7 @@ function Profile(props) {
                                     <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
-                                          setUrl(j.fileOneSignedUrl);
+                                          setUrl(j.fileOneSignedUrl,j.fileTwoSignedUrl);
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}`}
                                         target='_blank'
@@ -2104,7 +2118,7 @@ function Profile(props) {
                                     <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
-                                          setUrl(j.fileOneSignedUrl);
+                                          setUrl(j.fileOneSignedUrl,j.fileTwoSignedUrl);
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}`}
                                         target='_blank'
