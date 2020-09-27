@@ -290,10 +290,18 @@ function Profile(props) {
   const handleClose1 = () => {
     setOpen(false);
   };
+  const [Name, setName] = useState("");
+
+  // console.log("textft", text);
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id='simple-modal-description' style={{ textAlign: "center" }}>
-        <input type='text' roe />
+        <input
+          type='text'
+          name='title'
+          onChange={(e) => setName(e.target.value)}
+        />
         <br></br>
         <br></br>
 
@@ -305,33 +313,61 @@ function Profile(props) {
         >
           Close
         </Button>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          onClick={(e) => {
+            console.log("hioo");
+            console.log("oooo");
+            approve1(e, id, "Rejected", Name);
+          }}
+        >
+          Submit
+        </Button>
       </p>
     </div>
   );
 
   const id = props.match.params.id;
-    const check = ()=>{
-      for(var i=0;i<vjobq.documents.length;i++){
-        if(vjobq.documents[0].verified !== "Approved"){
-          return false;
-        }
+  const check = () => {
+    for (var i = 0; i < vjobq.documents.length; i++) {
+      if (vjobq.documents[0].verified !== "Approved") {
+        return false;
       }
     }
-  const approve = async (event, id, name) => {
-    console.log("sscccs", id);
+  };
+
+  const approve1 = (event, id, name, text) => {
+    console.log("texttt", `${text}`);
     event.preventDefault();
-    const c = await Promise.resolve(check())
-    if(c === false){
-      alert("Approve all")
-    }
-    else {approveOSV(id, {
+    approveOSV(id, {
       status: `${name}`,
+      reason: `${text}`,
     }).then((data) => {
       console.log(data);
       if (data.error) {
         console.log(data.error);
       }
-    })};
+    });
+  };
+
+  const approve = async (event, id, name) => {
+    console.log("sscccs", id);
+    event.preventDefault();
+    const c = await Promise.resolve(check());
+    if (c === false) {
+      alert("Approve all");
+    } else {
+      approveOSV(id, {
+        status: `${name}`,
+      }).then((data) => {
+        console.log(data);
+        if (data.error) {
+          console.log(data.error);
+        }
+      });
+    }
   };
 
   const reject = (event, id, name) => {
@@ -357,9 +393,6 @@ function Profile(props) {
         </Toolbar>
       </AppBar>
 
-      {vjobq.documents.map((j, k) => {
-        return j.verified === "Approved";
-      }) && console.log("ssss")}
       {/* {vjobp.map((j, k) => {
         console.log("jiik", j.documents);
       })} */}
@@ -1529,12 +1562,13 @@ function Profile(props) {
                                     <Grid
                                       container
                                       style={{
-                                        marginLeft: "2.8rem",
-                                        marginTop: "1rem",
+                                        // marginLeft: "2.8rem",
+                                        marginTop: "0.4rem",
                                       }}
                                     >
                                       <Grid
                                         item
+                                        xs={4}
                                         style={{
                                           color: "#ACACAC",
                                           opacity: 1.5,
@@ -1546,8 +1580,30 @@ function Profile(props) {
                                         )}
                                         {n.keyCaptionOne}
                                       </Grid>
+
                                       <Grid
                                         item
+                                        xs={3}
+                                        style={{
+                                          textAlign: "left",
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyOneValue}
+                                      </Grid>
+                                    </Grid>
+                                    <Grid
+                                      container
+                                      style={{
+                                        // marginLeft: "2.8rem",
+                                        marginTop: "1rem",
+                                      }}
+                                    >
+                                      <Grid
+                                        item
+                                        xs={4}
                                         style={{
                                           color: "#ACACAC",
                                           opacity: 1.5,
@@ -1559,8 +1615,109 @@ function Profile(props) {
                                         )}
                                         {n.keyCaptionTwo}
                                       </Grid>
+
                                       <Grid
                                         item
+                                        xs={3}
+                                        style={{
+                                          textAlign: "left",
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyTwoValue}
+                                      </Grid>
+                                      <Grid item xs={1}>
+                                        {j.fileOneSignedUrl && (
+                                          <a
+                                            onClick={() => {
+                                              setUrl(j.fileOneSignedUrl);
+                                            }}
+                                            href={`/verify/${vjob.id}/${j.id}`}
+                                            target='_blank'
+                                          >
+                                            <Visibility
+                                              style={{ color: "black" }}
+                                            />
+                                          </a>
+                                        )}
+
+                                        {j.fileTwoSignedUrl && (
+                                          <a
+                                            onClick={() => {
+                                              setUrl(j.fileTwoSignedUrl);
+                                            }}
+                                            href={`/verify/${vjob.id}/${j.id}`}
+                                            target='_blank'
+                                          >
+                                            <Visibility
+                                              style={{ color: "black" }}
+                                            />
+                                          </a>
+                                        )}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={
+                                          {
+                                            // textAlign: "center",
+                                            // paddingRight: "18%",
+                                          }
+                                        }
+                                      >
+                                        {j.isStampingReq && (
+                                          <div
+                                            style={{
+                                              // width: "20%"
+                                              // marginRight: "1rem",
+                                              paddingRight: "1rem",
+                                              fontFamily: "Roboto",
+                                              fontSize: 10,
+                                              color: "#0088FC",
+                                            }}
+                                          >
+                                            Stamping<span>*</span>
+                                          </div>
+                                        )}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={
+                                          {
+                                            // textAlign: "center",
+                                            // paddingRight: "18%",
+                                          }
+                                        }
+                                      >
+                                        {j.isVerificationReq && (
+                                          <div
+                                            style={{
+                                              // width: "20%"
+
+                                              paddingLeft: "1rem",
+                                              fontFamily: "Roboto",
+                                              fontSize: 10,
+                                              color: "#66BB6A",
+                                            }}
+                                          >
+                                            Verfication<span>*</span>
+                                          </div>
+                                        )}
+                                      </Grid>
+                                    </Grid>
+                                    <Grid
+                                      container
+                                      style={{
+                                        // marginLeft: "2.8rem",
+                                        marginTop: "1rem",
+                                      }}
+                                    >
+                                      <Grid
+                                        item
+                                        xs={4}
                                         style={{
                                           color: "#ACACAC",
                                           opacity: 1.5,
@@ -1572,18 +1729,50 @@ function Profile(props) {
                                         )}
                                         {n.keyCaptionThree}
                                       </Grid>
+
                                       <Grid
                                         item
+                                        xs={3}
                                         style={{
+                                          textAlign: "left",
                                           color: "#ACACAC",
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
                                       >
-                                        {j.docKeyOneValue}
+                                        {j.docKeyThreeValue}
                                       </Grid>
+                                      {/* <Grid item xs={2}>
+                                        {j.fileOneSignedUrl && (
+                                          <a
+                                            onClick={() => {
+                                              setUrl(j.fileOneSignedUrl);
+                                            }}
+                                            href={`/verify/${vjob.id}/${j.id}`}
+                                            target='_blank'
+                                          >
+                                            <Visibility
+                                              style={{ color: "black" }}
+                                            />
+                                          </a>
+                                        )}
+
+                                        {j.fileTwoSignedUrl && (
+                                          <a
+                                            onClick={() => {
+                                              setUrl(j.fileTwoSignedUrl);
+                                            }}
+                                            href={`/verify/${vjob.id}/${j.id}`}
+                                            target='_blank'
+                                          >
+                                            <Visibility
+                                              style={{ color: "black" }}
+                                            />
+                                          </a>
+                                        )}
+                                      </Grid> */}
                                     </Grid>
-                                    <Grid
+                                    {/* <Grid
                                       container
                                       style={{
                                         // marginLeft: "2.8rem",
@@ -1678,7 +1867,7 @@ function Profile(props) {
                                           </div>
                                         )}
                                       </Grid>
-                                    </Grid>
+                                    </Grid> */}
                                   </>
                                 )}
                               </>
@@ -2226,10 +2415,6 @@ function Profile(props) {
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
                 onClick={handleOpen1}
-                onClick={(e) => {
-                  console.log("hioo");
-                  approve(e, id, "Rejected");
-                }}
               >
                 Reject
               </Button>
