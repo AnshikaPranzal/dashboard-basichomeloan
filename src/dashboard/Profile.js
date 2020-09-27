@@ -289,27 +289,17 @@ function Profile(props) {
   const handleClose1 = () => {
     setOpen(false);
   };
+  const [Name, setName] = useState("");
 
-  const [title, settitle] = useState({
-    title: "",
-  });
-
-  const handleChange = (name) => (event) => {
-    settitle({
-      [name]: event.target.value,
-    });
-    console.log("nameme", name);
-  };
+  // console.log("textft", text);
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id='simple-modal-description' style={{ textAlign: "center" }}>
         <input
           type='text'
-          name={title}
-          id={title}
-          value={title}
-          onChange={handleChange("title")}
+          name='title'
+          onChange={(e) => setName(e.target.value)}
         />
         <br></br>
         <br></br>
@@ -329,7 +319,7 @@ function Profile(props) {
           onClick={(e) => {
             console.log("hioo");
             console.log("oooo");
-            approve1(e, id, "Rejected");
+            approve1(e, id, "Rejected", Name);
           }}
         >
           Submit
