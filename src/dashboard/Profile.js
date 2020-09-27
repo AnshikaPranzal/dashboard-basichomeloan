@@ -316,12 +316,15 @@ function Profile(props) {
         <br></br>
 
         <Button
-          style={{ marginLeft: "1rem" }}
+          disabled={disabled1}
           variant='contained'
           color='primary'
           type='submit'
           onClick={(e) => {
             approve1(e, id, "Rejected", Name);
+
+            handleChange2();
+            handleChange1();
             handleClose1();
           }}
         >
@@ -2379,16 +2382,16 @@ function Profile(props) {
             </Col>
             <Col md={6}>
               <Button
-                disabled1={disabled1}
-                disabled={disabled}
+                // disabled={disabled1}
+                disabled={disabled || disabled1}
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
                 onClick={(e) => {
                   handleOpen1();
-
-                  handleChange2();
-                  handleChange1();
+                  if (disabled === "true") {
+                    handleChange1();
+                  }
                 }}
               >
                 Reject
