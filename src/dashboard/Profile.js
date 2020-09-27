@@ -1569,54 +1569,92 @@ function Profile(props) {
                                       marginLeft: "1rem",
                                     }}
                                   >
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionOneRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionOne}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          // color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionOneRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionOne}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyOneValue}
+                                      </Grid>
                                     </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionTwoRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionTwo}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          // color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionTwoRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionTwo}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyTwoValue}
+                                      </Grid>
                                     </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionThreeRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionThree}
-                                    </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {j.docKeyOneValue}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          // color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionThreeRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionThree}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyThreeValue}
+                                      </Grid>
                                     </Grid>
                                   </Grid>
                                   <Grid
@@ -1661,6 +1699,31 @@ function Profile(props) {
                                           style={{ color: "black" }}
                                         />
                                       </a>
+                                    </Grid>
+                                    {/* <Grid
+                                      item
+                                      xs={2}
+                                      style={
+                                        {
+                                          // textAlign: "center",
+                                          // paddingRight: "18%",
+                                        }
+                                      }
+                                    >
+                                      <a
+                                        onClick={() => {
+                                          setUrl(
+                                            j.fileOneSignedUrl,
+                                            j.fileTwoSignedUrl
+                                          );
+                                        }}
+                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        target='_blank'
+                                      >
+                                        <Visibility
+                                          style={{ color: "black" }}
+                                        />
+                                      </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
                                           onClick={() => {
@@ -1674,7 +1737,7 @@ function Profile(props) {
                                           />
                                         </a>
                                       )}
-                                    </Grid>
+                                    </Grid> */}
                                     <Grid
                                       item
                                       xs={2}
