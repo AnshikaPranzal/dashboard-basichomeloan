@@ -143,7 +143,6 @@ function Profile(props) {
   const [vjobs, setvjobs] = useState([
     {
       documents: [],
-      // primaryBorrower: [],
     },
   ]);
   // eslint-disable-next-line no-unused-vars
@@ -295,6 +294,12 @@ function Profile(props) {
 
   // console.log("textft", text);
 
+  const [disabled, setDisabled] = useState(false);
+
+  const handleChange1 = () => {
+    setDisabled(true);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <p id='simple-modal-description' style={{ textAlign: "center" }}>
@@ -315,6 +320,7 @@ function Profile(props) {
           Close
         </Button>
         <Button
+          style={{ marginLeft: "1rem" }}
           variant='contained'
           color='primary'
           type='submit'
@@ -1118,7 +1124,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -1702,7 +1708,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -2002,7 +2008,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -2209,7 +2215,7 @@ function Profile(props) {
                                       }}
                                     >
                                       {n.keyCaptionTwoRequired && (
-                                        <span>*</span>
+                                        <span style={{ color: "red" }}>*</span>
                                       )}
                                       {n.keyCaptionTwo}
                                     </Grid>
@@ -2264,7 +2270,7 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
                                         target='_blank'
                                       >
                                         <Visibility
@@ -2365,9 +2371,11 @@ function Profile(props) {
                 className='login-otp'
                 style={{ background: "#0088FC", width: "100%" }}
                 // onClick={() => addItem(true)}
+                disabled={disabled}
                 onClick={(e) => {
                   console.log("hioo");
                   approve(e, id, "OSVApproved");
+                  handleChange1();
                 }}
               >
                 Approve

@@ -59,14 +59,18 @@ const Verify = (props) => {
     });
   };
 
+  const [disabled, setDisabled] = useState(true);
+
+  const handleChange = () => {
+    setDisabled(false);
+  };
+
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
-      {localStorage.getItem("recent2") === "undefined" ? (
-        <span>k</span>
-      ) : (
-        <span>l</span>
-      )}
+      <Row style={{ fontSize: 19, marginLeft: "5rem" }}>
+        {props.match.params.name}
+      </Row>
       <Row>
         <Col md={6}>
           <iframe src={localStorage.getItem("recent")} width='100%'></iframe>
@@ -102,6 +106,7 @@ const Verify = (props) => {
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Rejected");
+              handleChange();
             }}
           >
             Reject
