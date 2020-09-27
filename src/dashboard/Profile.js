@@ -317,9 +317,8 @@ function Profile(props) {
           color='primary'
           type='submit'
           onClick={(e) => {
-            console.log("hioo");
-            console.log("oooo");
             approve1(e, id, "Rejected", Name);
+            handleClose1();
           }}
         >
           Submit
