@@ -192,6 +192,8 @@ function Profile(props) {
     loadDoc();
   }, [refresh3]);
   useEffect(() => {
+    const func= async()=>{
+     const k= await Promise.resolve(loadDoc());
     setproperty(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
     );
@@ -202,6 +204,9 @@ function Profile(props) {
     setosv(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
     );
+    }
+    
+    func()
   }, [vjobs1]);
   const [vjob, setvjob] = useState(
     {
@@ -318,7 +323,7 @@ function Profile(props) {
           color='primary'
           type='submit'
           onClick={(e) => {
-            approve1(e, id, "Rejected", Name);
+            approve1(e, id, "OSVRejected", Name);
             handleClose1();
           }}
         >
@@ -331,7 +336,7 @@ function Profile(props) {
   const id = props.match.params.id;
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
-      if (vjobq.documents[0].verified !== "Approved") {
+      if (borrower.documents && borrower.documents[0].verified !== "Approved") {
         return false;
       }
     }
@@ -356,7 +361,7 @@ function Profile(props) {
     event.preventDefault();
     const c = await Promise.resolve(check());
     if (c === false) {
-      alert("Approve all");
+      alert("All the documents are not verified");
     } else {
       approveOSV(id, {
         "\"status\"": name

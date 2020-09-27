@@ -62,7 +62,7 @@ const Verify = (props) => {
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
-{localStorage.getItem("recent2") === "undefined" ? <span>k</span> : <span>l</span>}
+
       <Row>
         
         <Col md={6}><iframe src={localStorage.getItem("recent")} width='100%'></iframe></Col>
