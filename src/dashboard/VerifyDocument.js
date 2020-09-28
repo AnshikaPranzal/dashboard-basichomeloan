@@ -52,10 +52,11 @@ const Verify = (props) => {
       documentId: ID,
       verification: `${name}`,
     }).then((data) => {
-      console.log(data);
+      console.log(data,"here");
       if (data.error) {
         console.log(data.error);
       }
+      
     });
   };
 
