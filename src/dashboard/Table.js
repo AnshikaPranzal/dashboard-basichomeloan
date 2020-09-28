@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../style.css";
 import { GETALLLEADS } from "../helper/index";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -10,7 +10,6 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 // import React from 'react';
-import TablePagination from "@material-ui/core/TablePagination";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 import {
@@ -240,14 +239,12 @@ function TableCard() {
             <tbody>
               {vjobs &&
                 vjobs
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((product, i) => {
                     return (
                       <tr style={{ paddingTop: "2rem" }}>
                         <td>
                           <Row>
                             <Col md={2}>
-                              {product.applicationStatus === "PendingOSV" ? (
                                 <Link to={`/${product.id}`}>
                                   <img
                                     // className='circular-image-small'
@@ -260,18 +257,6 @@ function TableCard() {
                                     alt='user'
                                   />
                                 </Link>
-                              ) : (
-                                <img
-                                  // className='circular-image-small'
-                                  src={product.profilePicUrl}
-                                  style={{
-                                    width: "4rem",
-                                    height: "4rem",
-                                    borderRadius: "2rem",
-                                  }}
-                                  alt='user'
-                                />
-                              )}
                             </Col>
                             <Col md={8}>
                               <span
@@ -383,18 +368,10 @@ function TableCard() {
             </tbody>
           </Table>
         </CardBody>
-        <TablePagination
-          // style={{ fontSize: 14 }}
-          component='div'
-          count={vjobs.length}
-          page={page}
-          onChangePage={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        
       </Card>
     </>
   );
 }
 
-export default TableCard;
+export default withRouter(TableCard);

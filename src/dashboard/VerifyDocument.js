@@ -48,10 +48,10 @@ const Verify = (props) => {
   const approve = (event, id, ID, name) => {
     console.log("sscccs", id);
     event.preventDefault();
-    approveOSV(id, {
+    approveOSV(id, {documents: [{
       documentId: ID,
       verification: `${name}`,
-    }).then((data) => {
+    }]}).then((data) => {
       console.log(data,"here");
       if (data.error) {
         console.log(data.error);
@@ -69,8 +69,9 @@ const Verify = (props) => {
   //   console.log("ddd", vjob);
   return (
     <React.Fragment>
-      <Row style={{ fontSize: 19, marginLeft: "5rem" }}>
-        {props.match.params.name}
+      <Row className="text-center py-4">
+        <Col md={4}></Col>
+        <Col md={4}><h1>{props.match.params.name}</h1></Col>
       </Row>
       <Row>
         <Col md={6}>
