@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../style.css";
 import { GETALLLEADS } from "../helper/index";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -10,7 +10,6 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 // import React from 'react';
-import TablePagination from "@material-ui/core/TablePagination";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 import {
@@ -28,6 +27,7 @@ import osvi from "../images/Group 2412.svg";
 import disb from "../images/Group 2424.svg";
 import closed from "../images/Group 2423.svg";
 import sanction from "../images/Group 2418.svg";
+import { Typography } from "@material-ui/core";
 
 function TableCard() {
   const [jobs, setjobs] = useState([]);
@@ -147,10 +147,16 @@ function TableCard() {
           <div className='align-items-center'>
             {/* <div> */}
             <Row>
-              <Col md={10}>
+              <Col md={1}>
                 <CardTitle>
                   <h4>My Leads</h4>
                 </CardTitle>
+              </Col>
+              <Col md={9}>
+                <Button style={{width:"7rem",height:"4rem",backgroundColor:"skyblue"}}>
+                  <Typography variant="h6">Prev</Typography></Button>
+                <Button style={{width:"7rem",height:"4rem",backgroundColor:"skyblue",marginLeft:"2rem"}}>
+                <Typography variant="h6">Next</Typography></Button>
               </Col>
               <Col md={2}>
                 <Button
@@ -248,14 +254,12 @@ function TableCard() {
             <tbody>
               {vjobs &&
                 vjobs
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((product, i) => {
                     return (
                       <tr style={{ paddingTop: "2rem" }}>
                         <td>
                           <Row>
                             <Col md={2}>
-                              {product.applicationStatus === "PendingOSV" ? (
                                 <Link to={`/${product.id}`}>
                                   <img
                                     // className='circular-image-small'
@@ -268,18 +272,6 @@ function TableCard() {
                                     alt='user'
                                   />
                                 </Link>
-                              ) : (
-                                <img
-                                  // className='circular-image-small'
-                                  src={product.profilePicUrl}
-                                  style={{
-                                    width: "4rem",
-                                    height: "4rem",
-                                    borderRadius: "2rem",
-                                  }}
-                                  alt='user'
-                                />
-                              )}
                             </Col>
                             <Col md={8}>
                               <span
@@ -292,6 +284,7 @@ function TableCard() {
                                     color: "black",
                                     opacity: 0.75,
                                     fontWeight: 500,
+                                    marginTop:"-2rem",
                                   }}
                                 >
                                   {product.customerName}
@@ -307,27 +300,30 @@ function TableCard() {
                             fontFamily: "Roboto",
                           }}
                         >
-                          {" "}
+                         <div style={{ marginLeft:"1rem"}}> {" "}
                           {product.basicAppID}/<br></br>
-                          {product.bankAppID}
+                          {product.bankAppID}</div>
                         </td>
                         <td
                           style={{
                             // color: "#ACACAC",
                             opacity: 1.5,
                             fontFamily: "Roboto",
+                            alignItems:"center"
+
                           }}
                         >
-                          {product.bankName}
+                         <div style={{ marginLeft:"2rem"}}> {product.bankName}</div>
                         </td>
                         <td
                           style={{
                             // color: "#ACACAC",
 
                             fontFamily: "Roboto",
+                           
                           }}
                         >
-                          {product.loanType}
+                         <div style={{ marginLeft:"2.5rem"}}> {product.loanType} </div>
                         </td>
                         <td
                           style={{
@@ -391,18 +387,10 @@ function TableCard() {
             </tbody>
           </Table>
         </CardBody>
-        <TablePagination
-          // style={{ fontSize: 14 }}
-          component='div'
-          count={vjobs.length}
-          page={page}
-          onChangePage={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        
       </Card>
     </>
   );
 }
 
-export default TableCard;
+export default withRouter(TableCard);

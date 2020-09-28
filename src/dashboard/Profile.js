@@ -18,7 +18,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION, approveOSV } from "../helper/index";
 import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
@@ -185,13 +185,15 @@ function Profile(props) {
         }
     });
   };
-  console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
+  // console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
     loadDoc();
   }, [refresh3]);
   useEffect(() => {
+    const func= async()=>{
+     const k= await Promise.resolve(loadDoc());
     setproperty(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
     );
@@ -202,6 +204,9 @@ function Profile(props) {
     setosv(
       vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
     );
+    }
+    
+    func()
   }, [vjobs1]);
   const [vjob, setvjob] = useState(
     {
@@ -246,12 +251,12 @@ function Profile(props) {
           console.log("app", data.result);
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
-          console.log("ggii", data.result.primaryBorrower);
+          // console.log("ggii", data.result.primaryBorrower);
           // console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  console.log("hi", vjobq);
+  // console.log("hi", vjobq);
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -321,7 +326,7 @@ function Profile(props) {
           color='primary'
           type='submit'
           onClick={(e) => {
-            approve1(e, id, "Rejected", Name);
+            approve1(e, id, "OSVRejected", Name);
 
             handleChange2();
             handleChange1();
@@ -337,14 +342,15 @@ function Profile(props) {
   const id = props.match.params.id;
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
-      if (vjobq.documents[0].verified !== "Approved") {
+      if (vjobq.documents[i].verified !== "Approved") {
+        console.log(vjobq.documents[i],"k")
         return false;
       }
     }
   };
 
   const approve1 = (event, id, name, text) => {
-    console.log("texttt", `${text}`);
+    // console.log("texttt", `${text}`);
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -353,30 +359,40 @@ function Profile(props) {
       console.log(data);
       if (data.error) {
         console.log(data.error);
+         
+      }
+      else{
+        alert("Projile Rejected")
+        props.history.push("/dashboard")
       }
     });
   };
 
   const approve = async (event, id, name) => {
-    console.log("sscccs", id);
+    // console.log("sscccs", id);
     event.preventDefault();
     const c = await Promise.resolve(check());
     if (c === false) {
-      alert("Approve all");
+      alert("All the documents are not verified");
     } else {
-      approveOSV(id, {
-        '"status"': name,
+      const c = await Promise.resolve(approveOSV(id, {
+        "status": name,
       }).then((data) => {
         console.log(data);
         if (data.error) {
           console.log(data.error);
+          
         }
-      });
+        else{
+          alert("Profile Verified")
+          props.history.push("/dashboard") 
+        }
+      }));
     }
   };
 
   const reject = (event, id, name) => {
-    console.log("sscccs", id);
+    // console.log("sscccs", id);
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -1022,11 +1038,11 @@ function Profile(props) {
 
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {property.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1201,6 +1217,15 @@ function Profile(props) {
                                         style={{ paddingLeft: "1rem" }}
                                       >
                                         <img src={verified}></img>
+                                      </Grid>
+                                    )}
+                                    {j.verified === "Rejected" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{color:"red", paddingLeft: "1rem" }}
+                                      >
+                                        X
                                       </Grid>
                                     )}
                                   </Grid>
@@ -1568,11 +1593,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12} style={{ marginLeft: "2rem" }}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {borrower.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1812,6 +1837,15 @@ function Profile(props) {
                                         <img src={verified}></img>
                                       </Grid>
                                     )}
+                                    {j.verified === "Rejected" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{color:"red", paddingLeft: "1rem" }}
+                                      >
+                                        X
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -1915,11 +1949,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {bank.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2088,6 +2122,15 @@ function Profile(props) {
                                         <img src={verified}></img>
                                       </Grid>
                                     )}
+                                    {j.verified === "Rejected" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{color:"red", paddingLeft: "1rem" }}
+                                      >
+                                        X
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -2176,11 +2219,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    console.log("jiik", j.docConfigId);
+                    // console.log("jiik", j.docConfigId);
                     return (
                       <>
                         {osv.map((n, m) => {
-                          console.log(n);
+                          // console.log(n);
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2349,6 +2392,15 @@ function Profile(props) {
                                         <img src={verified}></img>
                                       </Grid>
                                     )}
+                                    {j.verified === "Rejected" && (
+                                      <Grid
+                                        item
+                                        xs={1}
+                                        style={{color:"red", paddingLeft: "1rem" }}
+                                      >
+                                        X
+                                      </Grid>
+                                    )}
                                   </Grid>
                                 </>
                               )}
@@ -2370,10 +2422,10 @@ function Profile(props) {
                 className='login-otp'
                 style={{ background: "#0088FC", width: "100%" }}
                 // onClick={() => addItem(true)}
-                disabled={disabled}
+                // disabled={disabled}
                 onClick={(e) => {
-                  console.log("hioo");
-                  approve(e, id, "OSVApproved");
+                  // console.log("hioo");
+                  approve(e, id, "OSVVerified");
                   handleChange1();
                 }}
               >
@@ -2383,7 +2435,7 @@ function Profile(props) {
             <Col md={6}>
               <Button
                 // disabled={disabled1}
-                disabled={disabled || disabled1}
+                // disabled={disabled || disabled1}
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
                 // onClick={addItem}
@@ -2412,4 +2464,4 @@ function Profile(props) {
   );
 }
 
-export default Profile;
+export default withRouter(Profile);
