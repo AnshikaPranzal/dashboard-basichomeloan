@@ -82,18 +82,26 @@ function TableCard() {
     });
   };
 
-  const filter = (status) => {
-    if (status === "") {
+  const filter = (stages) => {
+    if (stages === "") {
       setvjobs(tjobs);
     } else {
       // console.log(tjobs.filter((e) => e.applicationStatus == status));
-      setvjobs(tjobs.filter((e) => e.applicationStatus == status));
+      setvjobs(tjobs.filter((e) => e.applicationStages == stages));
     }
   };
 
   const [refresh, setrefresh] = useState(true);
   const filteredStatus = [];
-  const status = [
+  const stages = [
+    "Closed",
+    "Disbursed",
+    "Login",
+    "Lead",
+    "OSV",
+    "Sanction",
+  ];
+  /*const status = [
     "OSVRejected",
     "SanctionRejected",
     "Lead",
@@ -114,7 +122,7 @@ function TableCard() {
     "Withdrawn",
     "OSVStampped",
     "OSVStampPending",
-  ];
+  ];*/
   useEffect(() => {
     loadAlljobs();
   }, [refresh]);
@@ -186,7 +194,7 @@ function TableCard() {
                             >
                               All
                             </MenuItem>
-                            {status.map((obj, k) => (
+                            {stages.map((obj, k) => (
                               <MenuItem
                                 onClick={(e) => {
                                   filter(obj);
