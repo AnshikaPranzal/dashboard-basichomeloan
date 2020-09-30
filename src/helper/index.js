@@ -7,7 +7,7 @@ export const GETALLLEADS = (pn,stage) => {
     PageSize: 1000,
   })
   return fetch(
-    `http://dev-applicationservice.basichomeloan.com/api/v1/Applications/LeadsSummary/?PageNumber=${pn}&LoanStages=${stage}`,
+    `https://dev-applicationservice.basichomeloan.com/api/v1/Applications/LeadsSummary/?PageNumber=${pn}&LoanStages=${stage}`,
     {
       method: "GET",
       headers: {
@@ -28,7 +28,7 @@ export const GETALLLEADS = (pn,stage) => {
 
 export const GETAPPLICATION = (id) => {
   return fetch(
-    `http://dev-applicationservice.basichomeloan.com/api/v1/Applications/${id}`,
+    `https://dev-applicationservice.basichomeloan.com/api/v1/Applications/${id}`,
     {
       method: "GET",
       headers: {
@@ -46,7 +46,7 @@ export const GETAPPLICATION = (id) => {
 
 export const getDocConfig = () => {
   return fetch(
-    `http://dev-applicationservice.basichomeloan.com/api/v1/DocConfig/`,
+    `https://dev-applicationservice.basichomeloan.com/api/v1/DocConfig/`,
     {
       method: "GET",
       headers: {
@@ -65,7 +65,7 @@ export const getDocConfig = () => {
 export const approveOSV = (applicationId, application) => {
   console.log(application,applicationId,"ll");
   return fetch(
-    `http://dev-applicationservice.basichomeloan.com/api/v1/Application/Activity/${applicationId}/OSV`,
+    `https://dev-applicationservice.basichomeloan.com/api/v1/Application/Activity/${applicationId}/OSV`,
     {
       method: "PUT",
       headers: {
