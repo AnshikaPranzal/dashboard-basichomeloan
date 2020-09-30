@@ -1,48 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import { approveOSV } from "../helper/index";
 
 const Verify = (props) => {
-  // const [id, setid] = React.useState(props.match.params.url);
-  //   const appId = props.match.params.id;
-  //   // const [obj, setobj] = React.useState({ documentId: id, verification: "" });
-  //   const [docs, setdocs] = React.useState("");
-  //   // const { documentId, verification } = obj;
-  //   let a = [];
-  //   const addItem = (idd) => {
-  //     if (docs !== "") {
-  //   if (idd) {
-  //   setobj({
-  //     ...obj,
-  //     verification: "Approved",
-  //   });
-  // } else {
-  //   setobj({
-  //     ...obj,
-  //     verification: "Rejected",
-  //   });
-  // }
-  //   a.push(idd);
-  //   const arr = JSON.parse(localStorage.getItem(`darray${appId}`));
-  //   if (arr !== null && arr !== undefined) {
-  //     arr.map((o, i) => {
-  //       a.push(o);
-  //     });
-  //   }
-  //   localStorage.setItem(`darray${appId}`, JSON.stringify(a));
-  // }
-  // const a = await Promise.resolve(setobj({...obj, "value":idd}))
-  // const b = await Promise.resolve(setdocs(localStorage.getItem("verification")))
-  // const c = await Promise.resolve(docs.push(obj))
-  // localStorage.setItem("verification",JSON.stringify(docs))
-  //   };
-
-  console.log(props.match.params.url, "kkkkkkkkkk");
-
   let id = props.match.params;
-
-  //   let ID = props.match.params;
+  console.log(id,"ycfhg")
+  
   console.log(id, "idddd");
   console.log(localStorage.getItem("recent2"), "wgyugyv");
   const approve = (event, id, ID, name) => {
@@ -56,6 +20,10 @@ const Verify = (props) => {
       if (data.error) {
         console.log(data.error);
       }
+      else{
+        alert("Document "+name)
+        props.history.push(`/${id}`)
+      }
       
     });
   };
@@ -66,7 +34,7 @@ const Verify = (props) => {
     setDisabled(true);
   };
 
-  //   console.log("ddd", vjob);
+  
   return (
     <React.Fragment>
       <Row className="text-center py-4">
@@ -75,25 +43,25 @@ const Verify = (props) => {
       </Row>
       <Row>
         <Col md={6}>
-          <iframe src={localStorage.getItem("recent")} width='100%'></iframe>
+          <iframe title={props.match.params.name} src={localStorage.getItem("recent")} width='100%'></iframe>
         </Col>
 
         {localStorage.getItem("recent2") !== "undefined" && (
           <Col md={6}>
-            <iframe src={localStorage.getItem("recent2")} width='100%'></iframe>
+            <iframe title={props.match.params.name} src={localStorage.getItem("recent2")} width='100%'></iframe>
           </Col>
         )}
       </Row>
-      <Row>
+      {props.match.params.app === "false" && (<Row>
         <Col md={6}>
           <Button
             disabled={disabled}
             className='login-otp'
             style={{ background: "#0088FC", width: "100%" }}
-            // onClick={() => {
-            //   setdocs("hi");
-            //   addItem({ documentId: id, verification: "Approved" });
-            // }}
+            
+            
+            
+            
             onClick={(e) => {
               console.log("hioo");
               approve(e, id.id, id.url, "Approved");
@@ -117,7 +85,7 @@ const Verify = (props) => {
             Reject
           </Button>
         </Col>
-      </Row>
+      </Row>)}
 
       {/* <Button className="login-otp">Reject</Button> */}
     </React.Fragment>

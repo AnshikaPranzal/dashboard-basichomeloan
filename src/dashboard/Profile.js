@@ -2,8 +2,8 @@ import { Card, makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
-// import Card from '@material-ui/core/Card';
-// import Avatar from "@material-ui/core/Avatar";
+
+
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -24,9 +24,9 @@ import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
 import Verify from "./VerifyDocument";
 import verified from "../images/Group 2125.svg";
-// import Modal from "@material-ui/core/Modal";
 
-// import { Link } from "react-router-dom";
+
+
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { CheckCircleOutline, Visibility } from "@material-ui/icons";
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%", 
   },
   expand: {
     transform: "rotate(0deg)",
@@ -145,24 +145,7 @@ function Profile(props) {
       documents: [],
     },
   ]);
-  // eslint-disable-next-line no-unused-vars
-  const [errorF, seterrorF] = useState(false);
-  const [update, setupdate] = useState(false);
-
-  const loadAlljobs = () => {
-    GETALLLEADS().then((data) => {
-      // console.log(data);
-      if (data)
-        if (data.error) {
-          seterrorF(data.error);
-        } else {
-          setjobs(data);
-          setvjobs(data.result);
-
-          console.log(vjobs);
-        }
-    });
-  };
+ 
 
   const [refresh1, setrefresh1] = useState(true);
   const [property, setproperty] = useState([]);
@@ -170,22 +153,20 @@ function Profile(props) {
   const [osv, setosv] = useState([]);
   const [bank, setbank] = useState([]);
   useEffect(() => {
-    loadAlljobs();
+    
   }, [refresh1]);
 
   const loadDoc = () => {
     getDocConfig().then(async (data) => {
-      // console.log(data.result);
       if (data)
         if (data.error) {
-          seterrorF(data.error);
+          
         } else {
           setjobs1(data);
           const h = await Promise.resolve(setvjobs1(data.result));
         }
     });
   };
-  // console.log("sammm", vjobs1, "kk", property, borrower, osv, bank);
   const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
@@ -210,7 +191,7 @@ function Profile(props) {
   }, [vjobs1]);
   const [vjob, setvjob] = useState(
     {
-      // coBorrowers: {
+      
       coBorrowers: [
         {
           documents: [
@@ -228,35 +209,32 @@ function Profile(props) {
         ],
       },
     }
-    // },
-    // },
+    
+    
   );
 
-  // console.log("ghgg", vjob.coBorrowers.documents);
+  
   const [vjobp, setvjobp] = useState([]);
   const [vjobq, setvjobq] = useState({
     documents: [],
   });
 
-  //   const [errorF, seterrorF] = useState(false);
+  
 
   const getajob = (id) => {
     GETAPPLICATION(id).then((data) => {
       if (data)
         if (data.error) {
-          seterrorF(data.error);
+          
         } else {
-          // console.log(data);
           setvjob(data.result);
           console.log("app", data.result);
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
-          // console.log("ggii", data.result.primaryBorrower);
-          // console.log(vjobp, data.result.coBorrowers);
         }
     });
   };
-  // console.log("hi", vjobq);
+  
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -297,7 +275,7 @@ function Profile(props) {
   };
   const [Name, setName] = useState("");
 
-  // console.log("textft", text);
+  
 
   const [disabled, setDisabled] = useState(false);
   const [disabled1, setDisabled1] = useState(false);
@@ -311,7 +289,8 @@ function Profile(props) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <p id='simple-modal-description' style={{ textAlign: "center" }}>
+      <h3>Please enter rejection reason:</h3>
+      <p id='simple-modal-description' style={{ textAlign: "center",marginTop:"2em" }}>
         <input
           type='text'
           name='title'
@@ -323,7 +302,6 @@ function Profile(props) {
         <Button
           disabled={disabled1}
           variant='contained'
-          color='primary'
           type='submit'
           onClick={(e) => {
             approve1(e, id, "OSVRejected", Name);
@@ -350,7 +328,7 @@ function Profile(props) {
   };
 
   const approve1 = (event, id, name, text) => {
-    // console.log("texttt", `${text}`);
+    
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -362,14 +340,14 @@ function Profile(props) {
          
       }
       else{
-        alert("Projile Rejected")
+        alert("Lead Rejected")
         props.history.push("/dashboard")
       }
     });
   };
 
   const approve = async (event, id, name) => {
-    // console.log("sscccs", id);
+    
     event.preventDefault();
     const c = await Promise.resolve(check());
     if (c === false) {
@@ -384,15 +362,15 @@ function Profile(props) {
           
         }
         else{
-          alert("Profile Verified")
+          alert("Lead Verified")
           props.history.push("/dashboard") 
         }
       }));
     }
   };
-
+  console.log(vjob,"here")
   const reject = (event, id, name) => {
-    // console.log("sscccs", id);
+    
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -427,15 +405,15 @@ function Profile(props) {
                 style={{
                   backgroundColor: "#f1f3f8",
                   borderRadius: "3px",
-                  // width: 290,
-                  // height: "150%",
+                  
+                  
                 }}
               >
                 <div
                   style={{
                     paddingLeft: "15%",
                     paddingTop: "6rem",
-                    // height: "140%",
+                    
                   }}
                 >
                   <div style={{ fontWeight: 600, fontFamily: "Open Sans" }}>
@@ -444,10 +422,10 @@ function Profile(props) {
                       {vjobs &&
                         vjobs.map((obj2, i) => {
                           return (
-                            <div>
+                            <div key={i}>
                               {obj2.id === vjob.id && (
                                 <img
-                                  // className='circular-image-small'
+                                  
                                   src={
                                     obj2.id === vjob.id && obj2.profilePicUrl
                                   }
@@ -523,7 +501,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    Basic Ref No:{" "}
+                    Basic Ref No:{" "}  {vjob.basicAppId}
                   </div>
                   <div
                     style={{
@@ -537,7 +515,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    Bank Application No:{" "}
+                    Bank Application No:{" "} {vjob.bankAppId}
                   </div>
                   <div
                     style={{
@@ -605,68 +583,7 @@ function Profile(props) {
                   </div>
                 </div>
                 <Divider />
-                <div
-                  style={{
-                    paddingLeft: "15%",
-                    paddingTop: "3rem",
-                    // height: "140%",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "0.5rem",
-                      fontFamily: "Roboto",
-                      // opacity: 0.75,
-                      // fontSize: 16,
-                      fontWeight: 600,
-                      letterSpacing: 0.21,
-                      // color: "blue",
-                    }}
-                  >
-                    {" "}
-                    Basic Relationship Manager Details{" "}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "2rem",
-                      fontFamily: "Roboto",
-                      opacity: 0.75,
-                      fontSize: 13,
-                      color: "#ACACAC",
-                      opacity: 1,
-                    }}
-                  >
-                    {" "}
-                    Name:{" "}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "1rem",
-                      fontFamily: "Roboto",
-                      opacity: 0.75,
-                      fontSize: 13,
-                      color: "#ACACAC",
-                      opacity: 1,
-                    }}
-                  >
-                    {" "}
-                    Mobile{" "}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "1rem",
-                      fontFamily: "Roboto",
-                      opacity: 0.75,
-                      fontSize: 13,
-                      paddingBottom: "4rem",
-                      color: "#ACACAC",
-                      opacity: 1,
-                    }}
-                  >
-                    {" "}
-                    Email{" "}
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -678,7 +595,7 @@ function Profile(props) {
                 style={{
                   marginLeft: "2.8rem",
                   fontWeight: 500,
-                  // opacity: 1.5,
+                  
                   letterSpacing: 0.48,
                   fontSize: 16,
                   fontFamily: "Roboto",
@@ -846,7 +763,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Bank Application Number
+                    Bank Application Id
                   </Grid>
                   <Grid
                     item
@@ -1023,8 +940,8 @@ function Profile(props) {
                     style={{
                       marginLeft: "2rem",
                       fontWeight: 400,
-                      // color: "#ACACAC",
-                      // opacity: 1.5,
+                      
+                      
                       fontFamily: "Roboto",
                     }}
                   >
@@ -1038,11 +955,11 @@ function Profile(props) {
 
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    // console.log("jiik", j.docConfigId);
+                    
                     return (
                       <>
                         {property.map((n, m) => {
-                          // console.log(n);
+                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1127,8 +1044,8 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
@@ -1139,12 +1056,26 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
-                                        target='_blank'
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
+                                        
                                       >
-                                        <Visibility
+                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
                                           style={{ color: "black" }}
-                                        />
+                                        />}
+                                      </a>
+                                      <a
+                                        onClick={() => {
+                                          setUrl(
+                                            j.fileOneSignedUrl,
+                                            j.fileTwoSignedUrl
+                                          );
+                                        }}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        
+                                      >
+                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
+                                          style={{ color: "black" }}
+                                        />}
                                       </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
@@ -1152,7 +1083,7 @@ function Profile(props) {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
-                                          target='_blank'
+                                          
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -1165,15 +1096,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1190,15 +1121,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
 
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1247,7 +1178,7 @@ function Profile(props) {
                 style={{
                   marginLeft: "2.8rem",
                   fontWeight: 500,
-                  // opacity: 1.5,
+                  
                   fontFamily: "Roboto",
                   letterSpacing: 0.48,
                   fontSize: 16,
@@ -1275,7 +1206,7 @@ function Profile(props) {
                     style={{
                       marginLeft: "2rem",
                       fontWeight: 600,
-                      // opacity: 1.5,
+                      
                       fontFamily: "Roboto",
                     }}
                   >
@@ -1578,7 +1509,7 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
-                          // console.log(vjobp.id);
+                          
                           return o.companyName;
                         })
                       : ""}
@@ -1593,11 +1524,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12} style={{ marginLeft: "2rem" }}>
                   {vjobq.documents.map((j, k) => {
-                    // console.log("jiik", j.docConfigId);
+                    
                     return (
                       <>
                         {borrower.map((n, m) => {
-                          // console.log(n);
+                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1614,7 +1545,7 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          // color: "#ACACAC",
+                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1643,7 +1574,7 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          // color: "#ACACAC",
+                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1672,7 +1603,7 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          // color: "#ACACAC",
+                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1720,8 +1651,8 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
@@ -1732,66 +1663,43 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
-                                        target='_blank'
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
+                                        
                                       >
-                                        <Visibility
+                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
                                           style={{ color: "black" }}
-                                        />
+                                        />}
+                                      </a>
+                                      <a
+                                        onClick={() => {
+                                          setUrl(
+                                            j.fileOneSignedUrl,
+                                            j.fileTwoSignedUrl
+                                          );
+                                        }}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        
+                                      >
+                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
+                                          style={{ color: "black" }}
+                                        />}
                                       </a>
                                     </Grid>
-                                    {/* <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
-                                        }
-                                      }
-                                    >
-                                      <a
-                                        onClick={() => {
-                                          setUrl(
-                                            j.fileOneSignedUrl,
-                                            j.fileTwoSignedUrl
-                                          );
-                                        }}
-                                        href={`/verify/${vjob.id}/${j.id}`}
-                                        target='_blank'
-                                      >
-                                        <Visibility
-                                          style={{ color: "black" }}
-                                        />
-                                      </a>
-                                      {j.fileTwoSignedUrl && (
-                                        <a
-                                          onClick={() => {
-                                            setUrl(j.fileTwoSignedUrl);
-                                          }}
-                                          href={`/verify/${vjob.id}/${j.id}`}
-                                          target='_blank'
-                                        >
-                                          <Visibility
-                                            style={{ color: "black" }}
-                                          />
-                                        </a>
-                                      )}
-                                    </Grid> */}
+                                   
                                     <Grid
                                       item
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1808,15 +1716,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
 
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1949,11 +1857,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    // console.log("jiik", j.docConfigId);
+                    
                     return (
                       <>
                         {bank.map((n, m) => {
-                          // console.log(n);
+                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2041,12 +1949,26 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
-                                        target='_blank'
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
+                                        
                                       >
-                                        <Visibility
+                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
                                           style={{ color: "black" }}
-                                        />
+                                        />}
+                                      </a>
+                                      <a
+                                        onClick={() => {
+                                          setUrl(
+                                            j.fileOneSignedUrl,
+                                            j.fileTwoSignedUrl
+                                          );
+                                        }}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        
+                                      >
+                                        { vjob.applicationStatus === "PendingOSV" && <Visibility
+                                          style={{ color: "black" }}
+                                        />}
                                       </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
@@ -2054,7 +1976,7 @@ function Profile(props) {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
-                                          target='_blank'
+                                          
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -2067,15 +1989,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2093,15 +2015,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
 
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2181,10 +2103,10 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Bank Name
+                    Status
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.bankName}
+                    {vjob.applicationStatus}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -2198,10 +2120,44 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Branch
+                    Reason
                   </Grid>
                   <Grid item xs={4}>
-                    {vjob.bankBranchName}
+                    {vjob.osvRejectionReason}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Televerification Status
+                  </Grid>
+                  <Grid item xs={4}>
+                    {vjob.teleVerificationStatus}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Tele verification failed reason:
+                  </Grid>
+                  <Grid item xs={4}>
+                    {vjob.teleVerificationFailedReason}
                   </Grid>
                 </Grid>
                 <Grid
@@ -2219,11 +2175,11 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    // console.log("jiik", j.docConfigId);
+                    
                     return (
                       <>
                         {osv.map((n, m) => {
-                          // console.log(n);
+                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2299,7 +2255,7 @@ function Profile(props) {
                                         color: "#ACACAC",
                                         opacity: 1.5,
                                         fontFamily: "Roboto",
-                                        // marginTop: "1rem",
+                                        
                                       }}
                                     >
                                       {j.docKeyCaption}
@@ -2312,12 +2268,26 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}`}
-                                        target='_blank'
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
+                                        
                                       >
-                                        <Visibility
+                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
                                           style={{ color: "black" }}
-                                        />
+                                        />}
+                                      </a>
+                                      <a
+                                        onClick={() => {
+                                          setUrl(
+                                            j.fileOneSignedUrl,
+                                            j.fileTwoSignedUrl
+                                          );
+                                        }}
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        
+                                      >
+                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
+                                          style={{ color: "black" }}
+                                        />}
                                       </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
@@ -2325,7 +2295,7 @@ function Profile(props) {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
-                                          target='_blank'
+                                          
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -2338,15 +2308,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2363,15 +2333,15 @@ function Profile(props) {
                                       xs={2}
                                       style={
                                         {
-                                          // textAlign: "center",
-                                          // paddingRight: "18%",
+                                          
+                                          
                                         }
                                       }
                                     >
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            // width: "20%"
+                                            
 
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2416,15 +2386,15 @@ function Profile(props) {
             </Collapse>
           </Card>
 
-          <Row style={{ marginTop: "2rem" }}>
+          {vjob.applicationStatus === "PendingOSV" &&(<Row style={{ marginTop: "2rem" }}>
             <Col md={6}>
               <Button
                 className='login-otp'
                 style={{ background: "#0088FC", width: "100%" }}
-                // onClick={() => addItem(true)}
-                // disabled={disabled}
+                
+                
                 onClick={(e) => {
-                  // console.log("hioo");
+                  
                   approve(e, id, "OSVVerified");
                   handleChange1();
                 }}
@@ -2434,11 +2404,11 @@ function Profile(props) {
             </Col>
             <Col md={6}>
               <Button
-                // disabled={disabled1}
-                // disabled={disabled || disabled1}
+                
+                
                 className='login-otp'
                 style={{ background: "#ACACAC", width: "100%" }}
-                // onClick={addItem}
+                
                 onClick={(e) => {
                   handleOpen1();
                   if (disabled === "true") {
@@ -2457,7 +2427,7 @@ function Profile(props) {
                 {body}
               </Modal>
             </Col>
-          </Row>
+          </Row>)}
         </Grid>
       </Grid>
     </div>

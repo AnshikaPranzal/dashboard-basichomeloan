@@ -9,15 +9,13 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-// import React from 'react';
+
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 import {
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
-  Input,
   Table,
   Row,
   Col,
@@ -30,13 +28,13 @@ import sanction from "../images/Group 2418.svg";
 import { Typography } from "@material-ui/core";
 
 function TableCard() {
-  const [jobs, setjobs] = useState([]);
+  const [, setjobs] = useState([]);
   const [vjobs, setvjobs] = useState([]);
-  const [tjobs, settjobs] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [errorF, seterrorF] = useState(false);
-  const [update, setupdate] = useState(false);
+  const [, settjobs] = useState([]);
+  const [, seterrorF] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [pageNo, setpageNo] = useState(1)
+  const [stage, setstage] = useState("")
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -49,7 +47,7 @@ function TableCard() {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
+  
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -65,10 +63,9 @@ function TableCard() {
 
     setOpen(false);
   };
-
+  
   const loadAlljobs = () => {
-    console.log(localStorage.getItem("userToken"));
-    GETALLLEADS().then((data) => {
+    GETALLLEADS(pageNo,stage).then((data) => {
       console.log(data.result);
       if (data)
         if (data.error) {
@@ -77,22 +74,18 @@ function TableCard() {
           setjobs(data);
           setvjobs(data.result);
           settjobs(data.result);
-          // console.log(vjobs);
+          
         }
     });
   };
 
   const filter = (stages) => {
-    if (stages === "") {
-      setvjobs(tjobs);
-    } else {
-      // console.log(tjobs.filter((e) => e.applicationStatus == status));
-      setvjobs(tjobs.filter((e) => e.applicationStages == stages));
+      setstage(stages)
+      
     }
-  };
+  
 
-  const [refresh, setrefresh] = useState(true);
-  const filteredStatus = [];
+  const [refresh] = useState(true);
   const stages = [
     "Closed",
     "Disbursed",
@@ -101,46 +94,17 @@ function TableCard() {
     "OSV",
     "Sanction",
   ];
-  /*const status = [
-    "OSVRejected",
-    "SanctionRejected",
-    "Lead",
-    "Cancelled",
-    "Disbursed",
-    "OSVApproved",
-    "RejectedForBasicFulfillment",
-    "FileLoginComplete",
-    "CustomerVerificationSkipped",
-    "CustomerConsentPending",
-    "CustomerRejected",
-    "AcceptedForBasicFulfillment",
-    "SentForBasicFulfillment",
-    "SanctionExpired",
-    "PendingOSV",
-    "CustomerApproved",
-    "Sanctioned",
-    "Withdrawn",
-    "OSVStampped",
-    "OSVStampPending",
-  ];*/
+
   useEffect(() => {
     loadAlljobs();
-  }, [refresh]);
+  
+  }, [refresh, stage, pageNo]);
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   return (
-    // <Card elevation={3} className='pt-5 mb-6'>
-    //   <div className='card-title px-6 mb-3'>top selling products</div>
+    
+    
     <>
       <Card className='card-dashboard'>
         <CardBody>
@@ -153,10 +117,10 @@ function TableCard() {
                 </CardTitle>
               </Col>
               <Col md={9}>
-                <Button style={{width:"7rem",height:"4rem",backgroundColor:"skyblue"}}>
-                  <Typography variant="h6">Prev</Typography></Button>
-                <Button style={{width:"7rem",height:"4rem",backgroundColor:"skyblue",marginLeft:"2rem"}}>
-                <Typography variant="h6">Next</Typography></Button>
+                {pageNo>1 && <Button onClick={()=>{if(pageNo !== 0){setpageNo(pageNo-1);loadAlljobs();}}} style={{width:"7rem",height:"4rem",backgroundColor:"skyblue"}}>
+                  <Typography variant="h6">Prev</Typography></Button>}
+                {vjobs.length === 20 && <Button onClick={()=>{setpageNo(pageNo+1);loadAlljobs();}} style={{width:"7rem",height:"4rem",backgroundColor:"skyblue",marginLeft:"2rem"}}>
+                <Typography variant="h6">Next</Typography></Button>}
               </Col>
               <Col md={2}>
                 <Button
@@ -165,7 +129,7 @@ function TableCard() {
                   aria-haspopup='true'
                   onClick={handleToggle}
                 >
-                  <FilterListIcon></FilterListIcon> Status
+                  <FilterListIcon></FilterListIcon> Stages
                 </Button>
                 <Popper
                   open={open}
@@ -202,6 +166,7 @@ function TableCard() {
                             </MenuItem>
                             {stages.map((obj, k) => (
                               <MenuItem
+                                key={k}
                                 onClick={(e) => {
                                   filter(obj);
                                   handleClose(e);
@@ -256,13 +221,13 @@ function TableCard() {
                 vjobs
                   .map((product, i) => {
                     return (
-                      <tr style={{ paddingTop: "2rem" }}>
+                      <tr key={i} style={{ paddingTop: "2rem" }}>
                         <td>
                           <Row>
                             <Col md={2}>
                                 <Link to={`/${product.id}`}>
                                   <img
-                                    // className='circular-image-small'
+                                    
                                     src={product.profilePicUrl}
                                     style={{
                                       width: "4rem",
@@ -306,7 +271,7 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
+                            
                             opacity: 1.5,
                             fontFamily: "Roboto",
                             alignItems:"center"
@@ -317,7 +282,7 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
+                            
 
                             fontFamily: "Roboto",
                            
@@ -327,7 +292,7 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
+                            
 
                             fontFamily: "Roboto",
                           }}
@@ -336,7 +301,7 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
+                            
 
                             fontFamily: "Roboto",
                           }}
@@ -345,8 +310,8 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
-                            // opacity: 1.5,
+                            
+                            
                             fontFamily: "Roboto",
                           }}
                         >
@@ -354,25 +319,25 @@ function TableCard() {
                         </td>
                         <td
                           style={{
-                            // color: "#ACACAC",
+                            
                             opacity: 1.5,
                             fontFamily: "Roboto",
                           }}
                         >
                           {product.applicationStage === "Lead" && (
-                            <img src={lead}></img>
+                            <img alt="Lead" src={lead}></img>
                           )}
                           {product.applicationStage === "OSV" && (
-                            <img src={osvi}></img>
+                            <img alt="OSV" src={osvi}></img>
                           )}
                           {product.applicationStage === "Disbursed" && (
-                            <img src={disb}></img>
+                            <img alt="Disbursed" src={disb}></img>
                           )}
                           {product.applicationStage === "Closed" && (
-                            <img src={closed}></img>
+                            <img alt="Closed" src={closed}></img>
                           )}
                           {product.applicationStage === "Sanction" && (
-                            <img src={sanction}></img>
+                            <img alt="Sanction" src={sanction}></img>
                           )}
                         </td>
                         <td>
