@@ -338,8 +338,9 @@ function Profile(props) {
           type='submit'
           color='primary'
           onClick={(e) => {
-            handleChange1();
+            approve(e, id, "OSVVerified");
             handleClose2();
+            handleChange1();
           }}
         >
           Submit
@@ -368,6 +369,11 @@ function Profile(props) {
       if (data.error) {
         console.log(data.error);
       } else {
+        {
+          data.result.pendingDocuments.map((o, i) => {
+            console.log(o.id);
+          });
+        }
         alert("Lead Rejected");
         props.history.push("/dashboard");
       }
@@ -2343,7 +2349,6 @@ function Profile(props) {
                   className='login-otp'
                   style={{ background: "#0088FC", width: "100%" }}
                   onClick={(e) => {
-                    approve(e, id, "OSVVerified");
                     handleOpen2();
                   }}
                 >
