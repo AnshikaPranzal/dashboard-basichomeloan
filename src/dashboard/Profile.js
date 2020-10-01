@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 
-
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -18,14 +17,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION, approveOSV } from "../helper/index";
 import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
-import { Link,withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
 import Verify from "./VerifyDocument";
 import verified from "../images/Group 2125.svg";
-
-
 
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { CheckCircleOutline, Visibility } from "@material-ui/icons";
@@ -36,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", 
+    paddingTop: "56.25%",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -145,22 +142,18 @@ function Profile(props) {
       documents: [],
     },
   ]);
- 
 
   const [refresh1, setrefresh1] = useState(true);
   const [property, setproperty] = useState([]);
   const [borrower, setborrower] = useState([]);
   const [osv, setosv] = useState([]);
   const [bank, setbank] = useState([]);
-  useEffect(() => {
-    
-  }, [refresh1]);
+  useEffect(() => {}, [refresh1]);
 
   const loadDoc = () => {
     getDocConfig().then(async (data) => {
       if (data)
         if (data.error) {
-          
         } else {
           setjobs1(data);
           const h = await Promise.resolve(setvjobs1(data.result));
@@ -173,68 +166,64 @@ function Profile(props) {
     loadDoc();
   }, [refresh3]);
   useEffect(() => {
-    const func= async()=>{
-     const k= await Promise.resolve(loadDoc());
-    setproperty(
-      vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
-    );
-    setborrower(
-      vjobs1.filter((e) => e.belongsToEntity == "ApplicationCustomer")
-    );
-    setbank(vjobs1.filter((e) => e.belongsToEntity == "ApplicationBank"));
-    setosv(
-      vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
-    );
-    }
-    
-    func()
+    const func = async () => {
+      const k = await Promise.resolve(loadDoc());
+      setproperty(
+        vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
+      );
+      setborrower(
+        vjobs1.filter((e) => e.belongsToEntity == "ApplicationCustomer")
+      );
+      setbank(vjobs1.filter((e) => e.belongsToEntity == "ApplicationBank"));
+      setosv(
+        vjobs1.filter((e) => e.belongsToEntity == "ApplicationTeleVerification")
+      );
+    };
+
+    func();
   }, [vjobs1]);
-  const [vjob, setvjob] = useState(
-    {
-      
-      coBorrowers: [
-        {
-          documents: [
-            {
-              id: "",
-            },
-          ],
-        },
-      ],
-      primaryBorrower: {
+  const [vjob, setvjob] = useState({
+    documents: [],
+    coBorrowers: [
+      {
         documents: [
           {
             id: "",
           },
         ],
       },
-    }
-    
-    
-  );
+    ],
+    primaryBorrower: {
+      documents: [
+        {
+          id: "",
+        },
+      ],
+    },
+  });
 
-  
   const [vjobp, setvjobp] = useState([]);
+  const [vjobproperty, setvjobproperty] = useState([]);
+
   const [vjobq, setvjobq] = useState({
     documents: [],
   });
-
-  
 
   const getajob = (id) => {
     GETAPPLICATION(id).then((data) => {
       if (data)
         if (data.error) {
-          
         } else {
           setvjob(data.result);
           console.log("app", data.result);
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
+          setvjobproperty(data.result.documents);
+          console.log("documentssss saam", data.result.documents);
         }
     });
   };
-  
+
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -265,6 +254,7 @@ function Profile(props) {
 
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
 
   const handleOpen1 = () => {
     setOpen(true);
@@ -273,9 +263,15 @@ function Profile(props) {
   const handleClose1 = () => {
     setOpen(false);
   };
-  const [Name, setName] = useState("");
 
-  
+  const handleOpen2 = () => {
+    setOpen1(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen1(false);
+  };
+  const [Name, setName] = useState("");
 
   const [disabled, setDisabled] = useState(false);
   const [disabled1, setDisabled1] = useState(false);
@@ -290,7 +286,10 @@ function Profile(props) {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h3>Please enter rejection reason:</h3>
-      <p id='simple-modal-description' style={{ textAlign: "center",marginTop:"2em" }}>
+      <p
+        id='simple-modal-description'
+        style={{ textAlign: "center", marginTop: "2em" }}
+      >
         <input
           type='text'
           name='title'
@@ -317,18 +316,50 @@ function Profile(props) {
     </div>
   );
 
+  const body1 = (
+    <div style={modalStyle} className={classes.paper}>
+      <h3>Confirm Approval</h3>
+      <p
+        id='simple-modal-description'
+        style={{ textAlign: "center", marginTop: "2em" }}
+      >
+        <br></br>
+        <Button
+          variant='contained'
+          color='primary'
+          style={{ marginRight: "2rem" }}
+          onClick={handleClose2}
+        >
+          Close
+        </Button>
+        <Button
+          disabled={disabled1}
+          variant='contained'
+          type='submit'
+          color='primary'
+          onClick={(e) => {
+            approve(e, id, "OSVVerified");
+            handleChange1();
+            handleClose2();
+          }}
+        >
+          Submit
+        </Button>
+      </p>
+    </div>
+  );
+
   const id = props.match.params.id;
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
       if (vjobq.documents[i].verified !== "Approved") {
-        console.log(vjobq.documents[i],"k")
+        console.log(vjobq.documents[i], "k");
         return false;
       }
     }
   };
 
   const approve1 = (event, id, name, text) => {
-    
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -337,40 +368,36 @@ function Profile(props) {
       console.log(data);
       if (data.error) {
         console.log(data.error);
-         
-      }
-      else{
-        alert("Lead Rejected")
-        props.history.push("/dashboard")
+      } else {
+        alert("Lead Rejected");
+        props.history.push("/dashboard");
       }
     });
   };
 
   const approve = async (event, id, name) => {
-    
     event.preventDefault();
     const c = await Promise.resolve(check());
     if (c === false) {
       alert("All the documents are not verified");
     } else {
-      const c = await Promise.resolve(approveOSV(id, {
-        "status": name,
-      }).then((data) => {
-        console.log(data);
-        if (data.error) {
-          console.log(data.error);
-          
-        }
-        else{
-          alert("Lead Verified")
-          props.history.push("/dashboard") 
-        }
-      }));
+      const c = await Promise.resolve(
+        approveOSV(id, {
+          status: name,
+        }).then((data) => {
+          console.log(data);
+          if (data.error) {
+            console.log(data.error);
+          } else {
+            alert("Lead Verified");
+            props.history.push("/dashboard");
+          }
+        })
+      );
     }
   };
-  console.log(vjob,"here")
+  console.log(vjob, "here");
   const reject = (event, id, name) => {
-    
     event.preventDefault();
     approveOSV(id, {
       status: `${name}`,
@@ -392,9 +419,10 @@ function Profile(props) {
         </Toolbar>
       </AppBar>
 
-      {/* {vjobp.map((j, k) => {
-        console.log("jiik", j.documents);
-      })} */}
+      {vjobproperty.map((j, k) => {
+        console.log("jiik", j.id);
+      })}
+
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
@@ -405,15 +433,12 @@ function Profile(props) {
                 style={{
                   backgroundColor: "#f1f3f8",
                   borderRadius: "3px",
-                  
-                  
                 }}
               >
                 <div
                   style={{
                     paddingLeft: "15%",
                     paddingTop: "6rem",
-                    
                   }}
                 >
                   <div style={{ fontWeight: 600, fontFamily: "Open Sans" }}>
@@ -425,7 +450,6 @@ function Profile(props) {
                             <div key={i}>
                               {obj2.id === vjob.id && (
                                 <img
-                                  
                                   src={
                                     obj2.id === vjob.id && obj2.profilePicUrl
                                   }
@@ -501,7 +525,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    Basic Ref No:{" "}  {vjob.basicAppId}
+                    Basic Ref No: {vjob.basicAppId}
                   </div>
                   <div
                     style={{
@@ -515,7 +539,7 @@ function Profile(props) {
                     }}
                   >
                     {" "}
-                    Bank Application No:{" "} {vjob.bankAppId}
+                    Bank Application No: {vjob.bankAppId}
                   </div>
                   <div
                     style={{
@@ -583,7 +607,6 @@ function Profile(props) {
                   </div>
                 </div>
                 <Divider />
-                
               </div>
             </div>
           </div>
@@ -595,7 +618,7 @@ function Profile(props) {
                 style={{
                   marginLeft: "2.8rem",
                   fontWeight: 500,
-                  
+
                   letterSpacing: 0.48,
                   fontSize: 16,
                   fontFamily: "Roboto",
@@ -940,8 +963,7 @@ function Profile(props) {
                     style={{
                       marginLeft: "2rem",
                       fontWeight: 400,
-                      
-                      
+
                       fontFamily: "Roboto",
                     }}
                   >
@@ -953,13 +975,11 @@ function Profile(props) {
                   </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
-                  {vjobq.documents.map((j, k) => {
-                    
+                <Grid item xs={12} style={{ marginLeft: "2rem" }}>
+                  {vjobproperty.map((j, k) => {
                     return (
                       <>
                         {property.map((n, m) => {
-                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -971,54 +991,89 @@ function Profile(props) {
                                       marginLeft: "1rem",
                                     }}
                                   >
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionOneRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionOne}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionOneRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionOne}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyOneValue}
+                                      </Grid>
                                     </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionTwoRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionTwo}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionTwoRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionTwo}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyTwoValue}
+                                      </Grid>
                                     </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {n.keyCaptionThreeRequired && (
-                                        <span>*</span>
-                                      )}
-                                      {n.keyCaptionThree}
-                                    </Grid>
-                                    <Grid
-                                      item
-                                      style={{
-                                        color: "#ACACAC",
-                                        opacity: 1.5,
-                                        fontFamily: "Roboto",
-                                      }}
-                                    >
-                                      {j.docKeyOneValue}
+                                    <Grid container>
+                                      <Grid
+                                        item
+                                        xs={6}
+                                        style={{
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {n.keyCaptionThreeRequired && (
+                                          <span style={{ color: "red" }}>
+                                            *
+                                          </span>
+                                        )}
+                                        {n.keyCaptionThree}
+                                      </Grid>
+                                      <Grid
+                                        item
+                                        xs={3}
+                                        style={{
+                                          color: "#ACACAC",
+                                          opacity: 1.5,
+                                          fontFamily: "Roboto",
+                                        }}
+                                      >
+                                        {j.docKeyThreeValue}
+                                      </Grid>
                                     </Grid>
                                   </Grid>
                                   <Grid
@@ -1039,16 +1094,7 @@ function Profile(props) {
                                     >
                                       {j.docKeyCaption}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
                                           setUrl(
@@ -1056,12 +1102,14 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
-                                        
+                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
                                       >
-                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus !==
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       <a
                                         onClick={() => {
@@ -1071,40 +1119,20 @@ function Profile(props) {
                                           );
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
-                                        
                                       >
-                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
-                                      </a>
-                                      {j.fileTwoSignedUrl && (
-                                        <a
-                                          onClick={() => {
-                                            setUrl(j.fileTwoSignedUrl);
-                                          }}
-                                          href={`/verify/${vjob.id}/${j.id}`}
-                                          
-                                        >
+                                        {vjob.applicationStatus ===
+                                          "PendingOSV" && (
                                           <Visibility
                                             style={{ color: "black" }}
                                           />
-                                        </a>
-                                      )}
+                                        )}
+                                      </a>
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+
+                                    <Grid item xs={2} style={{}}>
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1116,21 +1144,10 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            
-
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
                                             fontSize: 10,
@@ -1154,7 +1171,10 @@ function Profile(props) {
                                       <Grid
                                         item
                                         xs={1}
-                                        style={{color:"red", paddingLeft: "1rem" }}
+                                        style={{
+                                          color: "red",
+                                          paddingLeft: "1rem",
+                                        }}
                                       >
                                         X
                                       </Grid>
@@ -1178,7 +1198,7 @@ function Profile(props) {
                 style={{
                   marginLeft: "2.8rem",
                   fontWeight: 500,
-                  
+
                   fontFamily: "Roboto",
                   letterSpacing: 0.48,
                   fontSize: 16,
@@ -1206,7 +1226,7 @@ function Profile(props) {
                     style={{
                       marginLeft: "2rem",
                       fontWeight: 600,
-                      
+
                       fontFamily: "Roboto",
                     }}
                   >
@@ -1509,7 +1529,6 @@ function Profile(props) {
                   >
                     {vjob.coBorrowers
                       ? vjob.coBorrowers.map((o, i) => {
-                          
                           return o.companyName;
                         })
                       : ""}
@@ -1524,11 +1543,9 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12} style={{ marginLeft: "2rem" }}>
                   {vjobq.documents.map((j, k) => {
-                    
                     return (
                       <>
                         {borrower.map((n, m) => {
-                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1545,7 +1562,6 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1574,7 +1590,6 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1603,7 +1618,6 @@ function Profile(props) {
                                         item
                                         xs={6}
                                         style={{
-                                          
                                           opacity: 1.5,
                                           fontFamily: "Roboto",
                                         }}
@@ -1646,16 +1660,7 @@ function Profile(props) {
                                     >
                                       {j.docKeyCaption}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       <a
                                         onClick={() => {
                                           setUrl(
@@ -1664,11 +1669,13 @@ function Profile(props) {
                                           );
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
-                                        
                                       >
-                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus !==
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       <a
                                         onClick={() => {
@@ -1678,28 +1685,20 @@ function Profile(props) {
                                           );
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
-                                        
                                       >
-                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus ===
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                     </Grid>
-                                   
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+
+                                    <Grid item xs={2} style={{}}>
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -1711,21 +1710,10 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            
-
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
                                             fontSize: 10,
@@ -1749,7 +1737,10 @@ function Profile(props) {
                                       <Grid
                                         item
                                         xs={1}
-                                        style={{color:"red", paddingLeft: "1rem" }}
+                                        style={{
+                                          color: "red",
+                                          paddingLeft: "1rem",
+                                        }}
                                       >
                                         X
                                       </Grid>
@@ -1857,11 +1848,9 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    
                     return (
                       <>
                         {bank.map((n, m) => {
-                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -1949,12 +1938,16 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
-                                        
+                                        href={`/verify/${vjob.id}/${j.id}/${
+                                          j.docKeyCaption / true
+                                        }`}
                                       >
-                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus !==
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       <a
                                         onClick={() => {
@@ -1964,11 +1957,13 @@ function Profile(props) {
                                           );
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
-                                        
                                       >
-                                        { vjob.applicationStatus === "PendingOSV" && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus ===
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
@@ -1976,7 +1971,6 @@ function Profile(props) {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
-                                          
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -1984,20 +1978,10 @@ function Profile(props) {
                                         </a>
                                       )}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2010,21 +1994,10 @@ function Profile(props) {
                                       )}
                                     </Grid>
 
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            
-
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
                                             fontSize: 10,
@@ -2048,7 +2021,10 @@ function Profile(props) {
                                       <Grid
                                         item
                                         xs={1}
-                                        style={{color:"red", paddingLeft: "1rem" }}
+                                        style={{
+                                          color: "red",
+                                          paddingLeft: "1rem",
+                                        }}
                                       >
                                         X
                                       </Grid>
@@ -2175,11 +2151,9 @@ function Profile(props) {
                 </Grid>
                 <Grid item xs={12}>
                   {vjobq.documents.map((j, k) => {
-                    
                     return (
                       <>
                         {osv.map((n, m) => {
-                          
                           return (
                             <>
                               {n.id === j.docConfigId && (
@@ -2255,7 +2229,6 @@ function Profile(props) {
                                         color: "#ACACAC",
                                         opacity: 1.5,
                                         fontFamily: "Roboto",
-                                        
                                       }}
                                     >
                                       {j.docKeyCaption}
@@ -2268,12 +2241,16 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption/true}`}
-                                        
+                                        href={`/verify/${vjob.id}/${j.id}/${
+                                          j.docKeyCaption / true
+                                        }`}
                                       >
-                                        {( vjob.applicationStatus !== "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus !==
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       <a
                                         onClick={() => {
@@ -2283,11 +2260,13 @@ function Profile(props) {
                                           );
                                         }}
                                         href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
-                                        
                                       >
-                                        {( vjob.applicationStatus === "PendingOSV") && <Visibility
-                                          style={{ color: "black" }}
-                                        />}
+                                        {vjob.applicationStatus ===
+                                          "PendingOSV" && (
+                                          <Visibility
+                                            style={{ color: "black" }}
+                                          />
+                                        )}
                                       </a>
                                       {j.fileTwoSignedUrl && (
                                         <a
@@ -2295,7 +2274,6 @@ function Profile(props) {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
                                           href={`/verify/${vjob.id}/${j.id}`}
-                                          
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -2303,20 +2281,10 @@ function Profile(props) {
                                         </a>
                                       )}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isStampingReq && (
                                         <div
                                           style={{
-                                            
                                             marginRight: "1rem",
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
@@ -2328,21 +2296,10 @@ function Profile(props) {
                                         </div>
                                       )}
                                     </Grid>
-                                    <Grid
-                                      item
-                                      xs={2}
-                                      style={
-                                        {
-                                          
-                                          
-                                        }
-                                      }
-                                    >
+                                    <Grid item xs={2} style={{}}>
                                       {j.isVerificationReq && (
                                         <div
                                           style={{
-                                            
-
                                             paddingLeft: "1rem",
                                             fontFamily: "Roboto",
                                             fontSize: 10,
@@ -2366,7 +2323,10 @@ function Profile(props) {
                                       <Grid
                                         item
                                         xs={1}
-                                        style={{color:"red", paddingLeft: "1rem" }}
+                                        style={{
+                                          color: "red",
+                                          paddingLeft: "1rem",
+                                        }}
                                       >
                                         X
                                       </Grid>
@@ -2386,48 +2346,51 @@ function Profile(props) {
             </Collapse>
           </Card>
 
-          {vjob.applicationStatus === "PendingOSV" &&(<Row style={{ marginTop: "2rem" }}>
-            <Col md={6}>
-              <Button
-                className='login-otp'
-                style={{ background: "#0088FC", width: "100%" }}
-                
-                
-                onClick={(e) => {
-                  
-                  approve(e, id, "OSVVerified");
-                  handleChange1();
-                }}
-              >
-                Approve
-              </Button>
-            </Col>
-            <Col md={6}>
-              <Button
-                
-                
-                className='login-otp'
-                style={{ background: "#ACACAC", width: "100%" }}
-                
-                onClick={(e) => {
-                  handleOpen1();
-                  if (disabled === "true") {
-                    handleChange1();
-                  }
-                }}
-              >
-                Reject
-              </Button>
-              <Modal
-                open={open}
-                onClose={handleClose1}
-                aria-labelledby='simple-modal-title'
-                aria-describedby='simple-modal-description'
-              >
-                {body}
-              </Modal>
-            </Col>
-          </Row>)}
+          {vjob.applicationStatus === "PendingOSV" && (
+            <Row style={{ marginTop: "2rem" }}>
+              <Col md={6}>
+                <Button
+                  className='login-otp'
+                  style={{ background: "#0088FC", width: "100%" }}
+                  onClick={(e) => {
+                    handleOpen2();
+                  }}
+                >
+                  Approve
+                </Button>
+                <Modal
+                  open={open1}
+                  onClose={handleClose2}
+                  aria-labelledby='simple-modal-title'
+                  aria-describedby='simple-modal-description'
+                >
+                  {body1}
+                </Modal>
+              </Col>
+              <Col md={6}>
+                <Button
+                  className='login-otp'
+                  style={{ background: "#ACACAC", width: "100%" }}
+                  onClick={(e) => {
+                    handleOpen1();
+                    if (disabled === "true") {
+                      handleChange1();
+                    }
+                  }}
+                >
+                  Reject
+                </Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose1}
+                  aria-labelledby='simple-modal-title'
+                  aria-describedby='simple-modal-description'
+                >
+                  {body}
+                </Modal>
+              </Col>
+            </Row>
+          )}
         </Grid>
       </Grid>
     </div>
