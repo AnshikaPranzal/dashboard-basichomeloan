@@ -1,11 +1,11 @@
 // import { API } from "../backend";
 // const token = localStorage.getItem("userToken");
 
-export const GETALLLEADS = (pn,stage) => {
+export const GETALLLEADS = (pn, stage) => {
   const ev = encodeURIComponent({
     PageNumber: 1,
     PageSize: 1000,
-  })
+  });
   return fetch(
     `https://dev-applicationservice.basichomeloan.com/api/v1/Applications/LeadsSummary/?PageNumber=${pn}&LoanStages=${stage}`,
     {
@@ -13,7 +13,7 @@ export const GETALLLEADS = (pn,stage) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        
+
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },
     }
@@ -63,7 +63,7 @@ export const getDocConfig = () => {
 };
 
 export const approveOSV = (applicationId, application) => {
-  console.log(application,applicationId,"ll");
+  console.log(application, applicationId, "ll");
   return fetch(
     `https://dev-applicationservice.basichomeloan.com/api/v1/Application/Activity/${applicationId}/OSV`,
     {

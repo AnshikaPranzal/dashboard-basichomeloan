@@ -21,6 +21,7 @@ const Verify = (props) => {
         console.log(data.error);
       }
       else{
+        
         alert("Document "+name)
         props.history.push(`/${id}`)
       }
