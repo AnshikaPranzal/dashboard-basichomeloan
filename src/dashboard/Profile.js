@@ -940,8 +940,6 @@ function Profile(props) {
                     style={{
                       marginLeft: "2rem",
                       fontWeight: 400,
-                      
-                      
                       fontFamily: "Roboto",
                     }}
                   >
