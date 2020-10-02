@@ -219,7 +219,7 @@ function Profile(props) {
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
           setvjobproperty(data.result.documents);
-          console.log("documentssss saam", vjobp.documents);
+          // console.log("documentssss saam", vjobp.documents);
         }
     });
   };
@@ -272,9 +272,14 @@ function Profile(props) {
     setOpen1(false);
   };
   const [Name, setName] = useState("");
+  const [Idd, setIdd] = useState("");
 
   const [disabled, setDisabled] = useState(false);
   const [disabled1, setDisabled1] = useState(false);
+
+  const handleChange3 = (id) => {
+    setIdd(id);
+  };
 
   const handleChange1 = () => {
     setDisabled(true);
@@ -353,7 +358,7 @@ function Profile(props) {
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
       if (vjobq.documents[i].verified !== "Approved") {
-        console.log(vjobq.documents[i], "k");
+        // console.log(vjobq.documents[i], "k");
         return false;
       }
     }
@@ -369,11 +374,6 @@ function Profile(props) {
       if (data.error) {
         console.log(data.error);
       } else {
-        {
-          data.result.pendingDocuments.map((o, i) => {
-            console.log(o.id);
-          });
-        }
         alert("Lead Rejected");
         props.history.push("/dashboard");
       }
@@ -401,7 +401,7 @@ function Profile(props) {
       );
     }
   };
-  console.log(vjob, "here");
+  // console.log(vjob, "here");
   const reject = (event, id, name) => {
     event.preventDefault();
     approveOSV(id, {
@@ -414,6 +414,7 @@ function Profile(props) {
     });
   };
 
+  const [Id, setId] = useState("");
   return (
     <div>
       <AppBar style={{ backgroundColor: "white" }}>
@@ -423,10 +424,6 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-
-      {vjobp.map((j, k) => {
-        console.log("jiik", j.documents);
-      })}
 
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
@@ -1747,239 +1744,240 @@ function Profile(props) {
                           Document:
                         </Grid>
                         <Grid item xs={12} style={{ marginLeft: "2rem" }}>
-                          {vjobp.map((p, q) => {
+                          {/* {vjobp.map((p, q) => {
+                            console.log(p, "pppppppp");
+                            return (
+                              <div key={q}>
+                                {console.log(q, "oooooooo")} */}
+                          {j.documents.map((p, q) => {
                             return (
                               <>
-                                {p.documents.map((j, k) => {
-                                  return (
-                                    <>
-                                      {borrower.map((n, m) => {
-                                        return (
-                                          <>
-                                            {n.id === j.docConfigId && (
-                                              <>
-                                                <Grid
-                                                  container
-                                                  style={{
-                                                    marginLeft: "2.8rem",
-                                                    marginLeft: "1rem",
-                                                  }}
-                                                >
-                                                  <Grid container>
-                                                    <Grid
-                                                      item
-                                                      xs={6}
-                                                      style={{
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {n.keyCaptionOneRequired && (
-                                                        <span
-                                                          style={{
-                                                            color: "red",
-                                                          }}
-                                                        >
-                                                          *
-                                                        </span>
-                                                      )}
-                                                      {n.keyCaptionOne}
-                                                    </Grid>
-                                                    <Grid
-                                                      item
-                                                      xs={3}
-                                                      style={{
-                                                        color: "#ACACAC",
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {j.docKeyOneValue}
-                                                    </Grid>
-                                                  </Grid>
-                                                  <Grid container>
-                                                    <Grid
-                                                      item
-                                                      xs={6}
-                                                      style={{
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {n.keyCaptionTwoRequired && (
-                                                        <span
-                                                          style={{
-                                                            color: "red",
-                                                          }}
-                                                        >
-                                                          *
-                                                        </span>
-                                                      )}
-                                                      {n.keyCaptionTwo}
-                                                    </Grid>
-                                                    <Grid
-                                                      item
-                                                      xs={3}
-                                                      style={{
-                                                        color: "#ACACAC",
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {j.docKeyTwoValue}
-                                                    </Grid>
-                                                  </Grid>
-                                                  <Grid container>
-                                                    <Grid
-                                                      item
-                                                      xs={6}
-                                                      style={{
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {n.keyCaptionThreeRequired && (
-                                                        <span
-                                                          style={{
-                                                            color: "red",
-                                                          }}
-                                                        >
-                                                          *
-                                                        </span>
-                                                      )}
-                                                      {n.keyCaptionThree}
-                                                    </Grid>
-                                                    <Grid
-                                                      item
-                                                      xs={3}
-                                                      style={{
-                                                        color: "#ACACAC",
-                                                        opacity: 1.5,
-                                                        fontFamily: "Roboto",
-                                                      }}
-                                                    >
-                                                      {j.docKeyThreeValue}
-                                                    </Grid>
-                                                  </Grid>
-                                                </Grid>
-                                                <Grid
-                                                  container
-                                                  style={{
-                                                    marginLeft: "2.8",
-                                                    marginTop: "1rem",
-                                                  }}
-                                                >
-                                                  <Grid
-                                                    item
-                                                    xs={4}
-                                                    style={{
-                                                      color: "#ACACAC",
-                                                      opacity: 1.5,
-                                                      fontFamily: "Roboto",
-                                                    }}
-                                                  >
-                                                    {j.docKeyCaption}
-                                                  </Grid>
-                                                  <Grid item xs={2} style={{}}>
-                                                    <a
-                                                      onClick={() => {
-                                                        setUrl(
-                                                          j.fileOneSignedUrl,
-                                                          j.fileTwoSignedUrl
-                                                        );
-                                                      }}
-                                                      href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
-                                                    >
-                                                      {vjob.applicationStatus !==
-                                                        "PendingOSV" && (
-                                                        <Visibility
-                                                          style={{
-                                                            color: "black",
-                                                          }}
-                                                        />
-                                                      )}
-                                                    </a>
-                                                    <a
-                                                      onClick={() => {
-                                                        setUrl(
-                                                          j.fileOneSignedUrl,
-                                                          j.fileTwoSignedUrl
-                                                        );
-                                                      }}
-                                                      href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
-                                                    >
-                                                      {vjob.applicationStatus ===
-                                                        "PendingOSV" && (
-                                                        <Visibility
-                                                          style={{
-                                                            color: "black",
-                                                          }}
-                                                        />
-                                                      )}
-                                                    </a>
-                                                  </Grid>
+                                {borrower.map((n, m) => {
+                                  // console.log("mmmmmjjj", n.id);
 
-                                                  <Grid item xs={2} style={{}}>
-                                                    {j.isStampingReq && (
-                                                      <div
-                                                        style={{
-                                                          marginRight: "1rem",
-                                                          paddingLeft: "1rem",
-                                                          fontFamily: "Roboto",
-                                                          fontSize: 10,
-                                                          color: "#0088FC",
-                                                        }}
-                                                      >
-                                                        Stamping Required
-                                                      </div>
-                                                    )}
-                                                  </Grid>
-                                                  <Grid item xs={2} style={{}}>
-                                                    {j.isVerificationReq && (
-                                                      <div
-                                                        style={{
-                                                          paddingLeft: "1rem",
-                                                          fontFamily: "Roboto",
-                                                          fontSize: 10,
-                                                          color: "#66BB6A",
-                                                        }}
-                                                      >
-                                                        Verfication Required
-                                                      </div>
-                                                    )}
-                                                  </Grid>
-                                                  {j.verified ===
-                                                    "Approved" && (
-                                                    <Grid
-                                                      item
-                                                      xs={1}
-                                                      style={{
-                                                        paddingLeft: "1rem",
-                                                      }}
-                                                    >
-                                                      <img src={verified}></img>
-                                                    </Grid>
-                                                  )}
-                                                  {j.verified ===
-                                                    "Rejected" && (
-                                                    <Grid
-                                                      item
-                                                      xs={1}
+                                  return (
+                                    <div key={m}>
+                                      {console.log(m, "gggggggggg")}
+                                      {p.refEntityId === j.id &&
+                                        n.id === p.docConfigId && (
+                                          <>
+                                            <Grid
+                                              container
+                                              style={{
+                                                marginLeft: "2.8rem",
+                                                marginLeft: "1rem",
+                                              }}
+                                            >
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionOneRequired && (
+                                                    <span
                                                       style={{
                                                         color: "red",
-                                                        paddingLeft: "1rem",
                                                       }}
                                                     >
-                                                      X
-                                                    </Grid>
+                                                      *
+                                                    </span>
                                                   )}
+                                                  {n.keyCaptionOne}
                                                 </Grid>
-                                              </>
-                                            )}
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyOneValue}
+                                                </Grid>
+                                              </Grid>
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionTwoRequired && (
+                                                    <span
+                                                      style={{
+                                                        color: "red",
+                                                      }}
+                                                    >
+                                                      *
+                                                    </span>
+                                                  )}
+                                                  {n.keyCaptionTwo}
+                                                </Grid>
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyTwoValue}
+                                                </Grid>
+                                              </Grid>
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionThreeRequired && (
+                                                    <span
+                                                      style={{
+                                                        color: "red",
+                                                      }}
+                                                    >
+                                                      *
+                                                    </span>
+                                                  )}
+                                                  {n.keyCaptionThree}
+                                                </Grid>
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyThreeValue}
+                                                </Grid>
+                                              </Grid>
+                                            </Grid>
+                                            <Grid
+                                              container
+                                              style={{
+                                                marginLeft: "2.8",
+                                                marginTop: "1rem",
+                                              }}
+                                            >
+                                              <Grid
+                                                item
+                                                xs={4}
+                                                style={{
+                                                  color: "#ACACAC",
+                                                  opacity: 1.5,
+                                                  fontFamily: "Roboto",
+                                                }}
+                                              >
+                                                {p.docKeyCaption}
+                                              </Grid>
+                                              <Grid item xs={2} style={{}}>
+                                                <a
+                                                  onClick={() => {
+                                                    setUrl(
+                                                      p.fileOneSignedUrl,
+                                                      p.fileTwoSignedUrl
+                                                    );
+                                                  }}
+                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                >
+                                                  {vjob.applicationStatus !==
+                                                    "PendingOSV" && (
+                                                    <Visibility
+                                                      style={{
+                                                        color: "black",
+                                                      }}
+                                                    />
+                                                  )}
+                                                </a>
+                                                <a
+                                                  onClick={() => {
+                                                    setUrl(
+                                                      p.fileOneSignedUrl,
+                                                      p.fileTwoSignedUrl
+                                                    );
+                                                  }}
+                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                >
+                                                  {vjob.applicationStatus ===
+                                                    "PendingOSV" && (
+                                                    <Visibility
+                                                      style={{
+                                                        color: "black",
+                                                      }}
+                                                    />
+                                                  )}
+                                                </a>
+                                              </Grid>
+
+                                              <Grid item xs={2} style={{}}>
+                                                {p.isStampingReq && (
+                                                  <div
+                                                    style={{
+                                                      marginRight: "1rem",
+                                                      paddingLeft: "1rem",
+                                                      fontFamily: "Roboto",
+                                                      fontSize: 10,
+                                                      color: "#0088FC",
+                                                    }}
+                                                  >
+                                                    Stamping Required
+                                                  </div>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={2} style={{}}>
+                                                {p.isVerificationReq && (
+                                                  <div
+                                                    style={{
+                                                      paddingLeft: "1rem",
+                                                      fontFamily: "Roboto",
+                                                      fontSize: 10,
+                                                      color: "#66BB6A",
+                                                    }}
+                                                  >
+                                                    Verfication Required
+                                                  </div>
+                                                )}
+                                              </Grid>
+                                              {p.verified === "Approved" && (
+                                                <Grid
+                                                  item
+                                                  xs={1}
+                                                  style={{
+                                                    paddingLeft: "1rem",
+                                                  }}
+                                                >
+                                                  <img src={verified}></img>
+                                                </Grid>
+                                              )}
+                                              {p.verified === "Rejected" && (
+                                                <Grid
+                                                  item
+                                                  xs={1}
+                                                  style={{
+                                                    color: "red",
+                                                    paddingLeft: "1rem",
+                                                  }}
+                                                >
+                                                  X
+                                                </Grid>
+                                              )}
+                                            </Grid>
                                           </>
-                                        );
-                                      })}
-                                    </>
+                                        )}
+                                    </div>
                                   );
                                 })}
                               </>
