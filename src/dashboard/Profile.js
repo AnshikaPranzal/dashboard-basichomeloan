@@ -142,7 +142,7 @@ function Profile(props) {
       documents: [],
     },
   ]);
-
+  let c = 0;
   const [refresh1, setrefresh1] = useState(true);
   const [property, setproperty] = useState([]);
   const [borrower, setborrower] = useState([]);
@@ -202,12 +202,19 @@ function Profile(props) {
     },
   });
 
-  const [vjobp, setvjobp] = useState([]);
   const [vjobproperty, setvjobproperty] = useState([]);
 
   const [vjobq, setvjobq] = useState({
     documents: [],
   });
+  const [vjobp, setvjobp] = useState(
+    [
+      {
+        documents: [],
+      },
+    ]
+    //
+  );
 
   const getajob = (id) => {
     GETAPPLICATION(id).then((data) => {
@@ -219,7 +226,7 @@ function Profile(props) {
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
           setvjobproperty(data.result.documents);
-          console.log("documentssss saam", data.result.documents);
+          // console.log("documentssss saam", data.result.documents);
         }
     });
   };
@@ -272,9 +279,14 @@ function Profile(props) {
     setOpen1(false);
   };
   const [Name, setName] = useState("");
+  const [Idd, setIdd] = useState("");
 
   const [disabled, setDisabled] = useState(false);
   const [disabled1, setDisabled1] = useState(false);
+
+  const handleChange3 = (id) => {
+    setIdd(id);
+  };
 
   const handleChange1 = () => {
     setDisabled(true);
@@ -352,10 +364,36 @@ function Profile(props) {
   const id = props.match.params.id;
   const check = () => {
     for (var i = 0; i < vjobq.documents.length; i++) {
-      if (vjobq.documents[i].verified !== "Approved") {
+      if (
+        vjobq.documents[i].verified !== "Approved" &&
+        vjobq.documents[i].isVerificationReq === true
+      ) {
         console.log(vjobq.documents[i], "k");
         return false;
       }
+    }
+  };
+
+  const check1 = () => {
+    {
+      vjobp.map((o, i) => {
+        return (
+          <>
+            {o.documents.map((j, k) => {
+              return (
+                <>
+                  {
+                    (j.isVerificationReq === true &&
+                      j.verified !== "Approved" &&
+                      console.log(j.id, "kkkkk"),
+                    c++)
+                  }
+                </>
+              );
+            })}
+          </>
+        );
+      });
     }
   };
 
@@ -369,21 +407,21 @@ function Profile(props) {
       if (data.error) {
         console.log(data.error);
       } else {
+        console.log(data.result, "hbjh");
         {
-          data.result.pendingDocuments.map((o, i) => {
-            console.log(o.id);
-          });
+          data.result.status === "OSVRejected" && alert("Lead Rejected");
+          props.history.push("/dashboard");
         }
-        alert("Lead Rejected");
-        props.history.push("/dashboard");
       }
     });
   };
 
   const approve = async (event, id, name) => {
     event.preventDefault();
-    const c = await Promise.resolve(check());
-    if (c === false) {
+    const c = await Promise.resolve(check1());
+    const c1 = await Promise.resolve(check());
+
+    if (c !== 0 || c1 === false) {
       alert("All the documents are not verified");
     } else {
       const c = await Promise.resolve(
@@ -394,14 +432,19 @@ function Profile(props) {
           if (data.error) {
             console.log(data.error);
           } else {
-            alert("Lead Verified");
-            props.history.push("/dashboard");
+            // console.log(data.result, "hbjh");
+            {
+              data.result.status === "OSVVerified" && alert("Lead Verified");
+              props.history.push("/dashboard");
+            }
+
+            // props.history.push("/dashboard");
           }
         })
       );
     }
   };
-  console.log(vjob, "here");
+  // console.log(vjob, "here");
   const reject = (event, id, name) => {
     event.preventDefault();
     approveOSV(id, {
@@ -414,6 +457,7 @@ function Profile(props) {
     });
   };
 
+  const [Id, setId] = useState("");
   return (
     <div>
       <AppBar style={{ backgroundColor: "white" }}>
@@ -423,9 +467,8 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-
-      {vjobproperty.map((j, k) => {
-        console.log("jiik", j.id);
+      {vjobp.map((o, i) => {
+        console.log(o.documents, "oookkj");
       })}
 
       <Grid container style={{ marginTop: "10rem" }}>
@@ -666,12 +709,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs &&
-                      vjobs.map((obj2, i) => {
-                        return (
-                          <div>{obj2.id === vjob.id && obj2.customerName}</div>
-                        );
-                      })}
+                    {vjobq.firstName} {vjobq.lastName}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -696,10 +734,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs &&
-                      vjobs.map((obj2, i) => {
-                        return <div>{obj2.id === vjob.id && obj2.mobile}</div>;
-                      })}
+                    {vjobq.mobile}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -749,10 +784,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjobs &&
-                      vjobs.map((obj2, i) => {
-                        return <div>{obj2.id === vjob.id && obj2.amount}</div>;
-                      })}
+                    ₹{vjob.loanAmountReq}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -766,7 +798,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Basic Ref Number
+                    Basic App Id
                   </Grid>
                   <Grid
                     item
@@ -777,7 +809,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjob.basicId == null ? "" : vjob.basickId}
+                    {vjob.basicAppId == null ? "" : vjob.basicAppId}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -791,7 +823,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Bank Application Id
+                    Bank App Id
                   </Grid>
                   <Grid
                     item
@@ -803,6 +835,107 @@ function Profile(props) {
                     }}
                   >
                     {vjob.bankId == null ? "" : vjob.bankId}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Basic Fullfillment
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.isBasicFullfilment === false && "No"}
+                    {vjob.isBasicFullfilment === true && "Yes"}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Application Date
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Total Disbursement Amount
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Confirm Disbursement Amount
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
                   </Grid>
                 </Grid>
               </CardContent>
@@ -920,6 +1053,31 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+                    Pin Code
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.propertyPincode}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
                     Property City
                   </Grid>
                   <Grid
@@ -945,7 +1103,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Pin Code
+                    State
                   </Grid>
                   <Grid
                     item
@@ -956,11 +1114,9 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjob.propertyPincode}
-                    {/* {vjob.basicId == null ? "" : vjob.basickId} */}
+                    {vjob.propertyState}
                   </Grid>
                 </Grid>
-
                 <Grid container item xs={12} style={{ marginTop: "2rem" }}>
                   <Grid
                     item
@@ -1248,7 +1404,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Name
+                    First Name
                   </Grid>
                   <Grid
                     item
@@ -1263,11 +1419,34 @@ function Profile(props) {
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.firstName
                       : ""}{" "}
+                    {/* {vjob.primaryBorrower ? vjob.primaryBorrower.lastName : ""} */}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Last Name
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {/* {vjob.primaryBorrower.map((ob, i) => { */}
+
                     {vjob.primaryBorrower ? vjob.primaryBorrower.lastName : ""}
-                    {/* })}
-                    {/* {vjob.primaryBorrower.map((o, i) => {
-                      return o.id;
-                    })} */}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -1332,7 +1511,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    Profession Name
+                    Profession
                   </Grid>
                   <Grid
                     item
@@ -1375,161 +1554,208 @@ function Profile(props) {
                       : ""}
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
                   <Grid
                     item
                     xs={6}
                     style={{
-                      fontWeight: 600,
-                      marginTop: "2rem",
                       marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
                     }}
                   >
-                    CoBorrower Details
+                    Annual Income
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower
+                      ? vjob.primaryBorrower.annualIncome
+                      : ""}
                   </Grid>
                 </Grid>
-                <Grid style={{ marginTop: "1rem" }}>
-                  {vjob.coBorrowers.map((j, i) => {
-                    return (
-                      <div>
-                        <Grid container item xs={12}>
-                          <Grid
-                            item
-                            xs={6}
-                            style={{
-                              marginLeft: "2rem",
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            Name
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            style={{
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            {j.firstName}
-                          </Grid>
-                        </Grid>
-                        <Grid container style={{ marginTop: "1rem" }}>
-                          <Grid
-                            item
-                            xs={6}
-                            style={{
-                              marginLeft: "2rem",
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            Phone Number
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            style={{
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            {j.mobile}
-                          </Grid>
-                        </Grid>
-                        <Grid container style={{ marginTop: "1rem" }}>
-                          <Grid
-                            item
-                            xs={6}
-                            style={{
-                              marginLeft: "2rem",
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            Gender
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            style={{
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            {j.gender}
-                          </Grid>
-                        </Grid>
-                        <Grid container style={{ marginTop: "1rem" }}>
-                          <Grid
-                            item
-                            xs={6}
-                            style={{
-                              marginLeft: "2rem",
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            Profession Name
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            style={{
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            {j.professionName}
-                          </Grid>
-                        </Grid>
-                        <Grid container style={{ marginTop: "1rem" }}>
-                          <Grid
-                            item
-                            xs={6}
-                            style={{
-                              marginLeft: "2rem",
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            Company Name
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            style={{
-                              color: "#ACACAC",
-                              opacity: 1.5,
-                              fontFamily: "Roboto",
-                            }}
-                          >
-                            {j.companyName}
-                          </Grid>
-                        </Grid>
-                        <Divider
-                          style={{
-                            marginLeft: "0rem",
-                            marginRight: "1rem",
-                            marginTop: "0.4rem",
-                            // width: "100%",
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Aadhar Number
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.aadhar : ""}
+                  </Grid>
                 </Grid>
-
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    PAN Number
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.pan : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Address
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.address : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    City
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.city : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    District
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.district : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    State
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.state : ""}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Pincode
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.primaryBorrower ? vjob.primaryBorrower.pincode : ""}
+                  </Grid>
+                </Grid>
                 <Grid
                   item
                   xs={12}
@@ -1748,6 +1974,678 @@ function Profile(props) {
                           );
                         })}
                       </>
+                    );
+                  })}
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      fontWeight: 600,
+                      marginTop: "2rem",
+                      marginLeft: "2rem",
+                    }}
+                  >
+                    CoBorrower Details
+                  </Grid>
+                </Grid>
+                <Grid style={{ marginTop: "1rem" }}>
+                  {vjob.coBorrowers.map((j, i) => {
+                    return (
+                      <div>
+                        <Grid container item xs={12}>
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            First Name
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.firstName}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Last Name
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.lastName}
+                          </Grid>
+                        </Grid>
+                        <Grid container style={{ marginTop: "1rem" }}>
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Phone Number
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.mobile}
+                          </Grid>
+                        </Grid>
+                        <Grid container style={{ marginTop: "1rem" }}>
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Gender
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.gender}
+                          </Grid>
+                        </Grid>
+                        <Grid container style={{ marginTop: "1rem" }}>
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Profession Name
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.professionName}
+                          </Grid>
+                        </Grid>
+                        <Grid container style={{ marginTop: "1rem" }}>
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Company Name
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.companyName}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Annual Income
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.annualIncome}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Aadhar Number
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.aadhar}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            PAN Number
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.pan}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Address
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.address}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            City
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.city}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            District
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.district}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            State
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.state}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Pincode
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            {j.pincode}
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{ marginLeft: "2.8rem", marginTop: "2rem" }}
+                        >
+                          Document:
+                        </Grid>
+                        <Grid item xs={12} style={{ marginLeft: "2rem" }}>
+                          {/* {vjobp.map((p, q) => {
+                            console.log(p, "pppppppp");
+                            return (
+                              <div key={q}>
+                                {console.log(q, "oooooooo")} */}
+                          {j.documents.map((p, q) => {
+                            return (
+                              <>
+                                {borrower.map((n, m) => {
+                                  // console.log("mmmmmjjj", n.id);
+
+                                  return (
+                                    <div key={m}>
+                                      {console.log(m, "gggggggggg")}
+                                      {p.refEntityId === j.id &&
+                                        n.id === p.docConfigId && (
+                                          <>
+                                            <Grid
+                                              container
+                                              style={{
+                                                marginLeft: "2.8rem",
+                                                marginLeft: "1rem",
+                                              }}
+                                            >
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionOneRequired && (
+                                                    <span
+                                                      style={{
+                                                        color: "red",
+                                                      }}
+                                                    >
+                                                      *
+                                                    </span>
+                                                  )}
+                                                  {n.keyCaptionOne}
+                                                </Grid>
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyOneValue}
+                                                </Grid>
+                                              </Grid>
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionTwoRequired && (
+                                                    <span
+                                                      style={{
+                                                        color: "red",
+                                                      }}
+                                                    >
+                                                      *
+                                                    </span>
+                                                  )}
+                                                  {n.keyCaptionTwo}
+                                                </Grid>
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyTwoValue}
+                                                </Grid>
+                                              </Grid>
+                                              <Grid container>
+                                                <Grid
+                                                  item
+                                                  xs={6}
+                                                  style={{
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {n.keyCaptionThreeRequired && (
+                                                    <span
+                                                      style={{
+                                                        color: "red",
+                                                      }}
+                                                    >
+                                                      *
+                                                    </span>
+                                                  )}
+                                                  {n.keyCaptionThree}
+                                                </Grid>
+                                                <Grid
+                                                  item
+                                                  xs={3}
+                                                  style={{
+                                                    color: "#ACACAC",
+                                                    opacity: 1.5,
+                                                    fontFamily: "Roboto",
+                                                  }}
+                                                >
+                                                  {p.docKeyThreeValue}
+                                                </Grid>
+                                              </Grid>
+                                            </Grid>
+                                            <Grid
+                                              container
+                                              style={{
+                                                marginLeft: "2.8",
+                                                marginTop: "1rem",
+                                              }}
+                                            >
+                                              <Grid
+                                                item
+                                                xs={4}
+                                                style={{
+                                                  color: "#ACACAC",
+                                                  opacity: 1.5,
+                                                  fontFamily: "Roboto",
+                                                }}
+                                              >
+                                                {p.docKeyCaption}
+                                              </Grid>
+                                              <Grid item xs={2} style={{}}>
+                                                <a
+                                                  onClick={() => {
+                                                    setUrl(
+                                                      p.fileOneSignedUrl,
+                                                      p.fileTwoSignedUrl
+                                                    );
+                                                  }}
+                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                >
+                                                  {vjob.applicationStatus !==
+                                                    "PendingOSV" && (
+                                                    <Visibility
+                                                      style={{
+                                                        color: "black",
+                                                      }}
+                                                    />
+                                                  )}
+                                                </a>
+                                                <a
+                                                  onClick={() => {
+                                                    setUrl(
+                                                      p.fileOneSignedUrl,
+                                                      p.fileTwoSignedUrl
+                                                    );
+                                                  }}
+                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                >
+                                                  {vjob.applicationStatus ===
+                                                    "PendingOSV" && (
+                                                    <Visibility
+                                                      style={{
+                                                        color: "black",
+                                                      }}
+                                                    />
+                                                  )}
+                                                </a>
+                                              </Grid>
+
+                                              <Grid item xs={2} style={{}}>
+                                                {p.isStampingReq && (
+                                                  <div
+                                                    style={{
+                                                      marginRight: "1rem",
+                                                      paddingLeft: "1rem",
+                                                      fontFamily: "Roboto",
+                                                      fontSize: 10,
+                                                      color: "#0088FC",
+                                                    }}
+                                                  >
+                                                    Stamping Required
+                                                  </div>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={2} style={{}}>
+                                                {p.isVerificationReq && (
+                                                  <div
+                                                    style={{
+                                                      paddingLeft: "1rem",
+                                                      fontFamily: "Roboto",
+                                                      fontSize: 10,
+                                                      color: "#66BB6A",
+                                                    }}
+                                                  >
+                                                    Verfication Required
+                                                  </div>
+                                                )}
+                                              </Grid>
+                                              {p.verified === "Approved" && (
+                                                <Grid
+                                                  item
+                                                  xs={1}
+                                                  style={{
+                                                    paddingLeft: "1rem",
+                                                  }}
+                                                >
+                                                  <img src={verified}></img>
+                                                </Grid>
+                                              )}
+                                              {p.verified === "Rejected" && (
+                                                <Grid
+                                                  item
+                                                  xs={1}
+                                                  style={{
+                                                    color: "red",
+                                                    paddingLeft: "1rem",
+                                                  }}
+                                                >
+                                                  X
+                                                </Grid>
+                                              )}
+                                            </Grid>
+                                          </>
+                                        )}
+                                    </div>
+                                  );
+                                })}
+                              </>
+                            );
+                          })}
+                        </Grid>
+                        <Divider
+                          style={{
+                            marginLeft: "0rem",
+                            marginRight: "1rem",
+                            marginTop: "0.4rem",
+                            // width: "100%",
+                          }}
+                        />
+                      </div>
                     );
                   })}
                 </Grid>
