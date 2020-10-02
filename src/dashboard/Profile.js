@@ -2,7 +2,7 @@ import { Card, makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
-
+import Moment from "react-moment";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -834,7 +834,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {vjob.bankId == null ? "" : vjob.bankId}
+                    {vjob.bankAppId == null ? "" : vjob.bankAppId}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -885,7 +885,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
+                    <Moment format='DD-MM-YY'>{vjob.osvDate}</Moment>
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -910,6 +910,9 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+                    {vjob.totalDisbursementAmount === null
+                      ? ""
+                      : vjob.totalDisbursementAmount}
                     {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
                   </Grid>
                 </Grid>
@@ -935,6 +938,10 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+                    {vjob.totalConfirmedDisbursementAmount === null
+                      ? ""
+                      : vjob.totalConfirmedDisbursementAmount}
+
                     {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
                   </Grid>
                 </Grid>
@@ -1576,6 +1583,7 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
+                    <span>₹</span>
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.annualIncome
                       : ""}
@@ -2725,6 +2733,56 @@ function Profile(props) {
                     }}
                   >
                     {vjob.bankBranchName}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Rm Name
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.bankRmName}
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} style={{ marginTop: "1rem" }}>
+                  <Grid
+                    item
+                    xs={6}
+                    style={{
+                      marginLeft: "2rem",
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Rm Email
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      color: "#ACACAC",
+                      opacity: 1.5,
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    {vjob.bankRmEmail}
                   </Grid>
                 </Grid>
                 <Grid
