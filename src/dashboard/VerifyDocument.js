@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import { approveOSV } from "../helper/index";
 
 const Verify = (props) => {
   let counter = 0;
   let id = props.match.params;
-  console.log(id, "ycfhg");
-
+  console.log(props, "ycfhg");
+  
   console.log(id, "idddd");
+  const back = ()=>{
+    props.history.push(`/${id.id}`);
+  }
   console.log(localStorage.getItem("recent2"), "wgyugyv");
   const approve = (event, id, ID, name) => {
     console.log("sscccs", id);
@@ -53,7 +56,9 @@ const Verify = (props) => {
   return (
     <React.Fragment>
       <Row className='text-center py-4'>
-        <Col md={4}></Col>
+        <Col md={4}>
+          <Button onClick={back}><Typography variant='h5'>{"< "} Go to profile</Typography> </Button>
+        </Col>
         <Col md={4}>
           <h1>{props.match.params.name}</h1>
         </Col>

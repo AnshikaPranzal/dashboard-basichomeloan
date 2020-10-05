@@ -154,6 +154,7 @@ function Profile(props) {
     getDocConfig().then(async (data) => {
       if (data)
         if (data.error) {
+          props.history.push("/")
         } else {
           setjobs1(data);
           const h = await Promise.resolve(setvjobs1(data.result));
@@ -373,29 +374,23 @@ function Profile(props) {
       }
     }
   };
-
+  console.log(vjobp,"okokok")
   const check1 = () => {
-    {
-      vjobp.map((o, i) => {
-        return (
-          <>
-            {o.documents.map((j, k) => {
-              return (
-                <>
-                  {
-                    (j.isVerificationReq === true &&
-                      j.verified !== "Approved" &&
-                      console.log(j.id, "kkkkk"),
-                    c++)
-                  }
-                </>
-              );
-            })}
-          </>
-        );
-      });
-    }
-  };
+      var i,j
+      console.log(vjobp,"okokok")
+      for(i=0;i<vjobp.length;i++){
+        for(j=0;j<vjobp[i].documents.length;j++){
+          if (
+            vjobp[i].documents[j].verified !== "Approved" &&
+            vjobp[i].documents[j].isVerificationReq === true
+          ) {
+            console.log(vjobq.documents[i], "k");
+            return false;
+          }
+        }
+      }
+
+}
 
   const approve1 = (event, id, name, text) => {
     event.preventDefault();
@@ -421,7 +416,7 @@ function Profile(props) {
     const c = await Promise.resolve(check1());
     const c1 = await Promise.resolve(check());
 
-    if (c !== 0 || c1 === false) {
+    if (c === false || c1 === false) {
       alert("All the documents are not verified");
     } else {
       const c = await Promise.resolve(
@@ -456,6 +451,9 @@ function Profile(props) {
       }
     });
   };
+  const back = ()=>{
+    props.history.push(`/dashboard`);
+  }
 
   const [Id, setId] = useState("");
   return (
@@ -467,16 +465,15 @@ function Profile(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      {vjobp.map((o, i) => {
-        console.log(o.documents, "oookkj");
-      })}
 
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
+          <Button onClick={back}><Typography variant='h5'>{"< "} Go to Dashboard</Typography> </Button>
+
             {/* <div className={classes.toolbar} /> */}
             {/* <Divider /> */}
-            <div style={{}}>
+            <div style={{marginTop:"2em"}}>
               <div
                 style={{
                   backgroundColor: "#f1f3f8",

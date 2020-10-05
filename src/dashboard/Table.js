@@ -27,8 +27,8 @@ import closed from "../images/Group 2423.svg";
 import sanction from "../images/Group 2418.svg";
 import { Typography } from "@material-ui/core";
 
-function TableCard() {
-  const [, setjobs] = useState([]);
+function TableCard(props) {
+  const [jobs, setjobs] = useState([]);
   const [vjobs, setvjobs] = useState([]);
   const [, settjobs] = useState([]);
   const [, seterrorF] = useState(false);
@@ -36,7 +36,11 @@ function TableCard() {
   const [pageNo, setpageNo] = useState(1)
   const [stage, setstage] = useState("")
   const anchorRef = React.useRef(null);
-
+  useEffect(()=>{
+    if(vjobs === undefined){
+      props.history.push("/")
+    }
+  })
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -66,9 +70,11 @@ function TableCard() {
   
   const loadAlljobs = () => {
     GETALLLEADS(pageNo,stage).then((data) => {
-      console.log(data.result);
+      // console.log(data.result);
+     
       if (data)
         if (data.error) {
+         
           seterrorF(data.error);
         } else {
           setjobs(data);
@@ -76,12 +82,14 @@ function TableCard() {
           settjobs(data.result);
           
         }
+        else{
+          props.history.push("/")
+        }
     });
   };
 
   const filter = (stages) => {
       setstage(stages)
-      
     }
   
 
@@ -97,32 +105,30 @@ function TableCard() {
 
   useEffect(() => {
     loadAlljobs();
-  
+    
   }, [refresh, stage, pageNo]);
-
+ 
 
 
   return (
-    
-    
     <>
       <Card className='card-dashboard'>
         <CardBody>
           <div className='align-items-center'>
             {/* <div> */}
             <Row>
-              <Col md={1}>
+              <Col md={1} xs={6}>
                 <CardTitle>
                   <h4>My Leads</h4>
                 </CardTitle>
               </Col>
-              <Col md={9}>
+              <Col md={9} xs={6}>
                 {pageNo>1 && <Button onClick={()=>{if(pageNo !== 0){setpageNo(pageNo-1);loadAlljobs();}}} style={{width:"7rem",height:"4rem",backgroundColor:"skyblue"}}>
                   <Typography variant="h6">Prev</Typography></Button>}
-                {vjobs.length === 20 && <Button onClick={()=>{setpageNo(pageNo+1);loadAlljobs();}} style={{width:"7rem",height:"4rem",backgroundColor:"skyblue",marginLeft:"2rem"}}>
+                {vjobs && vjobs.length === 20 && <Button onClick={()=>{setpageNo(pageNo+1);loadAlljobs();}} style={{width:"7rem",height:"4rem",backgroundColor:"skyblue",marginLeft:"2rem"}}>
                 <Typography variant="h6">Next</Typography></Button>}
               </Col>
-              <Col md={2}>
+              <Col md={2} xs={6}>
                 <Button
                   ref={anchorRef}
                   aria-controls={open ? "menu-list-grow" : undefined}

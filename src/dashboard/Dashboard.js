@@ -12,6 +12,7 @@ import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Zoom from "@material-ui/core/Zoom";
 import TableCard from "./Table";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +63,10 @@ ScrollTop.propTypes = {
 };
 
 export default function Dashboard(props) {
+  const signout = ()=>{
+    localStorage.removeItem("userToken")
+    props.history.push("/")
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -70,7 +75,12 @@ export default function Dashboard(props) {
           <Typography variant='h6' style={{ color: "black" }}>
             Basic HomeLoan
           </Typography>
+          <Button onClick={signout} style={{ color: "black",marginRight:"1rem",marginLeft:"auto" }}>
+          <Typography variant='h6' >Log Out</Typography>
+          </Button>
+          
         </Toolbar>
+        
       </AppBar>
       <Toolbar id='back-to-top-anchor' />
       <Container>

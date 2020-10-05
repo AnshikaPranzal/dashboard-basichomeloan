@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { Row, Col, Card, CardTitle, Input, Button } from "reactstrap";
 import logo from "../images/Group 2455.svg";
 // import { Input } from '@material-ui/core';
@@ -113,4 +113,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
