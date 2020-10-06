@@ -37,10 +37,11 @@ function TableCard(props) {
   const [stage, setstage] = useState("")
   const anchorRef = React.useRef(null);
   useEffect(()=>{
-    if(vjobs === undefined){
-      props.history.push("/")
-    }
-  })
+      if(vjobs === undefined){
+        props.history.push("/")
+      }
+    
+  },[])
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
