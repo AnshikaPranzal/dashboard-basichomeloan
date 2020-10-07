@@ -1270,7 +1270,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/true`}
                                       >
                                         {vjob.applicationStatus !==
@@ -1290,7 +1290,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/false`}
                                       >
                                         {vjob.applicationStatus ===
@@ -1907,7 +1907,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/true`}
                                       >
                                         {vjob.applicationStatus !==
@@ -1927,7 +1927,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/false`}
                                       >
                                         {vjob.applicationStatus ===
@@ -2569,7 +2569,7 @@ function Profile(props) {
                                                   href={`/verify/${vjob.id}/${
                                                     p.id
                                                   }/${p.docKeyCaption.substring(
-                                                    p.docKeyCaption.indexOf(
+                                                    p.docKeyCaption.lastIndexOf(
                                                       "/"
                                                     ) + 1
                                                   )}/false`}
@@ -2593,7 +2593,7 @@ function Profile(props) {
                                                   href={`/verify/${vjob.id}/${
                                                     p.id
                                                   }/${p.docKeyCaption.substring(
-                                                    p.docKeyCaption.indexOf(
+                                                    p.docKeyCaption.lastIndexOf(
                                                       "/"
                                                     ) + 1
                                                   )}/false`}
@@ -2919,7 +2919,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/true`}
                                       >
                                         {vjob.applicationStatus !==
@@ -2939,7 +2939,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/false`}
                                       >
                                         {vjob.applicationStatus ===
@@ -2957,7 +2957,7 @@ function Profile(props) {
                                           href={`/verify/${vjob.id}/${
                                             j.id
                                           }/${j.docKeyCaption.substring(
-                                            j.docKeyCaption.indexOf("/") + 1
+                                            j.docKeyCaption.lastIndexOf("/") + 1
                                           )}`}
                                         >
                                           <Visibility
@@ -3232,7 +3232,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/true`}
                                       >
                                         {vjob.applicationStatus !==
@@ -3252,7 +3252,7 @@ function Profile(props) {
                                         href={`/verify/${vjob.id}/${
                                           j.id
                                         }/${j.docKeyCaption.substring(
-                                          j.docKeyCaption.indexOf("/") + 1
+                                          j.docKeyCaption.lastIndexOf("/") + 1
                                         )}/false`}
                                       >
                                         {vjob.applicationStatus ===
@@ -3270,7 +3270,7 @@ function Profile(props) {
                                           href={`/verify/${vjob.id}/${
                                             j.id
                                           }/${j.docKeyCaption.substring(
-                                            j.docKeyCaption.indexOf("/") + 1
+                                            j.docKeyCaption.lastIndexOf("/") + 1
                                           )}`}
                                         >
                                           <Visibility
