@@ -154,7 +154,7 @@ function Profile(props) {
     getDocConfig().then(async (data) => {
       if (data)
         if (data.error) {
-          props.history.push("/")
+          props.history.push("/");
         } else {
           setjobs1(data);
           const h = await Promise.resolve(setvjobs1(data.result));
@@ -374,23 +374,22 @@ function Profile(props) {
       }
     }
   };
-  console.log(vjobp,"okokok")
+  console.log(vjobp, "okokok");
   const check1 = () => {
-      var i,j
-      console.log(vjobp,"okokok")
-      for(i=0;i<vjobp.length;i++){
-        for(j=0;j<vjobp[i].documents.length;j++){
-          if (
-            vjobp[i].documents[j].verified !== "Approved" &&
-            vjobp[i].documents[j].isVerificationReq === true
-          ) {
-            console.log(vjobq.documents[i], "k");
-            return false;
-          }
+    var i, j;
+    console.log(vjobp, "okokok");
+    for (i = 0; i < vjobp.length; i++) {
+      for (j = 0; j < vjobp[i].documents.length; j++) {
+        if (
+          vjobp[i].documents[j].verified !== "Approved" &&
+          vjobp[i].documents[j].isVerificationReq === true
+        ) {
+          console.log(vjobq.documents[i], "k");
+          return false;
         }
       }
-
-}
+    }
+  };
 
   const approve1 = (event, id, name, text) => {
     event.preventDefault();
@@ -451,9 +450,9 @@ function Profile(props) {
       }
     });
   };
-  const back = ()=>{
+  const back = () => {
     props.history.push(`/dashboard`);
-  }
+  };
 
   const [Id, setId] = useState("");
   return (
@@ -469,11 +468,13 @@ function Profile(props) {
       <Grid container style={{ marginTop: "10rem" }}>
         <Grid className={classes.text} item xs={12} md={4} style={{}}>
           <div>
-          <Button onClick={back}><Typography variant='h5'>{"< "} Go to Dashboard</Typography> </Button>
+            <Button onClick={back}>
+              <Typography variant='h5'>{"< "} Go to Dashboard</Typography>{" "}
+            </Button>
 
             {/* <div className={classes.toolbar} /> */}
             {/* <Divider /> */}
-            <div style={{marginTop:"2em"}}>
+            <div style={{ marginTop: "2em" }}>
               <div
                 style={{
                   backgroundColor: "#f1f3f8",
@@ -1266,7 +1267,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/true`}
                                       >
                                         {vjob.applicationStatus !==
                                           "PendingOSV" && (
@@ -1282,7 +1287,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/false`}
                                       >
                                         {vjob.applicationStatus ===
                                           "PendingOSV" && (
@@ -1895,7 +1904,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/true`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/true`}
                                       >
                                         {vjob.applicationStatus !==
                                           "PendingOSV" && (
@@ -1911,7 +1924,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/false`}
                                       >
                                         {vjob.applicationStatus ===
                                           "PendingOSV" && (
@@ -2549,7 +2566,13 @@ function Profile(props) {
                                                       p.fileTwoSignedUrl
                                                     );
                                                   }}
-                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                  href={`/verify/${vjob.id}/${
+                                                    p.id
+                                                  }/${p.docKeyCaption.substring(
+                                                    p.docKeyCaption.lastIndexOf(
+                                                      "/"
+                                                    ) + 1
+                                                  )}/false`}
                                                 >
                                                   {vjob.applicationStatus !==
                                                     "PendingOSV" && (
@@ -2567,7 +2590,13 @@ function Profile(props) {
                                                       p.fileTwoSignedUrl
                                                     );
                                                   }}
-                                                  href={`/verify/${vjob.id}/${p.id}/${p.docKeyCaption}/false`}
+                                                  href={`/verify/${vjob.id}/${
+                                                    p.id
+                                                  }/${p.docKeyCaption.substring(
+                                                    p.docKeyCaption.lastIndexOf(
+                                                      "/"
+                                                    ) + 1
+                                                  )}/false`}
                                                 >
                                                   {vjob.applicationStatus ===
                                                     "PendingOSV" && (
@@ -2887,9 +2916,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${
-                                          j.docKeyCaption / true
-                                        }`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/true`}
                                       >
                                         {vjob.applicationStatus !==
                                           "PendingOSV" && (
@@ -2905,7 +2936,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/false`}
                                       >
                                         {vjob.applicationStatus ===
                                           "PendingOSV" && (
@@ -2919,7 +2954,11 @@ function Profile(props) {
                                           onClick={() => {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
-                                          href={`/verify/${vjob.id}/${j.id}`}
+                                          href={`/verify/${vjob.id}/${
+                                            j.id
+                                          }/${j.docKeyCaption.substring(
+                                            j.docKeyCaption.lastIndexOf("/") + 1
+                                          )}`}
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
@@ -3190,9 +3229,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${
-                                          j.docKeyCaption / true
-                                        }`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/true`}
                                       >
                                         {vjob.applicationStatus !==
                                           "PendingOSV" && (
@@ -3208,7 +3249,11 @@ function Profile(props) {
                                             j.fileTwoSignedUrl
                                           );
                                         }}
-                                        href={`/verify/${vjob.id}/${j.id}/${j.docKeyCaption}/false`}
+                                        href={`/verify/${vjob.id}/${
+                                          j.id
+                                        }/${j.docKeyCaption.substring(
+                                          j.docKeyCaption.lastIndexOf("/") + 1
+                                        )}/false`}
                                       >
                                         {vjob.applicationStatus ===
                                           "PendingOSV" && (
@@ -3222,7 +3267,11 @@ function Profile(props) {
                                           onClick={() => {
                                             setUrl(j.fileTwoSignedUrl);
                                           }}
-                                          href={`/verify/${vjob.id}/${j.id}`}
+                                          href={`/verify/${vjob.id}/${
+                                            j.id
+                                          }/${j.docKeyCaption.substring(
+                                            j.docKeyCaption.lastIndexOf("/") + 1
+                                          )}`}
                                         >
                                           <Visibility
                                             style={{ color: "black" }}
