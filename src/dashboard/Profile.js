@@ -127,6 +127,7 @@ function Profile(props) {
   const [jobs1, setjobs1] = useState([]);
   const [vjobs1, setvjobs1] = useState([]);
   const [show, setshow] = useState(false);
+  const [refresh3, setrefresh3] = useState(true);
   const handleClose = () => {
     setshow(false);
   };
@@ -148,7 +149,6 @@ function Profile(props) {
   const [borrower, setborrower] = useState([]);
   const [osv, setosv] = useState([]);
   const [bank, setbank] = useState([]);
-  useEffect(() => {}, [refresh1]);
 
   const loadDoc = () => {
     getDocConfig().then(async (data) => {
@@ -161,14 +161,16 @@ function Profile(props) {
         }
     });
   };
-  const [refresh3, setrefresh3] = useState(true);
 
   useEffect(() => {
     loadDoc();
-  }, [refresh3]);
+  }, []);
   useEffect(() => {
     const func = async () => {
+      if(!vjobs1)
+      {
       const k = await Promise.resolve(loadDoc());
+      }
       setproperty(
         vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
       );

@@ -72,6 +72,7 @@ function TableCard(props) {
 
   const filter = (stages) => {
     setstage(stages);
+    setpageNo(1)
   };
 
   const [refresh] = useState(true);
@@ -221,6 +222,9 @@ function TableCard(props) {
                   Vendor Code
                 </th>
                 <th className='border-0' style={{ fontFamily: "Roboto" }}>
+                  RM Ref Code
+                </th>
+                <th className='border-0' style={{ fontFamily: "Roboto" }}>
                   Stage
                 </th>
               </tr>
@@ -327,6 +331,13 @@ function TableCard(props) {
                         }}
                       >
                         {product.vendorCode}
+                      </td>
+                      <td
+                        style={{
+                          fontFamily: "Roboto",
+                        }}
+                      >
+                        {product.basicRmRefCode}
                       </td>
                       <td
                         style={{
