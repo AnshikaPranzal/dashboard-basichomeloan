@@ -20,9 +20,7 @@ import sanction from "../images/Group 2418.svg";
 import { Typography } from "@material-ui/core";
 
 function TableCard(props) {
-  const [jobs, setjobs] = useState([]);
-  const [vjobs, setvjobs] = useState([]);
-  const [, settjobs] = useState([]);
+  const [users, setusers] = useState([]);
   const [, seterrorF] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [pageNo, setpageNo] = useState(1);
@@ -55,31 +53,27 @@ function TableCard(props) {
     setOpen(false);
   };
 
-  const loadAlljobs = () => {
+  const loadAllusers = () => {
     GETALLLEADS(pageNo, stage).then((data) => {
-      // console.log(data.result);
-
       if (data)
         if (data.error) {
           seterrorF(data.error);
         } else {
-          setjobs(data);
-          setvjobs(data.result);
-          settjobs(data.result);
+          setusers(data.result);
         }
     });
   };
 
   const filter = (stages) => {
     setstage(stages);
-    setpageNo(1)
+    setpageNo(1);
   };
 
   const [refresh] = useState(true);
   const stages = ["Closed", "Disbursed", "Login", "Lead", "OSV", "Sanction"];
 
   useEffect(() => {
-    loadAlljobs();
+    loadAllusers();
   }, [refresh, stage, pageNo]);
 
   return (
@@ -100,7 +94,7 @@ function TableCard(props) {
                     onClick={() => {
                       if (pageNo !== 0) {
                         setpageNo(pageNo - 1);
-                        loadAlljobs();
+                        loadAllusers();
                       }
                     }}
                     style={{
@@ -112,11 +106,11 @@ function TableCard(props) {
                     <Typography variant='h6'>Prev</Typography>
                   </Button>
                 )}
-                {vjobs && vjobs.length === 20 && (
+                {users && users.length === 20 && (
                   <Button
                     onClick={() => {
                       setpageNo(pageNo + 1);
-                      loadAlljobs();
+                      loadAllusers();
                     }}
                     style={{
                       width: "7rem",
@@ -190,9 +184,6 @@ function TableCard(props) {
                 </Popper>
               </Col>
             </Row>
-
-            {/* <CardSubtitle>Click on them to join</CardSubtitle> */}
-            {/* </div> */}
           </div>
           <Table className='no-wrap v-middle card-dashboard' responsive>
             <thead>
@@ -230,8 +221,8 @@ function TableCard(props) {
               </tr>
             </thead>
             <tbody>
-              {vjobs &&
-                vjobs.map((product, i) => {
+              {users &&
+                users.map((product, i) => {
                   return (
                     <tr key={i} style={{ paddingTop: "2rem" }}>
                       <td>
@@ -265,7 +256,7 @@ function TableCard(props) {
                               >
                                 {product.customerName}
                               </div>
-                              {/* <br></br> */}
+
                               {product.mobile}
                             </span>
                           </Col>

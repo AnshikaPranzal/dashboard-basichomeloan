@@ -6,12 +6,10 @@ import { approveOSV } from "../helper/index";
 const Verify = (props) => {
   let counter = 0;
   let id = props.match.params;
-  console.log(props, "ycfhg");
-  
-  console.log(id, "idddd");
-  const back = ()=>{
+
+  const back = () => {
     props.history.push(`/${id.id}`);
-  }
+  };
   console.log(localStorage.getItem("recent2"), "wgyugyv");
   const approve = (event, id, ID, name) => {
     console.log("sscccs", id);
@@ -24,7 +22,6 @@ const Verify = (props) => {
         },
       ],
     }).then((data) => {
-      console.log(data, "here");
       if (data.error) {
         console.log(data.error);
       } else {
@@ -32,7 +29,6 @@ const Verify = (props) => {
           data.result.pendingDocuments.map((o, i) => {
             {
               o.id === ID && counter++;
-              // props.history.push(`/${id}`);
             }
           });
         }
@@ -57,7 +53,9 @@ const Verify = (props) => {
     <React.Fragment>
       <Row className='text-center py-4'>
         <Col md={4}>
-          <Button onClick={back}><Typography variant='h5'>{"< "} Go to profile</Typography> </Button>
+          <Button onClick={back}>
+            <Typography variant='h5'>{"< "} Go to profile</Typography>{" "}
+          </Button>
         </Col>
         <Col md={4}>
           <h1>{props.match.params.name}</h1>
@@ -114,8 +112,6 @@ const Verify = (props) => {
           </Col>
         </Row>
       )}
-
-      {/* <Button className="login-otp">Reject</Button> */}
     </React.Fragment>
   );
 };

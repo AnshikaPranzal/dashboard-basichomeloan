@@ -63,10 +63,10 @@ ScrollTop.propTypes = {
 };
 
 export default function Dashboard(props) {
-  const signout = ()=>{
-    localStorage.removeItem("userToken")
-    props.history.push("/")
-  }
+  const signout = () => {
+    localStorage.removeItem("userToken");
+    props.history.push("/");
+  };
   return (
     <React.Fragment>
       <CssBaseline />
@@ -75,12 +75,13 @@ export default function Dashboard(props) {
           <Typography variant='h6' style={{ color: "black" }}>
             Basic HomeLoan
           </Typography>
-          <Button onClick={signout} style={{ color: "black",marginRight:"1rem",marginLeft:"auto" }}>
-          <Typography variant='h6' >Log Out</Typography>
+          <Button
+            onClick={signout}
+            style={{ color: "black", marginRight: "1rem", marginLeft: "auto" }}
+          >
+            <Typography variant='h6'>Log Out</Typography>
           </Button>
-          
         </Toolbar>
-        
       </AppBar>
       <Toolbar id='back-to-top-anchor' />
       <Container>

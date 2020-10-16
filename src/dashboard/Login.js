@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { Row, Col, Card, CardTitle, Input, Button } from "reactstrap";
 import logo from "../images/Group 2455.svg";
-// import { Input } from '@material-ui/core';
 import { Auth } from "aws-amplify";
 
 const initialForm = {
@@ -16,7 +15,6 @@ const Login = (props) => {
   const [user, setUser] = useState();
 
   const onChange = (e) => {
-    console.log("hi");
     e.persist();
     updateForm(() => ({ ...form, [e.target.name]: e.target.value }));
   };
@@ -69,39 +67,37 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
-      <Row className="login text-center">
+      <Row className='login text-center'>
         <Col md={4}></Col>
-        <Col md={4} className="login-col">
-          <Card className="login-card">
-            {/* <h3>Basic Home Loan</h3> */}
+        <Col md={4} className='login-col'>
+          <Card className='login-card'>
             <img src={logo}></img>
             <br></br>
-            {/* <Input type="number" className="login-input"></Input> */}
             <Input
-              name="phone_number"
-              type="number"
+              name='phone_number'
+              type='number'
               onChange={onChange}
-              placeholder="Enter Mobile No."
-              className="login-input"
+              placeholder='Enter Mobile No.'
+              className='login-input'
             ></Input>
             <Input
-              name="authCode"
-              type="number"
+              name='authCode'
+              type='number'
               onChange={onChange}
-              placeholder="Enter OTP"
-              className="login-otp"
+              placeholder='Enter OTP'
+              className='login-otp'
             ></Input>
             {form.otp === 0 && (
-              <Button className="login-otp" onClick={getOTP}>
+              <Button className='login-otp' onClick={getOTP}>
                 Get OTP
               </Button>
             )}
             {form.otp === 1 && (
               <>
-                <Button className="login-otp" onClick={signIn}>
+                <Button className='login-otp' onClick={signIn}>
                   Sign In
                 </Button>
-                <Button className="login-otp" onClick={resendOTP}>
+                <Button className='login-otp' onClick={resendOTP}>
                   Resend OTP
                 </Button>
               </>

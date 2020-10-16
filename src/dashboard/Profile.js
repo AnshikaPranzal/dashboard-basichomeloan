@@ -6,8 +6,6 @@ import Moment from "react-moment";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -15,13 +13,12 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { GETAPPLICATION, approveOSV } from "../helper/index";
-import { GETALLLEADS, getDocConfig, addItem } from "../helper/index";
+import { GETALLLEADS, getDocConfig } from "../helper/index";
 import Divider from "@material-ui/core/Divider";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 import Modal from "@material-ui/core/Modal";
-import Verify from "./VerifyDocument";
 import verified from "../images/Group 2125.svg";
 
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -167,9 +164,8 @@ function Profile(props) {
   }, []);
   useEffect(() => {
     const func = async () => {
-      if(!vjobs1)
-      {
-      const k = await Promise.resolve(loadDoc());
+      if (!vjobs1) {
+        const k = await Promise.resolve(loadDoc());
       }
       setproperty(
         vjobs1.filter((e) => e.belongsToEntity == "ApplicationProperty")
@@ -225,11 +221,9 @@ function Profile(props) {
         if (data.error) {
         } else {
           setvjob(data.result);
-          console.log("app", data.result);
           setvjobp(data.result.coBorrowers);
           setvjobq(data.result.primaryBorrower);
           setvjobproperty(data.result.documents);
-          // console.log("documentssss saam", data.result.documents);
         }
     });
   };
@@ -286,10 +280,6 @@ function Profile(props) {
 
   const [disabled, setDisabled] = useState(false);
   const [disabled1, setDisabled1] = useState(false);
-
-  const handleChange3 = (id) => {
-    setIdd(id);
-  };
 
   const handleChange1 = () => {
     setDisabled(true);
@@ -428,19 +418,16 @@ function Profile(props) {
           if (data.error) {
             console.log(data.error);
           } else {
-            // console.log(data.result, "hbjh");
             {
               data.result.status === "OSVVerified" && alert("Lead Verified");
               props.history.push("/dashboard");
             }
-
-            // props.history.push("/dashboard");
           }
         })
       );
     }
   };
-  // console.log(vjob, "here");
+
   const reject = (event, id, name) => {
     event.preventDefault();
     approveOSV(id, {
@@ -474,8 +461,6 @@ function Profile(props) {
               <Typography variant='h5'>{"< "} Go to Dashboard</Typography>{" "}
             </Button>
 
-            {/* <div className={classes.toolbar} /> */}
-            {/* <Divider /> */}
             <div style={{ marginTop: "2em" }}>
               <div
                 style={{
@@ -636,7 +621,6 @@ function Profile(props) {
                           </div>
                         );
                       })}
-                    {/* {vjob.applicationStatus}{" "} */}
                   </div>
                   <div
                     style={{
@@ -913,7 +897,6 @@ function Profile(props) {
                     {vjob.totalDisbursementAmount === null
                       ? ""
                       : vjob.totalDisbursementAmount}
-                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -941,8 +924,6 @@ function Profile(props) {
                     {vjob.totalConfirmedDisbursementAmount === null
                       ? ""
                       : vjob.totalConfirmedDisbursementAmount}
-
-                    {/* <Moment format='dd-mm-yy'>{vjob.osvDate}</Moment> */}
                   </Grid>
                 </Grid>
               </CardContent>
@@ -1434,7 +1415,6 @@ function Profile(props) {
                     {vjob.primaryBorrower
                       ? vjob.primaryBorrower.firstName
                       : ""}{" "}
-                    {/* {vjob.primaryBorrower ? vjob.primaryBorrower.lastName : ""} */}
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} style={{ marginTop: "1rem" }}>
@@ -1459,8 +1439,6 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {/* {vjob.primaryBorrower.map((ob, i) => { */}
-
                     {vjob.primaryBorrower ? vjob.primaryBorrower.lastName : ""}
                   </Grid>
                 </Grid>
@@ -1486,7 +1464,6 @@ function Profile(props) {
                       fontFamily: "Roboto",
                     }}
                   >
-                    {/* {vjob.mobile} */}
                     {vjob.primaryBorrower ? vjob.primaryBorrower.mobile : ""}
                   </Grid>
                 </Grid>
@@ -2421,17 +2398,10 @@ function Profile(props) {
                           Document:
                         </Grid>
                         <Grid item xs={12} style={{ marginLeft: "2rem" }}>
-                          {/* {vjobp.map((p, q) => {
-                            console.log(p, "pppppppp");
-                            return (
-                              <div key={q}>
-                                {console.log(q, "oooooooo")} */}
                           {j.documents.map((p, q) => {
                             return (
                               <>
                                 {borrower.map((n, m) => {
-                                  // console.log("mmmmmjjj", n.id);
-
                                   return (
                                     <div key={m}>
                                       {console.log(m, "gggggggggg")}
@@ -3029,7 +2999,6 @@ function Profile(props) {
                     );
                   })}
                 </Grid>
-                {/* </Grid> */}
               </CardContent>
             </Collapse>
           </Card>
@@ -3341,7 +3310,6 @@ function Profile(props) {
                     );
                   })}
                 </Grid>
-                {/* </Grid> */}
               </CardContent>
             </Collapse>
           </Card>
