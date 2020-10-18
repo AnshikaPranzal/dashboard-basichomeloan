@@ -3314,7 +3314,10 @@ function Profile(props) {
             </Collapse>
           </Card>
 
-          {vjob.applicationStatus === "PendingOSV" && (
+          {(vjob.applicationStatus === "PendingOSV" ||
+            vjob.applicationStatus === "OSVStampped" ||
+            vjob.applicationStatus === "OSVApproved" ||
+            vjob.applicationStatus === "OSVStampPending") && (
             <Row style={{ marginTop: "2rem" }}>
               <Col md={6}>
                 <Button

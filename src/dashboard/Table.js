@@ -20,7 +20,9 @@ import sanction from "../images/Group 2418.svg";
 import { Typography } from "@material-ui/core";
 
 function TableCard(props) {
+  const [jobs, setjobs] = useState([]);
   const [users, setusers] = useState([]);
+  const [, settjobs] = useState([]);
   const [, seterrorF] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [pageNo, setpageNo] = useState(1);
@@ -59,7 +61,9 @@ function TableCard(props) {
         if (data.error) {
           seterrorF(data.error);
         } else {
+          setjobs(data);
           setusers(data.result);
+          settjobs(data.result);
         }
     });
   };
@@ -210,7 +214,7 @@ function TableCard(props) {
                   Status
                 </th>
                 <th className='border-0' style={{ fontFamily: "Roboto" }}>
-                  Vendor Code
+                  Vendor Name
                 </th>
                 <th className='border-0' style={{ fontFamily: "Roboto" }}>
                   RM Ref Code
@@ -256,7 +260,7 @@ function TableCard(props) {
                               >
                                 {product.customerName}
                               </div>
-
+                              {/* <br></br> */}
                               {product.mobile}
                             </span>
                           </Col>
@@ -321,7 +325,7 @@ function TableCard(props) {
                           fontFamily: "Roboto",
                         }}
                       >
-                        {product.vendorCode}
+                        {product.vendorNameOrCp}
                       </td>
                       <td
                         style={{
