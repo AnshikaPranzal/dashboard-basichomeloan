@@ -227,7 +227,7 @@ function Profile(props) {
         }
     });
   };
-  
+  console.log(vjob, "bnb");
   const [refresh, setrefresh] = useState(true);
 
   useEffect(() => {
@@ -2178,6 +2178,37 @@ function Profile(props) {
                             }}
                           >
                             {j.companyName}
+                          </Grid>
+                        </Grid>
+
+                        <Grid
+                          container
+                          item
+                          xs={12}
+                          style={{ marginTop: "1rem" }}
+                        >
+                          <Grid
+                            item
+                            xs={6}
+                            style={{
+                              marginLeft: "2rem",
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            Date of Birth
+                          </Grid>
+                          <Grid
+                            item
+                            xs={4}
+                            style={{
+                              color: "#ACACAC",
+                              opacity: 1.5,
+                              fontFamily: "Roboto",
+                            }}
+                          >
+                            <Moment format='DD-MMM-YYYY'>{j.dateOfBirth}</Moment>
                           </Grid>
                         </Grid>
                         <Grid
